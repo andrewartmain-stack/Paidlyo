@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paidlyo · Design Tokens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ============================================
+       PAIDLYO — DESIGN TOKENS
+       Warm neutral · Evergreen accent · No blue
+       ============================================ */
+    :root {
+      /* --- Canvas & surfaces (warm, not cool) --- */
+      --color-canvas: #f7f5f1;        /* Page background — warm parchment, not blue-white */
+      --color-surface: #ffffff;       /* Cards, panels */
+      --color-surface-alt: #efebe4;   /* Section alternation, inset wells */
+
+      /* --- Ink & text (warm charcoal) --- */
+      --color-ink: #1c1b19;           /* Primary text, filled actions — near-black with warmth */
+      --color-ink-soft: #38352f;      /* Body copy, secondary headings */
+      --color-text-muted: #6b655c;    /* Labels, captions, placeholders */
+      --color-text-faint: #9e978d;    /* Disabled, faint metadata */
+
+      /* --- Borders --- */
+      --color-border: #e3ddd4;        /* Default 1px borders */
+      --color-border-strong: #cec5b9; /* Inputs, interactive surfaces */
+
+      /* --- Accent: Evergreen (no blue anywhere) --- */
+      --color-accent: #1f4d3a;        /* Deep forest green — primary CTA, links, focus */
+      --color-accent-soft: #e6f0ea;   /* Pale sage wash for selected rows */
+      --color-accent-hover: #163a2b;
+
+      /* --- Semantic --- */
+      --color-success: #2d6a4f;
+      --color-warning: #b45309;
+      --color-error: #b93a2e;
+
+      /* --- Font families --- */
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-heading: "Manrope", "Inter", sans-serif;
+
+      /* --- Type scale (rem) --- */
+      --text-xs: 0.75rem;      /* 12px */
+      --text-sm: 0.875rem;     /* 14px */
+      --text-base: 1rem;       /* 16px */
+      --text-md: 1.125rem;     /* 18px */
+      --text-lg: 1.25rem;      /* 20px */
+      --text-xl: 1.5rem;       /* 24px */
+      --text-2xl: 1.875rem;    /* 30px */
+      --text-3xl: 2.25rem;     /* 36px */
+      --text-4xl: 3rem;        /* 48px */
+
+      /* --- Line heights --- */
+      --leading-tight: 1.15;
+      --leading-snug: 1.3;
+      --leading-normal: 1.5;
+      --leading-relaxed: 1.65;
+
+      /* --- Letter spacing --- */
+      --tracking-tight: -0.02em;
+      --tracking-display: -0.035em;
+      --tracking-normal: 0;
+      --tracking-wide: 0.04em;
+      --tracking-caps: 0.08em;
+
+      /* --- Spacing (4px base) --- */
+      --space-1: 0.25rem;   /*  4px */
+      --space-2: 0.5rem;    /*  8px */
+      --space-3: 0.75rem;   /* 12px */
+      --space-4: 1rem;      /* 16px */
+      --space-5: 1.25rem;   /* 20px */
+      --space-6: 1.5rem;    /* 24px */
+      --space-8: 2rem;      /* 32px */
+      --space-10: 2.5rem;   /* 40px */
+      --space-12: 3rem;     /* 48px */
+      --space-16: 4rem;     /* 64px */
+      --space-20: 5rem;     /* 80px */
+      --space-24: 6rem;     /* 96px */
+
+      /* --- Radii --- */
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-normal);
+      color: var(--color-ink);
+      background: var(--color-canvas);
+      padding: var(--space-12) var(--space-6);
+      max-width: 960px;
+      margin-inline: auto;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      line-height: var(--leading-snug);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-ink);
+    }
+
+    h1 {
+      font-size: var(--text-4xl);
+      letter-spacing: var(--tracking-display);
+      margin-bottom: var(--space-2);
+    }
+
+    h2 {
+      font-size: var(--text-2xl);
+      margin-top: var(--space-12);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-top: var(--space-8);
+      margin-bottom: var(--space-4);
+    }
+
+    p {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+      max-width: 640px;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+    }
+
+    code {
+      font-family: var(--font-body);
+      font-size: 0.85em;
+      background: var(--color-surface-alt);
+      padding: 0.15em 0.4em;
+      border-radius: var(--radius-xs);
+      color: var(--color-ink-soft);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: var(--tracking-caps);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    /* ============================================
+       SWATCHES
+       ============================================ */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .swatch {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .swatch__color {
+      height: 72px;
+    }
+
+    .swatch__info {
+      padding: var(--space-3);
+    }
+
+    .swatch__name {
+      display: block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--color-ink);
+      margin-bottom: 2px;
+    }
+
+    .swatch__value {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .swatch__role {
+      display: block;
+      font-size: 11px;
+      color: var(--color-text-faint);
+      margin-top: var(--space-1);
+      line-height: 1.4;
+    }
+
+    /* ============================================
+       TYPE SPECIMENS
+       ============================================ */
+    .type-block {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .type-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .type-sample {
+      line-height: var(--leading-snug);
+      color: var(--color-ink);
+    }
+
+    .type-sample--display {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 600;
+      letter-spacing: var(--tracking-display);
+      line-height: var(--leading-tight);
+    }
+
+    .type-sample--h1 {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: 600;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .type-sample--h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .type-sample--h3 {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .type-sample--body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      font-weight: 400;
+      line-height: var(--leading-relaxed);
+      color: var(--color-ink-soft);
+    }
+
+    .type-sample--small {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 400;
+      line-height: var(--leading-normal);
+      color: var(--color-text-muted);
+    }
+
+    .type-sample--label {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: var(--tracking-caps);
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    /* ============================================
+       SIZES
+       ============================================ */
+    .size-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .size-row:last-child {
+      border-bottom: none;
+    }
+
+    .size-label {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      min-width: 90px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .size-bar {
+      height: 4px;
+      background: var(--color-accent);
+      border-radius: 2px;
+    }
+
+    .size-px {
+      font-size: 11px;
+      color: var(--color-text-faint);
+      margin-left: auto;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .radius-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    .radius-item {
+      text-align: center;
+    }
+
+    .radius-box {
+      width: 56px;
+      height: 56px;
+      background: var(--color-accent-soft);
+      border: 1px solid var(--color-border-strong);
+      margin-bottom: var(--space-2);
+    }
+
+    .radius-label {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    .note {
+      background: var(--color-surface-alt);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: var(--space-4) var(--space-5);
+      margin-block: var(--space-6);
+      font-size: var(--text-sm);
+      color: var(--color-ink-soft);
+      line-height: var(--leading-relaxed);
+    }
+
+    .note strong {
+      color: var(--color-ink);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin-block: var(--space-8);
+    }
+
+    @media print {
+      body { padding: 0; }
+      .swatch, .type-block { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================== HEADER ============================== -->
+  <div>
+    <span class="eyebrow">Paidlyo · Design Tokens v1.1</span>
+    <h1>Warm, grounded,<br />and quietly confident.</h1>
+    <p style="font-size: var(--text-md); color: var(--color-text-muted); max-width: 560px;">
+      A warm-neutral system for time tracking and invoicing. No blue anywhere.
+      One deep evergreen accent carries every primary action. The canvas is
+      parchment-warm, the ink is charcoal, and the type is clean geometric sans.
+      It stays light on the eyes and credible for financial workflows.
+    </p>
+  </div>
+
+  <!-- ============================== COLORS ============================== -->
+  <h2>01 · Colors</h2>
+  <p>
+    The palette is 85–90% warm neutrals. The accent (<code>#1f4d3a</code>) is the
+    only saturated colour, and it should appear on less than 5% of pixels —
+    primary actions, links, focus rings, and active navigation. Never use it for
+    body text or large decorative fills. No blue is used at any point in the
+    system.
+  </p>
+
+  <h3>Canvas & surfaces</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch__color" style="background: #f7f5f1;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Canvas</span>
+        <span class="swatch__value">#f7f5f1</span>
+        <span class="swatch__role">Page background · warm parchment, not blue-white</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #ffffff;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Surface</span>
+        <span class="swatch__value">#ffffff</span>
+        <span class="swatch__role">Cards · panels · elevated areas</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #efebe4;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Surface Alt</span>
+        <span class="swatch__value">#efebe4</span>
+        <span class="swatch__role">Section alternation · inset wells</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Ink & text</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch__color" style="background: #1c1b19;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Ink</span>
+        <span class="swatch__value">#1c1b19</span>
+        <span class="swatch__role">Primary text · filled buttons · near-black with warmth</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #38352f;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Ink Soft</span>
+        <span class="swatch__value">#38352f</span>
+        <span class="swatch__role">Body copy · secondary headings</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #6b655c;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Text Muted</span>
+        <span class="swatch__value">#6b655c</span>
+        <span class="swatch__role">Labels · captions · placeholders</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #9e978d;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Text Faint</span>
+        <span class="swatch__value">#9e978d</span>
+        <span class="swatch__role">Disabled · faint metadata</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Accent & borders</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch__color" style="background: #1f4d3a;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Evergreen</span>
+        <span class="swatch__value">#1f4d3a</span>
+        <span class="swatch__role">Primary CTA · links · focus · active states</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #e6f0ea;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Evergreen Soft</span>
+        <span class="swatch__value">#e6f0ea</span>
+        <span class="swatch__role">Selected rows · soft washes</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #e3ddd4;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Border</span>
+        <span class="swatch__value">#e3ddd4</span>
+        <span class="swatch__role">Default 1px dividers · card edges</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #cec5b9;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Border Strong</span>
+        <span class="swatch__value">#cec5b9</span>
+        <span class="swatch__role">Inputs · interactive surfaces</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Semantic</h3>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch__color" style="background: #2d6a4f;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Success</span>
+        <span class="swatch__value">#2d6a4f</span>
+        <span class="swatch__role">Paid · confirmed · positive delta</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #b45309;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Warning</span>
+        <span class="swatch__value">#b45309</span>
+        <span class="swatch__role">Due soon · attention needed</span>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background: #b93a2e;"></div>
+      <div class="swatch__info">
+        <span class="swatch__name">Error</span>
+        <span class="swatch__value">#b93a2e</span>
+        <span class="swatch__role">Failed · overdue · destructive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Contrast note.</strong> Ink on Canvas is ≈ 15.0:1. Ink on Surface is
+    ≈ 16.2:1. Text Muted on Surface is ≈ 4.9:1 — safe for 14px+ body and labels.
+    Evergreen on Surface is ≈ 8.1:1 — use white text on Evergreen for buttons only.
+    Never rely on colour alone to communicate status; pair with a label or icon.
+  </div>
+
+  <!-- ============================== TYPOGRAPHY ============================== -->
+  <h2>02 · Typography</h2>
+  <p>
+    Two clean sans-serifs. <strong>Manrope</strong> handles headings — geometric,
+    modern, and quietly confident without being decorative. <strong>Inter</strong>
+    handles all UI and body copy — designed for screens, it keeps dense tables
+    and financial data legible at 12–14px. This pairing reads as “modern business”
+    through restraint, not novelty.
+  </p>
+
+  <h3>Families</h3>
+  <div class="type-block">
+    <div class="type-meta">--font-heading · Manrope 500–700</div>
+    <div class="type-sample" style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: 600; letter-spacing: var(--tracking-tight);">
+      Turn hours into invoices.
+    </div>
+    <p style="margin-top: var(--space-3); margin-bottom: 0; font-size: var(--text-xs); color: var(--color-text-faint);">
+      Use for display, h1–h3, and large numbers. Weight 600. Tight negative
+      tracking on sizes above 24px.
+    </p>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">--font-body · Inter 400–600</div>
+    <div class="type-sample" style="font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-relaxed); color: var(--color-ink-soft);">
+      Paidlyo helps small teams track time, bill accurately, and get paid faster —
+      without enterprise pricing. Every entry, every invoice, in one calm place.
+    </div>
+    <p style="margin-top: var(--space-3); margin-bottom: 0; font-size: var(--text-xs); color: var(--color-text-faint);">
+      Use for body, UI labels, buttons, tables, inputs, and captions. Weight 400
+      for body, 500 for buttons and labels, 600 for emphasis.
+    </p>
+  </div>
+
+  <h3>Scale</h3>
+
+  <div class="type-block">
+    <div class="type-meta">Display · --text-4xl · 3rem / 48px · 1.15 / -0.035em · Manrope 600</div>
+    <div class="type-sample type-sample--display">Clarity in every hour.</div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">H1 · --text-3xl · 2.25rem / 36px · 1.3 / -0.02em · Manrope 600</div>
+    <div class="type-sample type-sample--h1">Time tracking that feels effortless</div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">H2 · --text-2xl · 1.875rem / 30px · 1.3 / -0.02em · Manrope 600</div>
+    <div class="type-sample type-sample--h2">Invoices, sent and settled</div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">H3 · --text-xl · 1.5rem / 24px · 1.3 / -0.02em · Manrope 600</div>
+    <div class="type-sample type-sample--h3">This week’s billable summary</div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">Body · --text-base · 1rem / 16px · 1.65 · Inter 400 · ink-soft</div>
+    <div class="type-sample type-sample--body">
+      A lighter alternative to Harvest, built for freelancers and growing studios.
+      No hidden fees. No steep learning curve. Just time in, money out.
+    </div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">Small · --text-sm · 0.875rem / 14px · 1.5 · Inter 400 · muted</div>
+    <div class="type-sample type-sample--small">
+      Last synced 2 minutes ago · 4 active projects · 12 unbilled entries
+    </div>
+  </div>
+
+  <div class="type-block">
+    <div class="type-meta">Label / Caps · --text-xs · 0.75rem / 12px · 0.08em · Inter 600</div>
+    <div class="type-sample type-sample--label">Total unbilled · $4,280.00</div>
+  </div>
+
+  <div class="note">
+    <strong>Tracking rule.</strong> Apply negative tracking only on Manrope
+    headings above 24px (<code>-0.02em</code> to <code>-0.035em</code>). Body,
+    labels, and small UI copy use normal tracking. Never letterspace lowercase
+    body copy.
+  </div>
+
+  <!-- ============================== SIZES ============================== -->
+  <h2>03 · Spacing, radii & controls</h2>
+  <p>
+    Everything sits on a 4px grid. Use the scale below for padding, margins, and
+    gaps. Radii are intentionally moderate: inputs and small controls feel precise,
+    cards feel soft but not playful, and pills are reserved for tags and avatars —
+    not primary buttons. This keeps the system credible for financial workflows.
+  </p>
+
+  <h3>Spacing scale</h3>
+  <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5);">
+
+    <div class="size-row">
+      <span class="size-label">--space-1</span>
+      <div class="size-bar" style="width: 4px;"></div>
+      <span class="size-px">4px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-2</span>
+      <div class="size-bar" style="width: 8px;"></div>
+      <span class="size-px">8px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-3</span>
+      <div class="size-bar" style="width: 12px;"></div>
+      <span class="size-px">12px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-4</span>
+      <div class="size-bar" style="width: 16px;"></div>
+      <span class="size-px">16px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-6</span>
+      <div class="size-bar" style="width: 24px;"></div>
+      <span class="size-px">24px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-8</span>
+      <div class="size-bar" style="width: 32px;"></div>
+      <span class="size-px">32px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-12</span>
+      <div class="size-bar" style="width: 48px;"></div>
+      <span class="size-px">48px</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">--space-16</span>
+      <div class="size-bar" style="width: 64px;"></div>
+      <span class="size-px">64px</span>
+    </div>
+  </div>
+
+  <h3>Radii</h3>
+  <div class="radius-row">
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius: var(--radius-xs);"></div>
+      <span class="radius-label">4px · xs</span>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+      <span class="radius-label">6px · sm</span>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+      <span class="radius-label">10px · md</span>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+      <span class="radius-label">16px · lg</span>
+    </div>
+    <div class="radius-item">
+      <div class="radius-box" style="border-radius: var(--radius-pill);"></div>
+      <span class="radius-label">999px · pill</span>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top: var(--space-6);">
+    <strong>Control sizing.</strong> Buttons and inputs use a <strong>36px</strong>
+    height (padding: 0 16px; font-size: 14px). Compact table rows are
+    <strong>40–44px</strong>. Card padding is <strong>24px</strong>. Section
+    gaps are <strong>64–96px</strong>. Focus rings are 2px Evergreen with a 2px
+    offset — always visible, never removed.
+  </div>
+
+  <!-- ============================== PRINCIPLES ============================== -->
+  <h2>04 · Principles</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); margin-top: var(--space-4);">
+    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5);">
+      <h3 style="margin-top: 0; font-size: var(--text-base);">Warm neutral, always</h3>
+      <p style="margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.7;">
+        The canvas is parchment-warm, not blue-white. Ink is charcoal, not pure
+        black. This is what keeps the product light on the eyes during long
+        invoicing sessions.
+      </p>
+    </div>
+    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5);">
+      <h3 style="margin-top: 0; font-size: var(--text-base);">One accent, no blue</h3>
+      <p style="margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.7;">
+        Evergreen is the only saturated colour. It is stable, financial, and
+        distinct from the sea of blue SaaS products. Use it sparingly on primary
+        actions and links only.
+      </p>
+    </div>
+    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5);">
+      <h3 style="margin-top: 0; font-size: var(--text-base);">Type does the hierarchy</h3>
+      <p style="margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.7;">
+        Weight and size carry the hierarchy — not colour, not boxes, not icons.
+        If everything is bold, nothing is. Use 600 sparingly.
+      </p>
+    </div>
+    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5);">
+      <h3 style="margin-top: 0; font-size: var(--text-base);">Quiet depth</h3>
+      <p style="margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.7;">
+        No drop shadows. Elevation comes from 1px borders and background tint
+        alone. This is what keeps the interface light and modern.
+      </p>
+    </div>
+  </div>
+
+  <hr />
+  <p style="font-size: var(--text-xs); color: var(--color-text-faint); margin-bottom: 0;">
+    Paidlyo Design Tokens · v1.1 · Warm neutral · Evergreen accent · No blue.
+    Built to be extended — not decorated.
+  </p>
+
+</body>
+</html>

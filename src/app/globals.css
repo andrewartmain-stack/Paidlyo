@@ -1,0 +1,330 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Dark mode is not designed yet; `.dark` is unused but kept so shadcn's dark: classes compile. */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Paidlyo design tokens (source: design_system.html, mapping: docs/DESIGN.md).
+ * Warm neutral · Evergreen accent · No blue · No shadows.
+ */
+@theme inline {
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: var(--font-manrope), var(--font-inter), sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-brand: var(--brand);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint-foreground: var(--faint-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
+  --color-sidebar-muted-foreground: var(--sidebar-muted-foreground);
+
+  /* Radii. shadcn uses rounded-lg for controls and rounded-xl for cards/dialogs. */
+  --radius-sm: 4px;   /* design xs */
+  --radius-md: 4px;   /* menu items */
+  --radius-lg: var(--radius); /* 6px · design sm: buttons, inputs, menus */
+  --radius-xl: 10px;  /* design md: cards, dialogs */
+  --radius-2xl: 16px; /* design lg: large panels */
+  --radius-3xl: 16px;
+  --radius-4xl: 999px; /* design pill: badges, avatars */
+}
+
+:root {
+  --radius: 6px;
+
+  --background: #ffffff;        /* canvas */
+  --foreground: #0e0f0c;        /* ink (near-black) */
+  --card: #ffffff;              /* surface */
+  --card-foreground: #0e0f0c;
+  --popover: #ffffff;
+  --popover-foreground: #0e0f0c;
+
+  --primary: #9fe870;           /* bright green — filled buttons only (text on it: --primary-foreground) */
+  --primary-foreground: #163300;
+  --primary-hover: #80e142;
+  --brand: #163300;             /* forest green — links, highlighted text, selected borders */
+
+  --secondary: #f0f2ee;         /* surface-alt: neutral with a hint of green */
+  --secondary-foreground: #0e0f0c;
+  --muted: #f0f2ee;
+  --muted-foreground: #5c6158;  /* text-muted (6:1 on white) */
+  --faint-foreground: #8d9289;  /* text-faint: placeholders, hints */
+  --accent: #e2f6d5;            /* light green — hover / selected rows */
+  --accent-foreground: #163300;
+
+  --destructive: #a8200d;
+  --success: #2f5711;
+  --warning: #9a5b00;
+
+  --border: #e2e5df;
+  --input: #c8ccc3;             /* border-strong */
+  --ring: #163300;
+
+  --chart-1: #163300;
+  --chart-2: #9fe870;
+  --chart-3: #5c6158;
+  --chart-4: #9a5b00;
+  --chart-5: #c8ccc3;
+
+  /* Sidebar: white, black selected item, neutral hover */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0e0f0c;
+  --sidebar-muted-foreground: #5c6158; /* section labels, "Soon" items */
+  --sidebar-primary: #163300;          /* active item text + icon */
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0f2ee;           /* hover (= --muted) */
+  --sidebar-accent-foreground: #0e0f0c;
+  --sidebar-active: #0e0f0c;           /* selected item: black… */
+  --sidebar-active-foreground: #ffffff; /* …with white text + icon */
+  --sidebar-border: #e2e5df;           /* = --border */
+  --sidebar-ring: #163300;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans antialiased;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading font-semibold tracking-tight text-foreground;
+  }
+}
+
+/* Printing (invoice preview → "Save as PDF"): A4 with even margins; pages hide their own chrome
+   with the print: variant. */
+@page {
+  size: A4;
+  margin: 16mm;
+}
+@media print {
+  body {
+    background: #ffffff;
+  }
+}
+
+/* ===== Illustrations (src/components/illustrations) — CSS-only animations ===== */
+/* Static state = final, complete picture. Motion only when the user has not asked to reduce it. */
+@media (prefers-reduced-motion: no-preference) {
+  .ill-sweep,
+  .ill-pulse,
+  .ill-draw,
+  .ill-coin,
+  .ill-slide-l,
+  .ill-slide-r,
+  .ill-fan-back,
+  .ill-fan-mid,
+  .ill-fan-front,
+  .ill-grow,
+  .ill-line,
+  .ill-pop,
+  .ill-travel,
+  .ill-glide,
+  .ill-tick,
+  .ill-check {
+    transform-box: fill-box;
+    animation-timing-function: ease-in-out;
+  }
+
+  .ill-sweep { transform-origin: 50% 100%; animation: ill-spin 5s linear infinite; }
+  .ill-pulse { transform-origin: 50% 50%; animation: ill-pulse 3s ease-in-out infinite; }
+  .ill-draw { transform-origin: 0% 50%; animation: ill-draw 0.5s ease-out both; }
+  .ill-coin { transform-origin: 50% 100%; animation: ill-drop 0.9s 2.3s both; }
+  .ill-slide-l { animation: ill-slide-l 0.7s ease-out both; }
+  .ill-slide-r { animation: ill-slide-r 0.7s ease-out both; }
+  .ill-fan-back { transform-origin: 0% 100%; animation: ill-fan-back 4.5s ease-in-out infinite; }
+  .ill-fan-mid { transform-origin: 0% 100%; animation: ill-fan-mid 4.5s ease-in-out infinite; }
+  .ill-fan-front { animation: ill-lift 4.5s ease-in-out infinite; }
+  .ill-grow { transform-origin: 50% 100%; animation: ill-grow 0.8s ease-out both; }
+  .ill-line { stroke-dasharray: 1; animation: ill-dash 1s 1s ease-out both; }
+  .ill-pop { transform-origin: 50% 50%; animation: ill-pop 0.5s ease-out both; }
+  .ill-travel { animation: ill-travel 3s ease-in-out infinite; }
+  .ill-glide { animation: ill-glide 0.9s ease-out both; }
+  .ill-tick { transform-origin: 50% 50%; animation: ill-pulse 2.4s ease-in-out infinite; }
+  .ill-check { stroke-dasharray: 1; animation: ill-dash 0.6s 0.2s ease-out both; }
+
+  @keyframes ill-spin { to { transform: rotate(360deg); } }
+  @keyframes ill-pulse { 50% { transform: scale(1.14); } }
+  @keyframes ill-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes ill-drop {
+    0% { transform: translateY(-90px); opacity: 0; }
+    30% { opacity: 1; }
+    60% { transform: translateY(0) scaleY(0.9); }
+    80% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes ill-slide-l { from { transform: translateX(-50px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes ill-slide-r { from { transform: translateX(50px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes ill-fan-back { 50% { transform: rotate(-7deg); } }
+  @keyframes ill-fan-mid { 50% { transform: rotate(-3deg) translateY(-8px); } }
+  @keyframes ill-lift { 50% { transform: translateY(4px); } }
+  @keyframes ill-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @keyframes ill-dash { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes ill-pop {
+    from { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.3); opacity: 1; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes ill-travel {
+    0% { transform: translateX(0); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translateX(62px); opacity: 0; }
+  }
+  @keyframes ill-glide { from { transform: translateX(-60px); opacity: 0; } to { transform: none; opacity: 1; } }
+}
+/* ===== end Illustrations ===== */
+
+/* ===== Logo: animated coin stack (components/app-shell/animated-logo-mark.tsx) =====
+   Units are SVG user units (the logo is 845×190; 1 screen px ≈ 7 units at h-7).
+   At rest everything below is hidden or zero, so the logo matches logo.png exactly. */
+.logo-rim,
+.logo-detail,
+.logo-edge {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .logo-coin,
+  .logo-lift-top,
+  .logo-lift-middle,
+  .logo-edge {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+  }
+  .logo-coin-bottom {
+    transform-origin: 50% 100%;
+  }
+  .logo-anim:hover .logo-lift-top,
+  a:focus-visible .logo-anim .logo-lift-top {
+    animation: logo-lift-top 1.2s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+  }
+  .logo-anim:hover .logo-coin-top,
+  a:focus-visible .logo-anim .logo-coin-top {
+    animation: logo-flip 1.2s ease-in-out both;
+  }
+  .logo-anim:hover .logo-edge,
+  a:focus-visible .logo-anim .logo-edge {
+    animation: logo-edge 1.2s linear both;
+  }
+  .logo-anim:hover .logo-lift-middle,
+  a:focus-visible .logo-anim .logo-lift-middle {
+    animation: logo-lift-middle 1.2s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+  }
+  .logo-anim:hover .logo-coin-bottom,
+  a:focus-visible .logo-anim .logo-coin-bottom {
+    animation: logo-squash 1.2s ease-out both;
+  }
+  .logo-anim:hover .logo-rim,
+  a:focus-visible .logo-anim .logo-rim {
+    animation: logo-rim 1.2s ease-in-out both;
+  }
+  .logo-anim:hover .logo-detail,
+  a:focus-visible .logo-anim .logo-detail {
+    animation: logo-detail 1.2s ease-in-out both;
+  }
+}
+
+/* Top coin: lifts high, hangs while it flips, drops and bounces. */
+@keyframes logo-lift-top {
+  0% { transform: translateY(0); }
+  18% { transform: translateY(-46px); }
+  30% { transform: translateY(-56px); }
+  48% { transform: translateY(-58px); }
+  62% { transform: translateY(-46px); }
+  80% { transform: translateY(4px); }
+  90% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+/* Two flips: the face squashes to its edge and opens again (the solid edge shows meanwhile). */
+@keyframes logo-flip {
+  0%, 18% { transform: scaleY(1); }
+  26% { transform: scaleY(0.05); }
+  34% { transform: scaleY(1); }
+  42% { transform: scaleY(0.05); }
+  50%, 78% { transform: scaleY(1); }
+  82% { transform: scaleY(0.9); }
+  90%, 100% { transform: scaleY(1); }
+}
+@keyframes logo-edge {
+  0%, 21% { opacity: 0; }
+  25%, 27% { opacity: 1; }
+  31%, 37% { opacity: 0; }
+  41%, 43% { opacity: 1; }
+  47%, 100% { opacity: 0; }
+}
+
+/* Middle coin rises with the stack and settles with a small bounce. */
+@keyframes logo-lift-middle {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-22px); }
+  64% { transform: translateY(-22px); }
+  80% { transform: translateY(4px); }
+  90% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+/* Bottom coin squashes as the stack lands. */
+@keyframes logo-squash {
+  0%, 78% { transform: scaleY(1); }
+  85% { transform: scaleY(0.88); }
+  93% { transform: scaleY(1.04); }
+  100% { transform: scaleY(1); }
+}
+
+/* Coins gain thickness while apart (the rim slides out below each face), then flatten back. */
+@keyframes logo-rim {
+  0% { opacity: 1; transform: translateY(0); }
+  16%, 70% { opacity: 1; transform: translateY(14px); }
+  86% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+
+/* Raised inner ring + shine on each face while the stack is apart. */
+@keyframes logo-detail {
+  0% { opacity: 0; }
+  16%, 70% { opacity: 1; }
+  86%, 100% { opacity: 0; }
+}
+/* ===== end Logo ===== */
