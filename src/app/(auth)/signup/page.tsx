@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { AuthCard } from "@/features/auth/components/auth-card";
 import { SignupForm } from "@/features/auth/components/signup-form";
 
@@ -19,7 +20,10 @@ export default function SignupPage() {
         </>
       }
     >
-      <SignupForm />
+      {/* SignupForm reads ?next, which is request data. */}
+      <Suspense>
+        <SignupForm />
+      </Suspense>
     </AuthCard>
   );
 }

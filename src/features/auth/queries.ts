@@ -36,3 +36,11 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser> => {
     fullName: profile?.full_name ?? "",
   };
 });
+
+/** The signed-in user's id, or null when signed out (for pages open to both, e.g. /join). */
+export const findSignedInUserId = cache(async (): Promise<string | null> => {
+  await connection();
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+  return data?.claims?.sub ?? null;
+});

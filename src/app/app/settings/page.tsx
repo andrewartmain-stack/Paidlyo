@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
-import { Building2, CreditCard, FileUp, ImageIcon, Settings } from "lucide-react";
+import { Building2, ClipboardCheck, CreditCard, FileUp, ImageIcon, Settings } from "lucide-react";
 import { PageIcon } from "@/components/page-icon";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogoUploader } from "@/features/organizations/components/logo-uploader";
 import { OrganizationSettingsForm } from "@/features/organizations/components/organization-settings-form";
+import { TimesheetApprovalToggle } from "@/features/organizations/components/timesheet-approval-toggle";
 import { currencyOptions, timeZoneOptions } from "@/features/organizations/options";
 import { canManageOrg, getCurrentOrg } from "@/features/organizations/queries";
 
@@ -69,6 +70,19 @@ async function OrganizationSettings() {
             <LogoUploader logoUrl={org.logoUrl} disabled={readOnly} />
           </CardContent>
         </Card>
+        {!readOnly && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+                <ClipboardCheck className="size-5 text-brand" aria-hidden />
+                Timesheet approval
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TimesheetApprovalToggle enabled={org.timesheetApproval} />
+            </CardContent>
+          </Card>
+        )}
         {!readOnly && (
           <Card>
             <CardHeader>

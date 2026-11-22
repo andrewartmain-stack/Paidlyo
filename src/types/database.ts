@@ -227,6 +227,35 @@ export type Database = {
           },
         ]
       }
+      member_rates: {
+        Row: {
+          hourly_rate_cents: number
+          organization_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          hourly_rate_cents: number
+          organization_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          hourly_rate_cents?: number
+          organization_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "member_rates_organization_id_user_id_fkey"
+            columns: ["organization_id", "user_id"]
+            isOneToOne: true
+            referencedRelation: "organization_members"
+            referencedColumns: ["organization_id", "user_id"]
+          },
+        ]
+      }
       organization_billing: {
         Row: {
           cancel_at_period_end: boolean
@@ -271,8 +300,59 @@ export type Database = {
           },
         ]
       }
+      organization_invites: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          expires_at: string
+          id: string
+          organization_id: string
+          revoked_at: string | null
+          role: Database["public"]["Enums"]["org_role"]
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          expires_at?: string
+          id?: string
+          organization_id: string
+          revoked_at?: string | null
+          role?: Database["public"]["Enums"]["org_role"]
+          token?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          expires_at?: string
+          id?: string
+          organization_id?: string
+          revoked_at?: string | null
+          role?: Database["public"]["Enums"]["org_role"]
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organization_invites_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organization_members: {
         Row: {
+          archived_at: string | null
           created_at: string
           id: string
           organization_id: string
@@ -280,6 +360,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          archived_at?: string | null
           created_at?: string
           id?: string
           organization_id: string
@@ -287,6 +368,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          archived_at?: string | null
           created_at?: string
           id?: string
           organization_id?: string
@@ -314,6 +396,7 @@ export type Database = {
           logo_path: string | null
           name: string
           next_invoice_number: number
+          timesheet_approval: boolean
           timezone: string
           updated_at: string
         }
@@ -327,6 +410,7 @@ export type Database = {
           logo_path?: string | null
           name: string
           next_invoice_number?: number
+          timesheet_approval?: boolean
           timezone?: string
           updated_at?: string
         }
@@ -340,6 +424,7 @@ export type Database = {
           logo_path?: string | null
           name?: string
           next_invoice_number?: number
+          timesheet_approval?: boolean
           timezone?: string
           updated_at?: string
         }
@@ -676,11 +761,63 @@ export type Database = {
           },
         ]
       }
+      timesheet_submissions: {
+        Row: {
+          decided_at: string | null
+          decided_by: string | null
+          id: string
+          note: string | null
+          organization_id: string
+          status: Database["public"]["Enums"]["timesheet_status"]
+          submitted_at: string
+          user_id: string
+          week_start: string
+        }
+        Insert: {
+          decided_at?: string | null
+          decided_by?: string | null
+          id?: string
+          note?: string | null
+          organization_id: string
+          status?: Database["public"]["Enums"]["timesheet_status"]
+          submitted_at?: string
+          user_id: string
+          week_start: string
+        }
+        Update: {
+          decided_at?: string | null
+          decided_by?: string | null
+          id?: string
+          note?: string | null
+          organization_id?: string
+          status?: Database["public"]["Enums"]["timesheet_status"]
+          submitted_at?: string
+          user_id?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timesheet_submissions_member_fkey"
+            columns: ["organization_id", "user_id"]
+            isOneToOne: false
+            referencedRelation: "organization_members"
+            referencedColumns: ["organization_id", "user_id"]
+          },
+          {
+            foreignKeyName: "timesheet_submissions_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      accept_invite: { Args: { p_token: string }; Returns: string }
       add_time_to_invoice: {
         Args: {
           p_from: string
@@ -693,6 +830,14 @@ export type Database = {
       apply_invoice_payments: {
         Args: { p_invoice_id: string }
         Returns: undefined
+      }
+      create_invite: {
+        Args: {
+          p_email: string
+          p_organization_id: string
+          p_role: Database["public"]["Enums"]["org_role"]
+        }
+        Returns: string
       }
       create_invoice: {
         Args: {
@@ -708,6 +853,7 @@ export type Database = {
         Returns: string
       }
       delete_payment: { Args: { p_payment_id: string }; Returns: undefined }
+      get_invite_preview: { Args: { p_token: string }; Returns: Json }
       get_shared_invoice: { Args: { p_token: string }; Returns: Json }
       has_org_role: {
         Args: {
@@ -721,6 +867,7 @@ export type Database = {
         Returns: Json
       }
       is_org_member: { Args: { org_id: string }; Returns: boolean }
+      my_hourly_rate: { Args: { p_organization_id: string }; Returns: number }
       recalculate_invoice_totals: {
         Args: { p_invoice_id: string }
         Returns: undefined
@@ -739,6 +886,11 @@ export type Database = {
         Args: { p_invoice_id: string }
         Returns: string
       }
+      review_week: {
+        Args: { p_action: string; p_note: string; p_submission_id: string }
+        Returns: undefined
+      }
+      revoke_invite: { Args: { p_invite_id: string }; Returns: undefined }
       save_invoice: {
         Args: { p_invoice: Json; p_invoice_id: string; p_items: Json }
         Returns: undefined
@@ -756,10 +908,33 @@ export type Database = {
         Args: { p_action: string; p_invoice_id: string }
         Returns: undefined
       }
+      set_member_active: {
+        Args: { p_active: boolean; p_member_id: string }
+        Returns: undefined
+      }
+      set_member_role: {
+        Args: {
+          p_member_id: string
+          p_role: Database["public"]["Enums"]["org_role"]
+        }
+        Returns: undefined
+      }
       shares_org_with: { Args: { other_user_id: string }; Returns: boolean }
       start_timer: { Args: { p_entry_id: string }; Returns: undefined }
       stop_timer: { Args: { p_entry_id: string }; Returns: undefined }
+      submit_week: {
+        Args: { p_organization_id: string; p_week_start: string }
+        Returns: undefined
+      }
       timer_elapsed_minutes: { Args: { p_started_at: string }; Returns: number }
+      week_is_locked: {
+        Args: { p_date: string; p_organization_id: string; p_user_id: string }
+        Returns: boolean
+      }
+      withdraw_week: {
+        Args: { p_organization_id: string; p_week_start: string }
+        Returns: undefined
+      }
     }
     Enums: {
       billing_method: "project_rate" | "task_rate" | "person_rate" | "none"
@@ -774,6 +949,7 @@ export type Database = {
         | "check"
         | "stripe"
         | "other"
+      timesheet_status: "submitted" | "approved" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -917,6 +1093,7 @@ export const Constants = {
         "stripe",
         "other",
       ],
+      timesheet_status: ["submitted", "approved", "rejected"],
     },
   },
 } as const

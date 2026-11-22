@@ -2,7 +2,9 @@ import Link from "next/link";
 import {
   AlertTriangle,
   ArrowRight,
+  Gauge,
   CalendarClock,
+  ClipboardCheck,
   Check,
   Circle,
   Clock,
@@ -18,6 +20,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { InvoiceStatusBadge } from "@/features/invoices/components/invoice-status-badge";
 import type { CurrentOrg } from "@/features/organizations/types";
+import { countPendingSubmissions } from "@/features/approvals/queries";
+import { listBudgetAlerts } from "@/features/projects/queries";
 import { formatMoneyTotals, percentOf } from "@/features/reports/aggregate";
 import { agingSummary } from "@/features/reports/outstanding";
 import { unbilledSummary } from "@/features/reports/unbilled";
@@ -342,6 +346,27 @@ function AttentionRow({ item }: { item: AttentionItem }) {
           </span>
         </Link>
       );
+    case "timesheets":
+      return (
+        <Link href="/app/approvals" className="flex items-start gap-3 rounded-lg p-2 hover:bg-muted">
+          <ClipboardCheck className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+          <span className="text-sm">
+            <span className="font-medium tabular-nums">{item.count}</span>{" "}
+            {item.count === 1 ? "timesheet is" : "timesheets are"} waiting for your approval
+          </span>
+        </Link>
+      );
+    case "budget":
+      return (
+        <Link href={`/app/projects/${item.projectId}/edit`} className="flex items-start gap-3 rounded-lg p-2 hover:bg-muted">
+          <Gauge className={cn("mt-0.5 size-4 shrink-0", item.over ? "text-destructive" : "text-warning")} aria-hidden />
+          <span className="text-sm">
+            <span className="font-medium">{item.projectName}</span> ({item.clientName}){" "}
+            {item.over ? "is over budget" : "is at"} <span className="tabular-nums">{item.pct}%</span>
+            {item.over ? "" : " of its budget"}
+          </span>
+        </Link>
+      );
     case "unbilled":
       return (
         <Link
@@ -358,8 +383,28 @@ function AttentionRow({ item }: { item: AttentionItem }) {
   }
 }
 
-export async function NeedsAttention({ org, today }: SectionProps) {
-  const [entries, money] = await Promise.all([getMyRecentEntries(today), getMoneyOverview(org, today)]);
+function attentionKey(item: AttentionItem): string {
+  switch (item.kind) {
+    case "timer":
+      return `timer-${item.entryId}`;
+    case "overdue":
+      return `overdue-${item.invoiceId}`;
+    case "timesheets":
+      return "timesheets";
+    case "budget":
+      return `budget-${item.projectId}`;
+    case "unbilled":
+      return `unbilled-${item.clientId}`;
+  }
+}
+
+export async function NeedsAttention({ org, today, nowMs }: SectionProps) {
+  const [entries, money, budgetAlerts, pendingTimesheets] = await Promise.all([
+    getMyRecentEntries(today),
+    getMoneyOverview(org, today),
+    listBudgetAlerts(org.id, nowMs),
+    org.timesheetApproval ? countPendingSubmissions(org.id) : Promise.resolve(0),
+  ]);
   const running = entries.find((entry) => entry.timerStartedAt);
   const items = attentionItems({
     runningTimer: running
@@ -367,6 +412,8 @@ export async function NeedsAttention({ org, today }: SectionProps) {
       : null,
     outstanding: money.outstanding,
     unbilledClients: money.unbilledClients,
+    budgetAlerts,
+    pendingTimesheets,
   });
 
   return (
@@ -383,7 +430,7 @@ export async function NeedsAttention({ org, today }: SectionProps) {
         ) : (
           <ul className="-m-2 flex flex-col">
             {items.map((item) => (
-              <li key={item.kind + ("invoiceId" in item ? item.invoiceId : "clientId" in item ? item.clientId : item.entryId)}>
+              <li key={attentionKey(item)}>
                 <AttentionRow item={item} />
               </li>
             ))}

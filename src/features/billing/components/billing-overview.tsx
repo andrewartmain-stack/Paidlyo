@@ -2,9 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDate, todayIn } from "@/features/time/dates";
+import { formatMoney } from "@/lib/money";
 import { billingAccess, canWrite, trialEligible, type BillingAccess, type PlanInterval } from "../access";
-import { openBillingPortal } from "../actions";
+import { openBillingPortal, syncSeatsNow } from "../actions";
 import type { OrgBilling, PlanPrice } from "../queries";
+import { peopleLabel, seatsOutOfSync, seatsToBill, seatTotalCents } from "../seat-count";
+import type { SeatStatus } from "../seats";
 import { PlanPicker } from "./plan-picker";
 
 const PLAN_NAME: Record<PlanInterval, string> = { month: "Monthly plan", year: "Yearly plan" };
@@ -13,6 +16,7 @@ export const BILLING_ERRORS: Record<string, string> = {
   unavailable: "Billing isn't available right now. Please try again later.",
   checkout: "We couldn't open the checkout. Please try again.",
   portal: "We couldn't open the billing portal. Please try again.",
+  seats: "We couldn't update your seats in Stripe. Please try again.",
 };
 
 function dateIn(timeZone: string, timestamp: string): string {
@@ -59,24 +63,36 @@ export function BillingOverview({
   billing,
   prices,
   timeZone,
+  seats,
   checkoutSuccess,
+  seatsSynced,
   error,
 }: {
   billing: OrgBilling;
   prices: PlanPrice[] | null;
   timeZone: string;
+  seats: SeatStatus;
   checkoutSuccess: boolean;
+  seatsSynced: boolean;
   error: string | undefined;
 }) {
   const access = billingAccess(billing, new Date());
   const live = canWrite(access);
   const message = error ? BILLING_ERRORS[error] : undefined;
+  const price = prices?.find((p) => p.interval === billing.interval);
+  const seatCount = seatsToBill(seats.activeMembers);
+  const outOfSync = live && seatsOutOfSync(seats.billedSeats, seats.activeMembers);
 
   return (
     <div className="flex flex-col gap-6">
       {message && (
         <p role="alert" className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
           {message}
+        </p>
+      )}
+      {seatsSynced && (
+        <p role="status" className="rounded-lg bg-muted px-4 py-3 text-sm">
+          Seats updated. Stripe will adjust your next invoice.
         </p>
       )}
       {checkoutSuccess && !live && (
@@ -93,6 +109,32 @@ export function BillingOverview({
           </div>
           <CardDescription>{statusText(access, billing, timeZone)}</CardDescription>
         </CardHeader>
+        {live && price && (
+          <CardContent className="flex flex-col gap-3">
+            <p className="text-sm">
+              <span className="font-medium">{peopleLabel(seatCount)}</span> ×{" "}
+              {formatMoney(price.amountCents, price.currency)} ={" "}
+              <span className="font-semibold tabular-nums">
+                {formatMoney(seatTotalCents(price.amountCents, seatCount), price.currency)}
+              </span>{" "}
+              / {price.interval}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              You pay for each active person. Adding or deactivating someone is prorated on your next invoice.
+            </p>
+            {outOfSync && (
+              <form action={syncSeatsNow} className="flex flex-wrap items-center gap-3 rounded-lg bg-warning/10 px-4 py-3">
+                <p className="flex-1 text-sm">
+                  Stripe is billing for {peopleLabel(seats.billedSeats ?? 0)}, but your team has{" "}
+                  {peopleLabel(seatCount)}.
+                </p>
+                <Button type="submit" size="sm" variant="outline">
+                  Sync seats
+                </Button>
+              </form>
+            )}
+          </CardContent>
+        )}
         {billing.stripeCustomerId && (
           <CardContent>
             <form action={openBillingPortal}>

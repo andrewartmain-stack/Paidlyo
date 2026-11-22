@@ -75,6 +75,29 @@
 - [ ] UI polish — code done (pill sidebar with more spacing + timer icon, animated buttons,
   `PageIcon` on page titles, stat/settings card icons, 8 animated SVG illustrations in empty
   states, trial, import and dashboard). Waiting on: browser check, approval.
+- [x] 14 · Team (done 2026-11-22): 14a members, invites (`/join/[token]`), roles, deactivate
+  (`20261122125945_team_members`) · 14b person billable rates + "Person hourly rate" billing
+  (`20261122185104_member_rates`) · 14c $9 per active person (Stripe quantity synced with
+  proration on join / deactivate / reactivate; "Sync seats" on the billing page).
+
+- [ ] 17 · Project budgets & alerts — code done (`features/projects/budget.ts`: hours budget = all
+  time incl. running timers, amount budget = billable amount at each entry's saved rate; warning
+  from 80%, over above 100%; Projects list progress bars + project edit summary for owners/admins;
+  dashboard "Needs attention" lists projects ≥ 80%). No DB change. Email alerts and per-project
+  thresholds not built. Waiting on: browser check, approval.
+
+- [ ] 23 · Copy previous day / week — code done (week view: "Copy rows from last week" adds the
+  project/task rows of the last week with time, up to 8 weeks back, without hours; day view:
+  "Copy from <day>" creates that day's entries at 0:00 with notes, up to 30 days back, empty days
+  only; archived projects/tasks skipped). Recurring entries skipped (needs a scheduled job). No DB
+  change. Waiting on: browser check, approval.
+
+- [ ] 22 · Timesheet approvals — code done (migration `20261122203304_timesheet_approvals`; off by
+  default, Settings toggle; Week/Day view status banner with Submit / Withdraw / Resubmit;
+  submitted + approved weeks locked in the DB; `/app/approvals` Pending / Approved / Rejected with
+  approve, reject with note, reopen; dashboard "N timesheets waiting"). Sidebar shows Approvals to
+  everyone like Team (members are redirected). No email reminders. DB pushed + types ✅, check + build ✅.
+  Waiting on: browser test, approval.
 
 ## Next
 - [ ] M2 · Features pages
@@ -137,7 +160,7 @@
 - Invoice emails: skipped (2026-11-20) — users share the client link themselves. Auth emails still need custom SMTP before launch.
 - Pricing: **decided 2026-11-21** — one plan ($9/month, $90/year; amounts live in Stripe);
   changed same day to a 14-day **card-required** Stripe trial (like Invoisin), charged after the
-  trial; read-only when a subscription ends; team plan with item 14.
+  trial; read-only when a subscription ends. **$9 per active seat** (decided 2026-11-22, item 14c).
   Tax (Stripe Tax vs Managed Payments) decided before launch
 - Harvest importer source: Harvest API v2 (personal access token) vs CSV exports (or both)
 

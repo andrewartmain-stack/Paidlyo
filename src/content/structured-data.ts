@@ -33,8 +33,8 @@ export function softwareApplicationJsonLd() {
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web",
     offers: [
-      { "@type": "Offer", name: "Monthly", price: (PLAN.monthlyCents / 100).toFixed(2), priceCurrency: PLAN.currency, url: absoluteUrl("/pricing") },
-      { "@type": "Offer", name: "Yearly", price: (PLAN.yearlyCents / 100).toFixed(2), priceCurrency: PLAN.currency, url: absoluteUrl("/pricing") },
+      { "@type": "Offer", name: "Monthly, per person", price: (PLAN.monthlyCents / 100).toFixed(2), priceCurrency: PLAN.currency, url: absoluteUrl("/pricing") },
+      { "@type": "Offer", name: "Yearly, per person", price: (PLAN.yearlyCents / 100).toFixed(2), priceCurrency: PLAN.currency, url: absoluteUrl("/pricing") },
     ],
   };
 }

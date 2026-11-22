@@ -13,5 +13,7 @@ export type CurrentOrg = {
   nextInvoiceNumber: number;
   logoPath: string | null;
   logoUrl: string | null;
+  /** Timesheet approval is on: people submit weeks, owners/admins approve them. */
+  timesheetApproval: boolean;
   role: OrgRole;
 };

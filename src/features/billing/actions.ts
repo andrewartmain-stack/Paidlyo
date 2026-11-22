@@ -8,6 +8,8 @@ import { getStripe } from "@/lib/stripe";
 import { absoluteUrl } from "@/lib/site-url";
 import { isLiveStatus, PLAN_INTERVALS, TRIAL_DAYS, trialEligible } from "./access";
 import { getOrgBilling, priceIds } from "./queries";
+import { seatsToBill } from "./seat-count";
+import { countActiveMembers, syncSeats } from "./seats";
 
 /** Pages that start a checkout; the user comes back to the same page. */
 const RETURN_PATHS = { subscribe: "/subscribe", billing: "/app/settings/billing" } as const;
@@ -27,7 +29,11 @@ export async function startCheckout(formData: FormData): Promise<void> {
   const org = await getCurrentOrg();
   if (!parsed.success || !canManageOrg(org)) redirect(back);
 
-  const [user, billing] = await Promise.all([getCurrentUser(), getOrgBilling(org.id)]);
+  const [user, billing, activeMembers] = await Promise.all([
+    getCurrentUser(),
+    getOrgBilling(org.id),
+    countActiveMembers(org.id),
+  ]);
   const ids = priceIds();
   if (!billing || !ids) redirect(`${back}?error=unavailable`);
 
@@ -39,7 +45,8 @@ export async function startCheckout(formData: FormData): Promise<void> {
     const session = await getStripe().checkout.sessions.create({
       mode: "subscription",
       payment_method_collection: "always",
-      line_items: [{ price: ids[parsed.data.interval], quantity: 1 }],
+      // $9 per active person: one seat per active member.
+      line_items: [{ price: ids[parsed.data.interval], quantity: seatsToBill(activeMembers) }],
       ...(billing.stripeCustomerId ? { customer: billing.stripeCustomerId } : { customer_email: user.email }),
       client_reference_id: org.id,
       metadata: { organization_id: org.id },
@@ -79,4 +86,12 @@ export async function openBillingPortal(): Promise<void> {
     url = null;
   }
   redirect(url ?? "/app/settings/billing?error=portal");
+}
+
+/** Billing page "Sync seats": sets Stripe's quantity to the number of active people. */
+export async function syncSeatsNow(): Promise<void> {
+  const org = await getCurrentOrg();
+  if (!canManageOrg(org)) redirect("/app/settings/billing");
+  const synced = await syncSeats(org.id);
+  redirect(synced ? "/app/settings/billing?seats=synced" : "/app/settings/billing?error=seats");
 }

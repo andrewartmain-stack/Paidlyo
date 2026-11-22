@@ -18,6 +18,7 @@ export function TimeEntryList({
   dateLabel,
   isToday,
   serverNowMs,
+  locked = false,
 }: {
   entries: TimeEntry[];
   projects: TrackableProject[];
@@ -25,6 +26,8 @@ export function TimeEntryList({
   dateLabel: string;
   isToday: boolean;
   serverNowMs: number;
+  /** Week submitted or approved: no timers or edits. */
+  locked?: boolean;
 }) {
   const [editing, setEditing] = useState<TimeEntry | null>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -75,7 +78,7 @@ export function TimeEntryList({
                   serverNowMs={serverNowMs}
                   className="min-w-14 text-right font-heading text-lg font-semibold tabular-nums"
                 />
-                {(isToday || running) && !entry.invoiced && (
+                {(isToday || running) && !entry.invoiced && !locked && (
                   <Button
                     variant={running ? "default" : "outline"}
                     size="sm"
@@ -87,6 +90,7 @@ export function TimeEntryList({
                     {running ? "Stop" : "Start"}
                   </Button>
                 )}
+                {!locked && (
                 <Button
                   variant="ghost"
                   size="icon-sm"
@@ -97,6 +101,7 @@ export function TimeEntryList({
                 >
                   <Pencil aria-hidden />
                 </Button>
+                )}
               </div>
             </li>
           );

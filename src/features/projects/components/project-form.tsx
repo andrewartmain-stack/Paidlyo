@@ -23,6 +23,7 @@ export type ProjectFormClient = { id: string; name: string; currency: string };
 const BILLING_HINTS: Record<SelectableBillingMethod, string> = {
   project_rate: "One hourly rate for all work on this project.",
   task_rate: "Each task has its own rate; defaults come from the task.",
+  person_rate: "Each person's own rate, set on the Team page.",
   none: "Time is tracked but never invoiced.",
 };
 
@@ -39,19 +40,21 @@ function initialBudgetKind(project?: ProjectDetail): BudgetKind {
 }
 
 function initialBillingMethod(project?: ProjectDetail): SelectableBillingMethod {
-  const method = project?.billingMethod;
-  return method && method !== "person_rate" ? method : "project_rate";
+  return project?.billingMethod ?? "project_rate";
 }
 
 export function ProjectForm({
   project,
   clients,
   tasks,
+  peopleWithoutRate,
 }: {
   /** Edit this project; omit to create one. */
   project?: ProjectDetail;
   clients: ProjectFormClient[];
   tasks: Task[];
+  /** Active team members with no billable rate yet (for the person-rate warning). */
+  peopleWithoutRate: number;
 }) {
   const router = useRouter();
   const [clientId, setClientId] = useState(project?.clientId ?? "");
@@ -153,6 +156,15 @@ export function ProjectForm({
                 errors={fieldErrors.hourlyRate}
                 className="max-w-48"
               />
+            )}
+            {billingMethod === "person_rate" && peopleWithoutRate > 0 && (
+              <p role="status" className="rounded-lg bg-warning/10 px-4 py-3 text-sm">
+                {peopleWithoutRate === 1 ? "1 person has" : `${peopleWithoutRate} people have`} no billable rate
+                yet, so their time here won&apos;t have an amount.{" "}
+                <Link href="/app/team" className="font-medium text-brand underline-offset-4 hover:underline">
+                  Set rates on the Team page
+                </Link>
+              </p>
             )}
 
             <RadioCards
@@ -304,7 +316,7 @@ function RadioCards<T extends string>({
   return (
     <fieldset className="flex flex-col gap-2">
       <legend className="mb-1.5 text-sm font-medium">{legend}</legend>
-      <div className="grid gap-2 sm:grid-cols-3">
+      <div className={cn("grid gap-2", options.length === 4 ? "sm:grid-cols-2 xl:grid-cols-4" : "sm:grid-cols-3")}>
         {options.map((option) => (
           <label
             key={option.value}

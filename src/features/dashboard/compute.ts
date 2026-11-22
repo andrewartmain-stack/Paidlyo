@@ -1,5 +1,6 @@
 /* Dashboard calculations (pure, shared by the page and tests). */
 import { formatWeekday } from "@/features/time/dates";
+import type { BudgetProgress } from "@/features/projects/budget";
 import type { OutstandingInvoice } from "@/features/reports/outstanding";
 import type { UnbilledClientRow } from "@/features/reports/unbilled";
 
@@ -75,18 +76,23 @@ export function weekBars(days: string[], minutesByDate: Map<string, number>, tod
 export type AttentionItem =
   | { kind: "timer"; entryId: string; label: string; startedAt: string }
   | { kind: "overdue"; invoiceId: string; number: string; clientName: string; daysOverdue: number; balanceCents: number; currency: string }
+  | { kind: "timesheets"; count: number }
+  | { kind: "budget"; projectId: string; projectName: string; clientName: string; pct: number; over: boolean }
   | { kind: "unbilled"; clientId: string; clientName: string; amountCents: number; minutes: number; currency: string };
 
 export const MAX_ATTENTION_ITEMS = 5;
 
 /**
  * What to act on now: a running timer first, then overdue invoices (most overdue first), then
- * clients with unbilled time (oldest first). Capped so the card stays short.
+ * timesheets waiting for approval, then projects near or over budget (most used first), then clients with unbilled time (oldest
+ * first). Capped so the card stays short.
  */
 export function attentionItems(input: {
   runningTimer: { entryId: string; label: string; startedAt: string } | null;
   outstanding: OutstandingInvoice[];
   unbilledClients: UnbilledClientRow[];
+  pendingTimesheets?: number;
+  budgetAlerts?: { projectId: string; projectName: string; clientName: string; progress: BudgetProgress }[];
 }): AttentionItem[] {
   const items: AttentionItem[] = [];
   if (input.runningTimer) items.push({ kind: "timer", ...input.runningTimer });
@@ -101,6 +107,22 @@ export function attentionItems(input: {
       daysOverdue: invoice.daysOverdue,
       balanceCents: invoice.balanceCents,
       currency: invoice.currency,
+    });
+  }
+
+  if (input.pendingTimesheets && input.pendingTimesheets > 0) {
+    items.push({ kind: "timesheets", count: input.pendingTimesheets });
+  }
+
+  for (const alert of input.budgetAlerts ?? []) {
+    if (alert.progress.status === "ok") continue;
+    items.push({
+      kind: "budget",
+      projectId: alert.projectId,
+      projectName: alert.projectName,
+      clientName: alert.clientName,
+      pct: alert.progress.pct,
+      over: alert.progress.status === "over",
     });
   }
 

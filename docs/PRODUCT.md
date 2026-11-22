@@ -1,10 +1,13 @@
 # Product
 
 ## Positioning
-A simpler, cheaper Harvest for freelancers and small agencies: track time, turn unbilled time
+A simpler, cheaper Harvest for the same customers Harvest serves (agencies, studios,
+consultancies and freelancers): track time, turn unbilled time
 into a branded invoice in one click, get paid online. Built to make switching from Harvest painless.
 
-**Target user:** Harvest customers hit by the price increase (freelancers, 2–20 person agencies).
+**Target user:** Harvest's customers hit by the price increase: agencies, studios, consultancies
+and small teams (2–20+ people) as well as freelancers. Not a freelancer-only tool — copy and
+features must speak to teams too (team members/roles = item 14).
 
 ## Competitor summary
 | Area | Harvest | Keito | Invoisin | Us (plan) |
@@ -18,7 +21,7 @@ into a branded invoice in one click, get paid online. Built to make switching fr
 | Tax & currency | Via integrations | — | VAT/GST, multi-currency, credit notes | MVP: per-invoice tax + currency per client; credit notes V1 |
 | Integrations | 40+ | AI assistant, Asana, calendar, Stripe ACH | Calendar, QuickBooks/Xero beta, CSV | Stripe + CSV first; others later |
 | Migration | — | Harvest importer + compatible API | Harvest importer with preview | MVP: Harvest importer with preview |
-| Pricing | Per seat + usage fees | $19 solo / $49 team flat | $9/seat (annual), unlimited | **Open decision** |
+| Pricing | Per seat + usage fees | $19 solo / $49 team flat | $9/seat (annual), unlimited | **$9 per active person / month ($90 / year), everything included** (decided 2026-11-22) |
 
 ## What we must match (table stakes for switchers)
 1. Timer + weekly timesheet with client/project/task and billable flag
@@ -40,7 +43,7 @@ into a branded invoice in one click, get paid online. Built to make switching fr
 AI agent time tracking, timesheet approvals, calendar sync, QuickBooks/Xero, public API,
 mileage, 40+ integrations. Revisit after paying customers ask.
 
-## Pricing options (decide before SaaS billing feature)
+## Pricing options (decided 2026-11-22: per active person, $9/month or $90/year, no free tier)
 - A: Flat like Keito, but cheaper (e.g. $12 solo / $29 team).
 - B: Per seat, cheaper than Invoisin's monthly price, with a free solo tier (limited clients).
 - C: Free solo forever + flat team plan (aggressive acquisition from Harvest's free-plan users).

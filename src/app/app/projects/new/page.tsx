@@ -26,8 +26,8 @@ export default function NewProjectPage() {
 async function NewProject() {
   const org = await getCurrentOrg();
   if (!canManageOrg(org)) redirect("/app/projects");
-  const { clients, tasks } = await loadProjectFormOptions();
-  return <ProjectForm clients={clients} tasks={tasks} />;
+  const { clients, tasks, peopleWithoutRate } = await loadProjectFormOptions(org.id);
+  return <ProjectForm clients={clients} tasks={tasks} peopleWithoutRate={peopleWithoutRate} />;
 }
 
 function FormSkeleton() {

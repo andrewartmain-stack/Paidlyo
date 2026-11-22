@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { formatWeekRange, weekDays } from "@/features/time/dates";
-import { timesheetParamsSchema, weekCellSchema } from "@/features/time/schemas";
+import { copyDaySchema, timesheetParamsSchema, weekCellSchema } from "@/features/time/schemas";
 import type { TimeEntry } from "@/features/time/types";
-import { buildWeekRows, decideCellChange, type CellEntry } from "@/features/time/week";
+import { buildWeekRows, copyableItems, copySummary, decideCellChange, type CellEntry } from "@/features/time/week";
 
 const days = weekDays("2026-11-20");
 const NOW = Date.parse("2026-11-20T12:00:00Z");
@@ -130,5 +130,38 @@ describe("week schemas and formatting", () => {
     expect(formatWeekRange(days, "2026-11-20")).toBe("16 – 22 November");
     expect(formatWeekRange(weekDays("2026-12-01"), "2026-11-20")).toBe("30 November – 6 December");
     expect(formatWeekRange(weekDays("2025-06-11"), "2026-11-20")).toBe("9 – 15 June 2025");
+  });
+});
+
+describe("copying a previous day or week", () => {
+  const projects = [
+    { id: "p1", name: "Website", code: null, clientName: "Acme", tasks: [{ id: "t1", name: "Design" }, { id: "t2", name: "Build" }] },
+  ];
+
+  it("keeps active project tasks, skips archived ones, and dedupes week rows", () => {
+    const sources = [
+      { projectId: "p1", taskId: "t1", notes: "Homepage" },
+      { projectId: "p1", taskId: "t1", notes: "Footer" },
+      { projectId: "p1", taskId: "t9" }, // task no longer on the project
+      { projectId: "p-archived", taskId: "t1" },
+    ];
+    const week = copyableItems(sources, projects, { dedupe: true });
+    expect(week.items.map((i) => i.task.id)).toEqual(["t1"]);
+    expect(week.skipped).toBe(2);
+
+    const day = copyableItems(sources, projects, { dedupe: false });
+    expect(day.items.map((i) => i.notes)).toEqual(["Homepage", "Footer"]);
+    expect(day.items[0].project.clientName).toBe("Acme");
+  });
+
+  it("summarises what was copied", () => {
+    expect(copySummary(1, 0, "entry")).toBe("Copied 1 entry");
+    expect(copySummary(3, 1, "row")).toBe("Copied 3 rows, skipped 1 from archived projects or tasks");
+  });
+
+  it("only copies from an earlier day", () => {
+    expect(copyDaySchema.safeParse({ fromDate: "2026-11-18", toDate: "2026-11-20" }).success).toBe(true);
+    expect(copyDaySchema.safeParse({ fromDate: "2026-11-20", toDate: "2026-11-20" }).success).toBe(false);
+    expect(copyDaySchema.safeParse({ fromDate: "nope", toDate: "2026-11-20" }).success).toBe(false);
   });
 });

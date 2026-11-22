@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
+  ClipboardCheck,
   Clock,
   FileText,
   FolderKanban,
@@ -12,6 +13,7 @@ import {
   ListChecks,
   Settings,
   Users,
+  UsersRound,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -37,6 +39,8 @@ const mainNav: NavGroup[] = [
   {
     label: "Manage",
     items: [
+      { href: "/app/team", label: "Team", icon: UsersRound },
+      { href: "/app/approvals", label: "Approvals", icon: ClipboardCheck },
       { href: "/app/clients", label: "Clients", icon: Users },
       { href: "/app/projects", label: "Projects", icon: FolderKanban },
       { href: "/app/tasks", label: "Tasks", icon: ListChecks },

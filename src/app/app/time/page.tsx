@@ -6,7 +6,12 @@ import { StopwatchIllustration } from "@/components/illustrations";
 import { PageIcon } from "@/components/page-icon";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { WeekApproval } from "@/features/approvals/components/week-approval";
+import { getWeekSubmission } from "@/features/approvals/queries";
+import { isWeekLocked } from "@/features/approvals/rules";
+import { getCurrentUser } from "@/features/auth/queries";
 import { getCurrentOrg } from "@/features/organizations/queries";
+import { CopyDayButton } from "@/features/time/components/copy-day-button";
 import { TimeEntryList } from "@/features/time/components/time-entry-list";
 import { TrackTimeDialogButton } from "@/features/time/components/track-time-dialog-button";
 import { WeekGrid } from "@/features/time/components/week-grid";
@@ -23,8 +28,13 @@ import {
   weekDays,
 } from "@/features/time/dates";
 import { formatDuration } from "@/features/time/duration";
-import { getWeekSheet, listTrackableProjects } from "@/features/time/queries";
-import { buildWeekRows } from "@/features/time/week";
+import {
+  findPreviousDay,
+  findPreviousWeekRows,
+  getWeekSheet,
+  listTrackableProjects,
+} from "@/features/time/queries";
+import { buildWeekRows, copyableItems } from "@/features/time/week";
 import { timesheetParamsSchema } from "@/features/time/schemas";
 
 export const metadata: Metadata = { title: "Timesheet" };
@@ -47,7 +57,7 @@ export default function TimesheetPage({
 
 async function Timesheet({ searchParams }: { searchParams: SearchParams }) {
   const params = timesheetParamsSchema.parse(await searchParams);
-  const org = await getCurrentOrg();
+  const [org, user] = await Promise.all([getCurrentOrg(), getCurrentUser()]);
   const today = todayIn(org.timezone);
   const date = params.date ?? today;
   const days = weekDays(date);
@@ -60,6 +70,26 @@ async function Timesheet({ searchParams }: { searchParams: SearchParams }) {
   const title = formatDayTitle(date, today);
   const thisWeek = days.includes(today);
   const step = isWeek ? 7 : 1;
+
+  // Timesheet approval: this week's status; submitted / approved weeks are read-only.
+  const submission = org.timesheetApproval ? await getWeekSubmission(org.id, user.id, days[0]) : null;
+  const locked = isWeekLocked(submission?.status ?? null, org.timesheetApproval);
+  const decidedLabel =
+    submission?.decidedAt != null
+      ? `${submission.decidedByName ?? "a manager"} on ${new Intl.DateTimeFormat("en-GB", {
+          day: "numeric",
+          month: "short",
+          timeZone: org.timezone,
+        }).format(new Date(submission.decidedAt))}`
+      : null;
+
+  // "Copy" offers, only for an empty week / day.
+  const previousWeek =
+    isWeek && weekEntries.length === 0
+      ? copyableItems(await findPreviousWeekRows(days[0]), projects, { dedupe: true })
+      : { items: [], skipped: 0 };
+  const previousDay =
+    !isWeek && entries.length === 0 && projects.length > 0 ? await findPreviousDay(date) : null;
 
   return (
     <>
@@ -135,12 +165,26 @@ async function Timesheet({ searchParams }: { searchParams: SearchParams }) {
         </div>
       </div>
 
+      {org.timesheetApproval && (
+        <WeekApproval
+          week={days[0]}
+          weekLabel={thisWeek ? "This week" : `The week of ${formatWeekRange(days, today)}`}
+          status={submission?.status ?? null}
+          note={submission?.note ?? null}
+          decidedLabel={decidedLabel}
+          hasTime={weekEntries.length > 0}
+        />
+      )}
+
       {isWeek ? (
         <WeekGrid
           rows={buildWeekRows(weekEntries, days, serverNowMs)}
           days={days}
           today={today}
           projects={projects}
+          previousRows={previousWeek.items}
+          previousSkipped={previousWeek.skipped}
+          locked={locked}
         />
       ) : (
         <>
@@ -160,6 +204,7 @@ async function Timesheet({ searchParams }: { searchParams: SearchParams }) {
                 dateLabel={title}
                 isToday={isToday}
                 serverNowMs={serverNowMs}
+                locked={locked}
               />
             ) : (
               <div className="flex flex-col items-center gap-1 px-6 py-12 text-center">
@@ -182,6 +227,13 @@ async function Timesheet({ searchParams }: { searchParams: SearchParams }) {
                     </>
                   )}
                 </p>
+                {previousDay && !locked && (
+                  <CopyDayButton
+                    fromDate={previousDay}
+                    toDate={date}
+                    fromLabel={formatDayTitle(previousDay, today)}
+                  />
+                )}
               </div>
             )}
             <div className="flex items-center justify-between border-t px-4 py-3 text-sm sm:px-5">

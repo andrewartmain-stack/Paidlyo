@@ -10,6 +10,7 @@ import {
   monthStart,
   weekBars,
 } from "@/features/dashboard/compute";
+import { budgetStatus } from "@/features/projects/budget";
 import type { OutstandingInvoice } from "@/features/reports/outstanding";
 import type { UnbilledClientRow } from "@/features/reports/unbilled";
 import { weekDays } from "@/features/time/dates";
@@ -87,6 +88,30 @@ describe("attentionItems", () => {
       unbilledClients: [unbilled("a", 5_000), unbilled("b", 0)],
     });
     expect(items.map((item) => item.kind)).toEqual(["timer", "overdue", "unbilled"]);
+  });
+
+  it("lists projects near or over budget after overdue invoices", () => {
+    const progress = (pct: number) => ({ kind: "hours" as const, used: pct, total: 100, pct, status: budgetStatus(pct) });
+    const items = attentionItems({
+      runningTimer: null,
+      outstanding: [outstanding("1", 3)],
+      unbilledClients: [unbilled("a", 5_000)],
+      budgetAlerts: [
+        { projectId: "p1", projectName: "Site", clientName: "Acme", progress: progress(120) },
+        { projectId: "p2", projectName: "App", clientName: "Acme", progress: progress(50) },
+      ],
+    });
+    expect(items.map((item) => item.kind)).toEqual(["overdue", "budget", "unbilled"]);
+
+    const withTimesheets = attentionItems({
+      runningTimer: null,
+      outstanding: [outstanding("1", 3)],
+      unbilledClients: [],
+      pendingTimesheets: 2,
+      budgetAlerts: [{ projectId: "p1", projectName: "Site", clientName: "Acme", progress: progress(120) }],
+    });
+    expect(withTimesheets.map((item) => item.kind)).toEqual(["overdue", "timesheets", "budget"]);
+    expect(items[1]).toMatchObject({ projectId: "p1", over: true, pct: 120 });
   });
 
   it("is capped so the card stays short", () => {

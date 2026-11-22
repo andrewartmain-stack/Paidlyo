@@ -2,14 +2,15 @@
 
 import { useState, useTransition, type FocusEvent, type KeyboardEvent } from "react";
 import Link from "next/link";
-import { Check, Lock, Timer } from "lucide-react";
+import { Check, Copy, Lock, Timer } from "lucide-react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { setWeekCell } from "../actions";
 import { formatShortDate, formatWeekday } from "../dates";
 import { formatDuration, parseDuration } from "../duration";
 import type { TrackableProject } from "../types";
-import { emptyCell, rowKey, type WeekCell, type WeekRow } from "../week";
+import { copySummary, emptyCell, rowKey, type CopyItem, type WeekCell, type WeekRow } from "../week";
 import { AddRowDialog } from "./add-row-dialog";
 import { timesheetHref } from "./week-strip";
 
@@ -18,11 +19,19 @@ export function WeekGrid({
   days,
   today,
   projects,
+  previousRows = [],
+  previousSkipped = 0,
+  locked = false,
 }: {
   rows: WeekRow[];
   days: string[];
   today: string;
   projects: TrackableProject[];
+  /** Rows of the last week with time, offered on an empty week ("Copy rows from last week"). */
+  previousRows?: CopyItem[];
+  previousSkipped?: number;
+  /** Week submitted or approved: everything is read-only. */
+  locked?: boolean;
 }) {
   // Rows added with "Add row" that have no time yet (they disappear once saved time arrives
   // from the server as a real row).
@@ -49,6 +58,19 @@ export function WeekGrid({
         total: 0,
       },
     ]);
+  }
+
+  function copyPreviousRows() {
+    setExtraRows(
+      previousRows.map((item) => ({
+        key: rowKey(item.project.id, item.task.id),
+        project: item.project,
+        task: item.task,
+        cells: Object.fromEntries(days.map((d) => [d, emptyCell()])),
+        total: 0,
+      })),
+    );
+    toast.success(copySummary(previousRows.length, previousSkipped, "row"));
   }
 
   return (
@@ -88,6 +110,14 @@ export function WeekGrid({
                 <td colSpan={days.length + 2} className="px-4 py-12 text-center text-muted-foreground">
                   No time this week. Use <span className="font-medium text-foreground">Add row</span> to
                   start filling in your week.
+                  {previousRows.length > 0 && !locked && (
+                    <div className="mt-4">
+                      <Button type="button" variant="outline" onClick={copyPreviousRows}>
+                        <Copy aria-hidden />
+                        Copy rows from last week
+                      </Button>
+                    </div>
+                  )}
                 </td>
               </tr>
             )}
@@ -109,6 +139,7 @@ export function WeekGrid({
                       day={day}
                       cell={row.cells[day]}
                       dayHref={timesheetHref(day, today)}
+                      locked={locked}
                     />
                   </td>
                 ))}
@@ -135,9 +166,11 @@ export function WeekGrid({
           </tfoot>
         </table>
       </div>
-      <div>
-        <AddRowDialog projects={projects} onAdd={addRow} />
-      </div>
+      {!locked && (
+        <div>
+          <AddRowDialog projects={projects} onAdd={addRow} />
+        </div>
+      )}
     </div>
   );
 }
@@ -149,16 +182,29 @@ function GridCell({
   day,
   cell,
   dayHref,
+  locked,
 }: {
   row: WeekRow;
   day: string;
   cell: WeekCell;
   dayHref: string;
+  locked: boolean;
 }) {
   const initial = cell.minutes > 0 || cell.entryCount > 0 ? formatDuration(cell.minutes) : "";
   const [status, setStatus] = useState<CellStatus>("idle");
   const [, startTransition] = useTransition();
   const label = `${row.project.name} – ${row.task.name}, ${formatWeekday(day)} ${formatShortDate(day)}`;
+
+  if (locked) {
+    return (
+      <span
+        aria-label={`${label}: ${formatDuration(cell.minutes)}, locked`}
+        className="flex h-9 items-center justify-center tabular-nums text-muted-foreground"
+      >
+        {cell.minutes > 0 ? formatDuration(cell.minutes) : "–"}
+      </span>
+    );
+  }
 
   if (!cell.editable) {
     return (

@@ -1,7 +1,7 @@
 import type { FaqItem } from "./landing";
 
 /*
- * The Paidlyo plan as shown on the public site.
+ * The Paidlyo plan as shown on the public site. Prices are per active person (seat).
  * Amounts must match the Stripe prices (STRIPE_PRICE_MONTHLY / STRIPE_PRICE_YEARLY): when you
  * change a price in Stripe, change it here too. The trial length matches TRIAL_DAYS in
  * features/billing/access.ts (the card-required Stripe trial).
@@ -29,15 +29,16 @@ export function yearlyMonthsFree(): number {
 }
 
 export const PRICING_META = {
-  title: "Pricing: $9 a Month, Everything Included | Paidlyo",
+  title: "Pricing: $9 per Person a Month, All Included | Paidlyo",
   description:
-    "Paidlyo costs $9 a month or $90 a year with everything included: unlimited clients, projects and invoices. Try it free for 14 days, cancel any time.",
+    "Paidlyo costs $9 per person a month or $90 a year, with every feature and unlimited clients, projects and invoices. Try it free for 14 days.",
 } as const;
 
 export const PRICING_HERO = {
   eyebrow: "Pricing",
-  title: "Simple pricing for freelancers",
-  description: "One plan with everything included. No per-invoice fees, no feature tiers, no surprises.",
+  title: "Simple pricing for businesses of every size",
+  description:
+    "One plan with everything included, priced per person. No per-invoice fees, no feature tiers, no surprises.",
 } as const;
 
 export const PLAN_FEATURES: string[] = [
@@ -65,6 +66,16 @@ export const PRICING_FAQ: FaqItem[] = [
       "Your subscription starts automatically and your card is charged for the plan you chose, monthly or yearly. We remind you before the trial ends, so there are no surprises.",
   },
   {
+    question: "Who counts as a person?",
+    answer:
+      "Everyone active on your team, including you. Deactivated people and pending invites are free, and deactivated people's time stays in your reports and invoices.",
+  },
+  {
+    question: "What happens when I add or remove someone mid-month?",
+    answer:
+      "Your bill is adjusted automatically. Adding a person costs only the rest of the current period, and deactivating someone credits the unused part on your next invoice. During the free trial, team changes cost nothing.",
+  },
+  {
     question: "Can I cancel at any time?",
     answer:
       "Yes. Cancel from Settings → Billing in a couple of clicks. You keep full access until the end of the period you've paid for, and you're not charged again.",
@@ -87,6 +98,6 @@ export const PRICING_FAQ: FaqItem[] = [
   {
     question: "Is Paidlyo cheaper than Harvest?",
     answer:
-      "For most freelancers, yes: Paidlyo is one flat price with everything included, and you can import your Harvest data in a few minutes to compare for yourself during the free trial.",
+      "For most businesses, yes: Paidlyo is $9 per person with everything included, and you can import your Harvest data in a few minutes to compare for yourself during the free trial.",
   },
 ];

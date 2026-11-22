@@ -2,8 +2,8 @@ import type { Enums } from "@/types/database";
 
 export type BillingMethod = Enums<"billing_method">;
 
-/** Billing methods offered in the UI (person_rate comes with team members). */
-export const BILLING_METHODS = ["project_rate", "task_rate", "none"] as const;
+/** Billing methods offered in the UI. person_rate uses each member's rate (Team page). */
+export const BILLING_METHODS = ["project_rate", "task_rate", "person_rate", "none"] as const;
 export type SelectableBillingMethod = (typeof BILLING_METHODS)[number];
 
 export type ProjectListItem = {

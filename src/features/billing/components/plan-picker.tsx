@@ -36,7 +36,8 @@ export function PlanPicker({
             <CardHeader>
               <CardTitle className="text-lg font-semibold">{label.name}</CardTitle>
               <CardDescription>
-                <span className="text-2xl font-semibold text-foreground tabular-nums">{amount}</span> / {label.per}
+                <span className="text-2xl font-semibold text-foreground tabular-nums">{amount}</span> per person /{" "}
+                {label.per}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
@@ -49,7 +50,7 @@ export function PlanPicker({
               </form>
               {trial && (
                 <p className="text-xs text-muted-foreground">
-                  {TRIAL_DAYS} days free, then {amount} per {label.per}. Cancel any time.
+                  {TRIAL_DAYS} days free, then {amount} per person per {label.per}. Cancel any time.
                 </p>
               )}
             </CardContent>

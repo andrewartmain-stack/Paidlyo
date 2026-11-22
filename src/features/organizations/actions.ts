@@ -112,3 +112,17 @@ export async function removeLogo(): Promise<ActionResult> {
   revalidatePath("/app", "layout");
   return ok();
 }
+
+/** Settings: turn timesheet approval on or off (owners/admins). Turning it off unlocks every week. */
+export async function setTimesheetApproval(enabled: boolean): Promise<ActionResult> {
+  if (typeof enabled !== "boolean") return fail(GENERIC_ERROR);
+  const org = await getCurrentOrg();
+  if (!canManageOrg(org)) return fail(NOT_ALLOWED);
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("organizations").update({ timesheet_approval: enabled }).eq("id", org.id);
+  if (error) return fail(GENERIC_ERROR);
+
+  revalidatePath("/app", "layout");
+  return ok();
+}

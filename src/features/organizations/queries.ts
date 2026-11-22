@@ -40,6 +40,7 @@ export const findCurrentOrg = cache(async (): Promise<CurrentOrg | null> => {
     nextInvoiceNumber: org.next_invoice_number,
     logoPath: org.logo_path,
     logoUrl: logoPublicUrl(org.logo_path),
+    timesheetApproval: org.timesheet_approval,
     role: data.role,
   };
 });

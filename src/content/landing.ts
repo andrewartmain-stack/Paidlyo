@@ -5,9 +5,9 @@
 
 export const SITE = {
   name: "Paidlyo",
-  tagline: "Time tracking and invoicing for freelancers",
+  tagline: "Time tracking and invoicing for businesses that bill by the hour",
   description:
-    "Paidlyo is simple time tracking and invoicing for freelancers and small agencies. Turn tracked hours into invoices and import everything from Harvest.",
+    "Paidlyo is simple time tracking and invoicing for agencies, consultancies and freelancers. Turn tracked hours into invoices and switch from Harvest in minutes.",
 } as const;
 
 export type NavLink = { href: string; label: string };
@@ -28,7 +28,7 @@ export const LEGAL_LINKS: NavLink[] = [
 
 export const HERO = {
   eyebrow: "The simpler Harvest alternative",
-  title: "Time tracking and invoicing for freelancers",
+  title: "Time tracking and invoicing for businesses that bill by the hour",
   description:
     "Track your hours, turn them into a branded invoice in one click and see who still owes you. Everything you used in Harvest, with fewer screens.",
   primaryCta: { href: "/signup", label: "Get started" },
@@ -103,12 +103,12 @@ export const FAQ: FaqItem[] = [
   {
     question: "How much does Paidlyo cost?",
     answer:
-      "$9 a month or $90 a year, with every feature and unlimited clients, projects and invoices. Every account starts with a 14-day free trial, and you can cancel any time before you're charged.",
+      "$9 per person a month or $90 per person a year, with every feature and unlimited clients, projects and invoices. Every account starts with a 14-day free trial, and you can cancel any time before you're charged.",
   },
   {
     question: "Who is Paidlyo for?",
     answer:
-      "Freelancers and small agencies who bill by the hour and want time tracking and invoicing in one simple tool.",
+      "Agencies, studios, consultancies and freelancers who bill clients by the hour: the same businesses that use Harvest, without Harvest's price. Time tracking and invoicing in one simple tool.",
   },
   {
     question: "Can I import my data from Harvest?",

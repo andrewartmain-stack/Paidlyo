@@ -14,6 +14,7 @@ export const PRIVATE_PATHS = [
   "/auth/",
   "/onboarding",
   "/subscribe",
+  "/join/",
   "/login",
   "/signup",
   "/forgot-password",

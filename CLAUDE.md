@@ -2,8 +2,8 @@
 
 # Project Instructions
 
-**Paidlyo** (paidlyo.com): affordable time-tracking + invoicing SaaS for freelancers and small
-agencies (alternative to Harvest, Keito, Invoisin). Simplicity and maintainability beat cleverness.
+**Paidlyo** (paidlyo.com): affordable time-tracking + invoicing SaaS for Harvest's customers: agencies, consultancies, teams
+and freelancers (alternative to Harvest, Keito, Invoisin). Simplicity and maintainability beat cleverness.
 
 ## Stack
 - Next.js 16 App Router (`proxy.ts`, not `middleware.ts`), React 19

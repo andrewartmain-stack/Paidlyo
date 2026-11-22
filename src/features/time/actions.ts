@@ -9,8 +9,9 @@ import { getCurrentUser } from "@/features/auth/queries";
 import { writeBlocked } from "@/features/billing/guard";
 import { getCurrentOrg } from "@/features/organizations/queries";
 import { todayIn } from "./dates";
-import { timeEntryIdSchema, timeEntrySchema, weekCellSchema, type WeekCellInput } from "./schemas";
-import { decideCellChange } from "./week";
+import { listDaySources, listTrackableProjects } from "./queries";
+import { copyDaySchema, timeEntryIdSchema, timeEntrySchema, weekCellSchema, type WeekCellInput } from "./schemas";
+import { copyableItems, copySummary, decideCellChange } from "./week";
 
 const NOT_FOUND = "This time entry no longer exists.";
 const GENERIC_ERROR = "Something went wrong. Please try again.";
@@ -22,9 +23,17 @@ function invalid(error: z.ZodError) {
 
 /** Maps database errors raised by the time_entries trigger / constraints to form errors. */
 const INVOICED = "This time is on a sent invoice, so it can't be changed.";
+const WEEK_LOCKED = "This week is submitted for approval or approved, so its time can't be changed.";
+
+function lockError(hint: string | undefined) {
+  if (hint === "entry_invoiced") return fail(INVOICED);
+  if (hint === "week_locked") return fail(WEEK_LOCKED);
+  return fail(GENERIC_ERROR);
+}
 
 function entryError(error: PostgrestError) {
   if (error.hint === "entry_invoiced") return fail(INVOICED);
+  if (error.hint === "week_locked") return fail(WEEK_LOCKED);
   if (error.hint === "project_archived") {
     return fail("Please fix the highlighted fields.", { projectId: ["This project is archived."] });
   }
@@ -119,7 +128,7 @@ export async function deleteTimeEntry(id: string): Promise<ActionResult> {
     .eq("user_id", user.id)
     .select("id")
     .maybeSingle();
-  if (error) return error.hint === "entry_invoiced" ? fail(INVOICED) : fail(GENERIC_ERROR);
+  if (error) return lockError(error.hint);
   if (!data) return fail(NOT_FOUND);
 
   revalidatePath(TIMESHEET_PATH);
@@ -138,8 +147,7 @@ export async function startTimer(id: string): Promise<ActionResult> {
   if (error) {
     if (error.hint === "not_found") return fail(NOT_FOUND);
     if (error.hint === "entry_full") return fail("This entry already has 24 hours.");
-    if (error.hint === "entry_invoiced") return fail(INVOICED);
-    return fail(GENERIC_ERROR);
+    return lockError(error.hint);
   }
 
   revalidatePath(TIMESHEET_PATH);
@@ -152,7 +160,7 @@ export async function stopTimer(id: string): Promise<ActionResult> {
 
   const supabase = await createClient();
   const { error } = await supabase.rpc("stop_timer", { p_entry_id: entryId.data });
-  if (error) return error.hint === "entry_invoiced" ? fail(INVOICED) : fail(GENERIC_ERROR);
+  if (error) return lockError(error.hint);
 
   revalidatePath(TIMESHEET_PATH);
   return ok();
@@ -236,4 +244,46 @@ export async function setWeekCell(input: WeekCellInput): Promise<ActionResult> {
 
   revalidatePath(TIMESHEET_PATH);
   return ok();
+}
+
+/**
+ * Day view "Copy from …": creates the same entries (project, task, notes) at 0:00 on an empty
+ * day. Hours are never copied. Archived projects and disabled tasks are skipped.
+ */
+export async function copyDayEntries(fromDate: string, toDate: string): Promise<ActionResult<{ message: string }>> {
+  const parsed = copyDaySchema.safeParse({ fromDate, toDate });
+  if (!parsed.success) return fail("Choose an earlier day to copy from.");
+
+  const [org, user] = await Promise.all([getCurrentOrg(), getCurrentUser()]);
+  const blocked = await writeBlocked(org.id);
+  if (blocked) return fail(blocked);
+
+  const [target, sources, projects] = await Promise.all([
+    listDaySources(parsed.data.toDate),
+    listDaySources(parsed.data.fromDate),
+    listTrackableProjects(),
+  ]);
+  if (target.length > 0) return fail("This day already has time. Copying only works on an empty day.");
+
+  const { items, skipped } = copyableItems(sources, projects, { dedupe: false });
+  if (items.length === 0) {
+    return fail(sources.length === 0 ? "There's nothing to copy from that day." : "Those projects or tasks are archived now.");
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("time_entries").insert(
+    items.map((item) => ({
+      organization_id: org.id,
+      user_id: user.id,
+      project_id: item.project.id,
+      task_id: item.task.id,
+      spent_date: parsed.data.toDate,
+      minutes: 0,
+      notes: item.notes,
+    })),
+  );
+  if (error) return entryError(error);
+
+  revalidatePath(TIMESHEET_PATH);
+  return ok({ message: copySummary(items.length, skipped, "entry") });
 }

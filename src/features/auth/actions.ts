@@ -38,6 +38,7 @@ export async function signUp(
   const parsed = signUpSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return invalid(parsed.error);
   const { fullName, email, password } = parsed.data;
+  const next = safeNext(formData.get("next"));
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
@@ -46,13 +47,13 @@ export async function signUp(
     options: {
       data: { full_name: fullName },
       // With Supabase's default email template the confirm link returns here with a one-time code.
-      emailRedirectTo: absoluteUrl("/auth/callback?next=/app"),
+      emailRedirectTo: absoluteUrl(`/auth/callback?next=${encodeURIComponent(next)}`),
     },
   });
   if (error) return fail(authErrorMessage(error));
 
   // Email confirmation off → already signed in.
-  if (data.session) redirect("/app");
+  if (data.session) redirect(next);
 
   // Same response whether or not the email is already registered (no account enumeration).
   return ok({ needsConfirmation: true });

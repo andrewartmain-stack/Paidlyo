@@ -12,7 +12,7 @@ function asInterval(value: string | null): PlanInterval | null {
   return value && (PLAN_INTERVALS as readonly string[]).includes(value) ? (value as PlanInterval) : null;
 }
 
-export type OrgBilling = BillingState & { stripeCustomerId: string | null };
+export type OrgBilling = BillingState & { stripeCustomerId: string | null; stripeSubscriptionId: string | null };
 
 /** The organization's billing row (RLS: members can read). Null if it's missing. */
 export const getOrgBilling = cache(async (organizationId: string): Promise<OrgBilling | null> => {
@@ -33,6 +33,7 @@ export const getOrgBilling = cache(async (organizationId: string): Promise<OrgBi
     cancelAtPeriodEnd: data.cancel_at_period_end,
     hasSubscription: data.stripe_subscription_id !== null,
     stripeCustomerId: data.stripe_customer_id,
+    stripeSubscriptionId: data.stripe_subscription_id,
   };
 });
 

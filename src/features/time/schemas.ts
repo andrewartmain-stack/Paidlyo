@@ -56,3 +56,8 @@ export const weekCellSchema = z.object({
   duration: duration.pipe(z.number().nullable()),
 });
 export type WeekCellInput = z.input<typeof weekCellSchema>;
+
+/** Day view "Copy from …": copy one earlier day's entries (at 0:00) onto an empty day. */
+export const copyDaySchema = z
+  .object({ fromDate: isoDateSchema, toDate: isoDateSchema })
+  .refine((v) => v.fromDate < v.toDate, "Choose an earlier day to copy from.");

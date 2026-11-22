@@ -5,7 +5,7 @@ import { SITE } from "@/content/landing";
 import { faqJsonLd, softwareApplicationJsonLd } from "@/content/structured-data";
 import { marketingMetadata } from "@/lib/seo";
 
-const TITLE = "Time Tracking & Invoicing for Freelancers | Paidlyo";
+const TITLE = "Time Tracking & Invoicing Software | Paidlyo";
 
 export const metadata: Metadata = marketingMetadata({ title: TITLE, description: SITE.description, path: "/" });
 

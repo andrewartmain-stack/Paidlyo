@@ -2,7 +2,9 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/features/auth/queries";
 import { getCurrentOrg } from "@/features/organizations/queries";
+import { addDays, weekStart } from "./dates";
 import { liveMinutes } from "./duration";
+import type { CopySource } from "./week";
 import type { TimeEntry, TrackableProject } from "./types";
 
 const ENTRY_COLUMNS = `id, spent_date, minutes, notes, is_billable, timer_started_at, invoice_item_id,
@@ -94,4 +96,46 @@ export async function listTrackableProjects(): Promise<TrackableProject[]> {
     }))
     .filter((project) => project.tasks.length > 0)
     .sort((a, b) => a.clientName.localeCompare(b.clientName) || a.name.localeCompare(b.name));
+}
+
+/** How far back "copy" looks for the previous week / day with time. */
+const COPY_WEEKS_BACK = 8;
+const COPY_DAYS_BACK = 30;
+
+async function myEntryRefs(from: string, to: string) {
+  const [org, user] = await Promise.all([getCurrentOrg(), getCurrentUser()]);
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("time_entries")
+    .select("project_id, task_id, notes, spent_date")
+    .eq("organization_id", org.id)
+    .eq("user_id", user.id)
+    .gte("spent_date", from)
+    .lte("spent_date", to)
+    .order("spent_date", { ascending: false })
+    .order("created_at");
+  if (error) throw new Error("Could not load time entries.");
+  return data;
+}
+
+/** Project + task pairs of the most recent earlier week with time (up to 8 weeks back). */
+export async function findPreviousWeekRows(start: string): Promise<CopySource[]> {
+  const rows = await myEntryRefs(addDays(start, -7 * COPY_WEEKS_BACK), addDays(start, -1));
+  if (rows.length === 0) return [];
+  const week = weekStart(rows[0].spent_date);
+  return rows
+    .filter((row) => row.spent_date >= week)
+    .map((row) => ({ projectId: row.project_id, taskId: row.task_id }));
+}
+
+/** The most recent earlier day with time (up to 30 days back), or null. */
+export async function findPreviousDay(date: string): Promise<string | null> {
+  const rows = await myEntryRefs(addDays(date, -COPY_DAYS_BACK), addDays(date, -1));
+  return rows[0]?.spent_date ?? null;
+}
+
+/** The signed-in user's entries on one day, as copy sources (oldest first). */
+export async function listDaySources(date: string): Promise<CopySource[]> {
+  const rows = await myEntryRefs(date, date);
+  return rows.map((row) => ({ projectId: row.project_id, taskId: row.task_id, notes: row.notes }));
 }

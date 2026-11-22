@@ -15,10 +15,10 @@ export function PricingPlan() {
         <div className="flex flex-col gap-2">
           <p className="flex items-baseline gap-2">
             <span className="text-5xl font-semibold tabular-nums">{formatPlanPrice(PLAN.monthlyCents)}</span>
-            <span className="text-muted-foreground">per month</span>
+            <span className="text-muted-foreground">per person / month</span>
           </p>
           <p className="text-sm">
-            or <span className="font-semibold">{formatPlanPrice(PLAN.yearlyCents)} per year</span>
+            or <span className="font-semibold">{formatPlanPrice(PLAN.yearlyCents)} per person / year</span>
             <span className="ml-2 rounded-full bg-background px-2 py-0.5 text-xs font-medium">
               {yearlyMonthsFree()} months free
             </span>

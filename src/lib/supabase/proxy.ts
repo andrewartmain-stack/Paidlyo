@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/supabase";
+import { safeNext } from "@/features/auth/redirect";
 
 /** Pages that require a signed-in user. */
 const PROTECTED = ["/app", "/onboarding", "/subscribe"];
@@ -46,7 +47,8 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (signedIn && GUEST_ONLY.includes(pathname)) {
-    return redirectWithCookies(request, response, "/app");
+    const next = new URL(safeNext(request.nextUrl.searchParams.get("next")), request.url);
+    return redirectWithCookies(request, response, next.pathname, Object.fromEntries(next.searchParams));
   }
 
   return response;

@@ -41,7 +41,7 @@ export const TERMS: LegalDocument = {
     {
       heading: "2. Your account",
       paragraphs: [
-        "You must be at least 18 and give accurate information. Keep your password safe: you're responsible for what happens in your account. Paidlyo is intended for business use by freelancers and companies.",
+        "You must be at least 18 and give accurate information. Keep your password safe: you're responsible for what happens in your account. Paidlyo is intended for business use by companies of any size, from agencies to freelancers.",
       ],
     },
     {

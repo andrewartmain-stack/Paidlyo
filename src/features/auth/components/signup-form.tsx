@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useFormAction } from "@/hooks/use-form-action";
 import { signUp } from "../actions";
@@ -8,6 +9,8 @@ import { FormError, FormField } from "@/components/form-field";
 import { OAuthButtons } from "./oauth-buttons";
 
 export function SignupForm() {
+  // ?next, e.g. an invite link to return to after signing up.
+  const next = useSearchParams().get("next") ?? "";
   const { onSubmit, pending, result, error, fieldErrors } = useFormAction(signUp);
 
   if (result?.ok && result.data.needsConfirmation) {
@@ -23,9 +26,10 @@ export function SignupForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <OAuthButtons />
+      <OAuthButtons next={next || undefined} />
       <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
         <FormError message={error} />
+        <input type="hidden" name="next" value={next} />
         <FormField
           name="fullName"
           label="Your name"

@@ -1,5 +1,5 @@
 import { liveMinutes } from "./duration";
-import type { TimeEntry } from "./types";
+import type { TimeEntry, TrackableProject } from "./types";
 
 export type WeekCell = {
   minutes: number;
@@ -100,4 +100,56 @@ export function decideCellChange(existing: CellEntry[], minutes: number | null):
     return { kind: "delete", id: entry.id };
   }
   return entry.minutes === minutes ? { kind: "none" } : { kind: "update", id: entry.id, minutes };
+}
+
+// ---------------------------------------------------------------------------
+// Copying a previous day / week
+// ---------------------------------------------------------------------------
+
+export type CopySource = { projectId: string; taskId: string; notes?: string | null };
+
+export type CopyItem = {
+  project: { id: string; name: string; code: string | null; clientName: string };
+  task: { id: string; name: string };
+  notes: string | null;
+};
+
+/**
+ * What can be copied: only projects that are still active with the task still enabled.
+ * `dedupe` keeps one item per project + task (week rows); day copies keep every entry.
+ */
+export function copyableItems(
+  sources: CopySource[],
+  projects: TrackableProject[],
+  { dedupe }: { dedupe: boolean },
+): { items: CopyItem[]; skipped: number } {
+  const byId = new Map(projects.map((p) => [p.id, p]));
+  const seen = new Set<string>();
+  const items: CopyItem[] = [];
+  let skipped = 0;
+  for (const source of sources) {
+    const key = rowKey(source.projectId, source.taskId);
+    if (dedupe && seen.has(key)) continue;
+    seen.add(key);
+    const project = byId.get(source.projectId);
+    const task = project?.tasks.find((t) => t.id === source.taskId);
+    if (!project || !task) {
+      skipped += 1;
+      continue;
+    }
+    items.push({
+      project: { id: project.id, name: project.name, code: project.code, clientName: project.clientName },
+      task,
+      notes: source.notes ?? null,
+    });
+  }
+  return { items, skipped };
+}
+
+/** "Copied 4 entries", "Copied 3 entries, skipped 1 from an archived project". */
+export function copySummary(copied: number, skipped: number, noun: "entry" | "row"): string {
+  const plural = (n: number) => (noun === "entry" ? (n === 1 ? "entry" : "entries") : n === 1 ? "row" : "rows");
+  const base = `Copied ${copied} ${plural(copied)}`;
+  if (skipped === 0) return base;
+  return `${base}, skipped ${skipped} from archived projects or tasks`;
 }

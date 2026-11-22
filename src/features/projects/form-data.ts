@@ -1,6 +1,7 @@
 import "server-only";
 import { listClients } from "@/features/clients/queries";
 import { listTasks } from "@/features/tasks/queries";
+import { countMembersWithoutRate } from "@/features/team/queries";
 import type { ProjectFormClient } from "./components/project-form";
 import type { ProjectDetail } from "./types";
 
@@ -8,10 +9,11 @@ import type { ProjectDetail } from "./types";
  * Clients and tasks for the project form: active ones, plus archived ones the project
  * already uses (so editing an old project still shows its settings).
  */
-export async function loadProjectFormOptions(project?: ProjectDetail) {
-  const [activeClients, activeTasks] = await Promise.all([
+export async function loadProjectFormOptions(orgId: string, project?: ProjectDetail) {
+  const [activeClients, activeTasks, peopleWithoutRate] = await Promise.all([
     listClients({ status: "active", q: "" }),
     listTasks("active"),
+    countMembersWithoutRate(orgId),
   ]);
 
   let clients: ProjectFormClient[] = activeClients;
@@ -32,5 +34,6 @@ export async function loadProjectFormOptions(project?: ProjectDetail) {
   return {
     clients: clients.map(({ id, name, currency }) => ({ id, name, currency })),
     tasks,
+    peopleWithoutRate,
   };
 }

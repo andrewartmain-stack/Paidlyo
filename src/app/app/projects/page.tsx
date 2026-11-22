@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
+import { connection } from "next/server";
 import { FolderKanban, Plus } from "lucide-react";
 import { ProjectsIllustration } from "@/components/illustrations";
 import { PageIcon } from "@/components/page-icon";
@@ -12,7 +13,8 @@ import { canManageOrg, getCurrentOrg } from "@/features/organizations/queries";
 import { ProjectsFilters } from "@/features/projects/components/projects-filters";
 import { projectsHref } from "@/features/projects/href";
 import { ProjectsTable } from "@/features/projects/components/projects-table";
-import { listProjects } from "@/features/projects/queries";
+import { budgetProgress, type BudgetProgress } from "@/features/projects/budget";
+import { listBudgetUsage, listProjects } from "@/features/projects/queries";
 import { projectFiltersSchema } from "@/features/projects/schemas";
 
 export const metadata: Metadata = { title: "Projects" };
@@ -37,6 +39,7 @@ async function Projects({ searchParams }: { searchParams: SearchParams }) {
     listClients({ status: "active", q: "" }),
   ]);
   const canManage = canManageOrg(org);
+  const budgets = canManage ? await loadBudgets(org.id, projects) : {};
   const filtered = Boolean(filters.q || filters.client);
 
   return (
@@ -82,7 +85,7 @@ async function Projects({ searchParams }: { searchParams: SearchParams }) {
       </div>
 
       {projects.length > 0 ? (
-        <ProjectsTable projects={projects} canManage={canManage} />
+        <ProjectsTable projects={projects} canManage={canManage} budgets={budgets} />
       ) : filtered ? (
         <EmptyState
           illustration={<ProjectsIllustration className="h-32 w-auto" />}
@@ -113,6 +116,22 @@ async function Projects({ searchParams }: { searchParams: SearchParams }) {
       )}
     </>
   );
+}
+
+async function loadBudgets(
+  orgId: string,
+  projects: Awaited<ReturnType<typeof listProjects>>,
+): Promise<Record<string, BudgetProgress>> {
+  const withBudget = projects.filter((p) => p.budgetMinutes !== null || p.budgetCents !== null);
+  if (withBudget.length === 0) return {};
+  await connection(); // running timers count up to now
+  const usage = await listBudgetUsage(orgId, withBudget.map((p) => p.id), Date.now());
+  const budgets: Record<string, BudgetProgress> = {};
+  for (const project of withBudget) {
+    const progress = budgetProgress(project, usage.get(project.id));
+    if (progress) budgets[project.id] = progress;
+  }
+  return budgets;
 }
 
 function ProjectsSkeleton() {

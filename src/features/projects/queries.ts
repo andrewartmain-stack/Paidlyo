@@ -2,7 +2,9 @@ import "server-only";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { escapeLike } from "@/lib/form-schemas";
+import { fetchAllRows } from "@/lib/supabase/fetch-all";
 import { getCurrentOrg } from "@/features/organizations/queries";
+import { budgetProgress, sumUsage, type BudgetProgress, type BudgetUsage } from "./budget";
 import { projectIdSchema, type ProjectFilters } from "./schemas";
 import type { ProjectDetail, ProjectListItem } from "./types";
 
@@ -78,4 +80,63 @@ export async function getProject(id: string): Promise<ProjectDetail> {
       hourlyRateCents: pt.hourly_rate_cents,
     })),
   };
+}
+
+const MAX_BUDGET_ENTRIES = 100_000;
+
+/**
+ * Time logged on the given projects, for budget usage (owners/admins: RLS shows everyone's time;
+ * for members it would only be their own, so call this for managers only).
+ */
+export async function listBudgetUsage(orgId: string, projectIds: string[], nowMs: number): Promise<Map<string, BudgetUsage>> {
+  if (projectIds.length === 0) return new Map();
+  const supabase = await createClient();
+  const { rows } = await fetchAllRows(
+    (from, to) =>
+      supabase
+        .from("time_entries")
+        .select("id, project_id, minutes, timer_started_at, is_billable, hourly_rate_cents")
+        .eq("organization_id", orgId)
+        .in("project_id", projectIds)
+        .order("id")
+        .range(from, to),
+    MAX_BUDGET_ENTRIES,
+  );
+  return sumUsage(
+    rows.map((row) => ({
+      projectId: row.project_id,
+      minutes: row.minutes,
+      timerStartedAt: row.timer_started_at,
+      isBillable: row.is_billable,
+      hourlyRateCents: row.hourly_rate_cents,
+    })),
+    nowMs,
+  );
+}
+
+export type BudgetAlert = { projectId: string; projectName: string; clientName: string; progress: BudgetProgress };
+
+/** Active projects at or above the warning level, most used first (owners/admins). */
+export async function listBudgetAlerts(orgId: string, nowMs: number): Promise<BudgetAlert[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("projects")
+    .select("id, name, budget_minutes, budget_cents, client:clients!projects_client_fkey(name)")
+    .eq("organization_id", orgId)
+    .is("archived_at", null)
+    .or("budget_minutes.not.is.null,budget_cents.not.is.null");
+  if (error) throw new Error("Could not load project budgets.");
+
+  const usage = await listBudgetUsage(orgId, data.map((p) => p.id), nowMs);
+  const alerts: BudgetAlert[] = [];
+  for (const project of data) {
+    const progress = budgetProgress(
+      { budgetMinutes: project.budget_minutes, budgetCents: project.budget_cents },
+      usage.get(project.id),
+    );
+    if (progress && progress.status !== "ok") {
+      alerts.push({ projectId: project.id, projectName: project.name, clientName: project.client.name, progress });
+    }
+  }
+  return alerts.sort((a, b) => b.progress.pct - a.progress.pct);
 }

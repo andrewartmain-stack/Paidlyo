@@ -16,5 +16,6 @@ export const config = {
     "/forgot-password",
     "/reset-password",
     "/auth/:path*",
+    "/join/:path*",
   ],
 };

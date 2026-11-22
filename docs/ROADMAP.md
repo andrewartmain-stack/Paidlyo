@@ -37,16 +37,16 @@ Before launch: M1–M3 at minimum, plus Google Search Console + sitemap submitte
 ## V1: "small agencies"
 | # | Feature | Depends on |
 |---|---|---|
-| 14 | Team members, roles & person rates | 3, 5 |
-| 15 | Expenses with receipt upload (Supabase Storage), billable to invoices | 5, 7 |
+| 14 | Team members, roles & person rates · ✅ done (14a members/invites/roles · 14b person rates · 14c $9/seat billing) | 3, 5 |
+| 15 | ~~Expenses with receipt upload, billable to invoices~~ · ⏭ deferred (user decision 2026-11-22): manual invoice lines cover it until customers ask | 5, 7 |
 | 16 | Credit notes | 7 |
-| 17 | Project budgets & overrun alerts | 6 |
+| 17 | Project budgets & overrun alerts · code done (in-app: progress bars, dashboard alerts; no email) | 6 |
 | 18 | Estimates / quotes → invoice | 7 |
 | 19 | Recurring invoices & payment reminders | 9 |
 | 20 | Utilization & profitability reports | 11, 14 |
 | 21 | Time off (PTO/holiday/sick categories, balances, shown on timesheet) | 6, 14 |
-| 22 | Timesheet approvals (submit week → manager approves/rejects, locks entries) | 6, 14 |
-| 23 | Recurring time entries & copy previous day/week | 6 |
+| 22 | Timesheet approvals (submit week → manager approves/rejects, locks entries) · code done | 6, 14 |
+| 23 | Copy previous day/week · code done (recurring entries skipped: needs a scheduled job) | 6 |
 | 24 | Dashboards (hours, billable %, revenue, outstanding — charts on `/app`) | 11 |
 
 ## Later (only when customers ask)

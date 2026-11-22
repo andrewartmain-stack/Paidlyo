@@ -9,6 +9,7 @@ import {
   type BillingState,
 } from "@/features/billing/access";
 import { readOnlyMessage } from "@/features/billing/guard";
+import { peopleLabel, seatsOutOfSync, seatsToBill, seatTotalCents } from "@/features/billing/seat-count";
 import {
   eventSubscriptionId,
   shouldApply,
@@ -197,5 +198,26 @@ describe("Stripe webhook route", () => {
     const header = new Stripe("sk_test_dummy").webhooks.generateTestHeaderString({ payload, secret: SECRET });
     const response = await post(payload, header);
     expect(response.status).toBe(200);
+  });
+});
+
+describe("seat count", () => {
+  it("bills one seat per active person, never fewer than one", () => {
+    expect(seatsToBill(0)).toBe(1);
+    expect(seatsToBill(1)).toBe(1);
+    expect(seatsToBill(4)).toBe(4);
+    expect(seatTotalCents(900, 4)).toBe(3600);
+  });
+
+  it("flags when Stripe's quantity differs from the team", () => {
+    expect(seatsOutOfSync(1, 3)).toBe(true);
+    expect(seatsOutOfSync(3, 3)).toBe(false);
+    expect(seatsOutOfSync(1, 0)).toBe(false);
+    expect(seatsOutOfSync(null, 3)).toBe(false);
+  });
+
+  it("labels people counts", () => {
+    expect(peopleLabel(1)).toBe("1 person");
+    expect(peopleLabel(3)).toBe("3 people");
   });
 });

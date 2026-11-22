@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
+import { budgetDetail, budgetLabel, budgetProgress, budgetStatus, sumUsage } from "@/features/projects/budget";
 import { resolveHourlyRate } from "@/features/projects/rates";
 import {
   hoursToMinutes,
@@ -100,8 +101,10 @@ describe("projectFormSchema", () => {
     expect(Object.keys(fieldErrors)).toEqual(expect.arrayContaining(["clientId", "name", "tasks"]));
   });
 
-  it("rejects person_rate (not offered yet) and dedupes task ids", () => {
-    expect(errors({ ...base, billingMethod: "person_rate" }).billingMethod).toBeDefined();
+  it("accepts person_rate without a project rate and dedupes task ids", () => {
+    const parsed = projectFormSchema.parse(form({ ...base, billingMethod: "person_rate", hourlyRate: "" }));
+    expect(parsed.billingMethod).toBe("person_rate");
+    expect(parsed.hourlyRateCents).toBeNull();
     expect(form({ ...base, taskIds: [TASK_A, TASK_A] }).tasks).toHaveLength(1);
   });
 });
@@ -137,6 +140,11 @@ describe("resolveHourlyRate", () => {
     expect(resolveHourlyRate({ ...args, projectTask: { isBillable: true, hourlyRateCents: 7000 } })).toBe(7000);
     expect(resolveHourlyRate({ ...args, projectTask: task })).toBe(5000);
   });
+  it("uses the person's own rate for person-rate billing", () => {
+    const args = { billingMethod: "person_rate" as const, projectRateCents: 10000, projectTask: task, taskDefaultRateCents: 5000 };
+    expect(resolveHourlyRate({ ...args, personRateCents: 12000 })).toBe(12000);
+    expect(resolveHourlyRate(args)).toBeNull();
+  });
   it("returns null for non-billable work", () => {
     expect(
       resolveHourlyRate({ billingMethod: "none", projectRateCents: 10000, projectTask: task, taskDefaultRateCents: 5000 }),
@@ -149,5 +157,43 @@ describe("resolveHourlyRate", () => {
         taskDefaultRateCents: null,
       }),
     ).toBeNull();
+  });
+});
+
+describe("project budgets", () => {
+  const now = Date.parse("2026-11-22T12:00:00Z");
+  const entries = [
+    { projectId: "p1", minutes: 120, timerStartedAt: null, isBillable: true, hourlyRateCents: 10_000 },
+    { projectId: "p1", minutes: 60, timerStartedAt: "2026-11-22T11:30:00Z", isBillable: true, hourlyRateCents: 10_000 },
+    { projectId: "p1", minutes: 60, timerStartedAt: null, isBillable: false, hourlyRateCents: null },
+    { projectId: "p2", minutes: 30, timerStartedAt: null, isBillable: true, hourlyRateCents: 8_000 },
+  ];
+
+  it("sums all minutes (running timers included) and the billable amount per project", () => {
+    const usage = sumUsage(entries, now);
+    expect(usage.get("p1")).toEqual({ minutes: 270, amountCents: 35_000 });
+    expect(usage.get("p2")).toEqual({ minutes: 30, amountCents: 4_000 });
+  });
+
+  it("measures hours or amount budgets and flags 80% and over", () => {
+    const usage = sumUsage(entries, now).get("p1");
+    const hours = budgetProgress({ budgetMinutes: 300, budgetCents: null }, usage);
+    expect(hours).toMatchObject({ kind: "hours", pct: 90, status: "warning" });
+    expect(budgetLabel(hours!, "USD")).toBe("4.5 of 5 h");
+    expect(budgetDetail(hours!, "USD")).toBe("90% used");
+
+    const amount = budgetProgress({ budgetMinutes: null, budgetCents: 30_000 }, usage);
+    expect(amount).toMatchObject({ kind: "amount", pct: 116, status: "over" });
+    expect(budgetDetail(amount!, "USD")).toBe("Over by $50.00");
+
+    expect(budgetProgress({ budgetMinutes: null, budgetCents: null }, usage)).toBeNull();
+    expect(budgetProgress({ budgetMinutes: 600, budgetCents: null }, undefined)).toMatchObject({ pct: 0, status: "ok" });
+  });
+
+  it("uses 80% as the warning level and over 100% as over budget", () => {
+    expect(budgetStatus(79)).toBe("ok");
+    expect(budgetStatus(80)).toBe("warning");
+    expect(budgetStatus(100)).toBe("warning");
+    expect(budgetStatus(101)).toBe("over");
   });
 });

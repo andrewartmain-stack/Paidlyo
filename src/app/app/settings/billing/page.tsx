@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { BillingOverview } from "@/features/billing/components/billing-overview";
 import { getOrgBilling, listPlanPrices } from "@/features/billing/queries";
+import { getSeatStatus } from "@/features/billing/seats";
 import { canManageOrg, getCurrentOrg } from "@/features/organizations/queries";
 
 export const metadata: Metadata = { title: "Billing" };
@@ -23,7 +24,7 @@ export default function BillingPage({ searchParams }: { searchParams: SearchPara
           Settings
         </Link>
         <h1 className="text-3xl">Billing</h1>
-        <p className="text-sm text-muted-foreground">One plan with everything included. Cancel any time.</p>
+        <p className="text-sm text-muted-foreground">One plan with everything included, priced per person. Cancel any time.</p>
       </div>
       <Suspense fallback={<div className="h-72 rounded-xl bg-muted" />}>
         <Billing searchParams={searchParams} />
@@ -37,7 +38,11 @@ async function Billing({ searchParams }: { searchParams: SearchParams }) {
   const org = await getCurrentOrg();
   if (!canManageOrg(org)) redirect("/app/settings");
 
-  const [billing, prices] = await Promise.all([getOrgBilling(org.id), listPlanPrices()]);
+  const [billing, prices, seats] = await Promise.all([
+    getOrgBilling(org.id),
+    listPlanPrices(),
+    getSeatStatus(org.id),
+  ]);
   if (!billing) {
     return (
       <p className="rounded-lg bg-muted px-4 py-3 text-sm">
@@ -51,7 +56,9 @@ async function Billing({ searchParams }: { searchParams: SearchParams }) {
       billing={billing}
       prices={prices}
       timeZone={org.timezone}
+      seats={seats}
       checkoutSuccess={params.checkout === "success"}
+      seatsSynced={params.seats === "synced"}
       error={typeof params.error === "string" ? params.error : undefined}
     />
   );

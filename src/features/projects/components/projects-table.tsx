@@ -20,16 +20,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { archiveProject, restoreProject } from "../actions";
+import type { BudgetProgress } from "../budget";
 import { billingSummary, budgetSummary } from "../format";
+import { BudgetBar } from "./budget-bar";
 import type { ProjectListItem } from "../types";
 
 /** Projects grouped under their client (input is sorted by client, then name). */
 export function ProjectsTable({
   projects,
   canManage,
+  budgets = {},
 }: {
   projects: ProjectListItem[];
   canManage: boolean;
+  /** Budget progress by project id (owners/admins only; members see the plain budget). */
+  budgets?: Record<string, BudgetProgress>;
 }) {
   const [pending, startTransition] = useTransition();
   const columns = canManage ? 4 : 3;
@@ -93,7 +98,11 @@ export function ProjectsTable({
                     {billingSummary(project)}
                   </TableCell>
                   <TableCell className="hidden text-muted-foreground tabular-nums md:table-cell">
-                    {budget ?? "—"}
+                    {budgets[project.id] ? (
+                      <BudgetBar progress={budgets[project.id]} currency={project.client.currency} className="max-w-56" />
+                    ) : (
+                      (budget ?? "—")
+                    )}
                   </TableCell>
                   {canManage && (
                     <TableCell className="pr-4 text-right">

@@ -39,7 +39,7 @@ Source of truth: `design_system.html` (Paidlyo Design Tokens v1.1). Tokens live 
 - Items are pill-shaped (`rounded-full`), 36px tall, 18px icons, `gap-1` between items and `gap-6`
   between groups; icons scale up slightly on hover.
 - Structure: logo + org name → "Track time" button (timer icon) → Dashboard, Timesheet, Invoices,
-  Reports → **Manage** (Clients, Projects, Tasks) → footer (Settings, account menu). Defined in
+  Reports → **Manage** (Team, Approvals, Clients, Projects, Tasks) → footer (Settings, account menu). Defined in
   `src/components/app-shell/sidebar-nav.tsx`. Only built features are listed; add V1 items (Team,
   Expenses, Estimates, Approvals, Time off…) when they ship.
 
