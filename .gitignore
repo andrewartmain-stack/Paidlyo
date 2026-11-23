@@ -46,3 +46,6 @@ next-env.d.ts
 # supabase local
 supabase/.branches
 supabase/.temp
+
+# raw video exports (the optimized hero video lives in public/videos)
+/Paidlyo Demo Video*.mp4

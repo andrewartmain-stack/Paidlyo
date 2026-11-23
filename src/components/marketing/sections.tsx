@@ -480,14 +480,13 @@ export function Trust() {
             );
           })}
         </ul>
-        <AskAi />
       </div>
     </section>
   );
 }
 
-/** "Don't take our word for it": opens the visitor's AI assistant with a prepared question about Paidlyo. */
-function AskAi() {
+/** Not on the page for now (removed 2026-11-23); add <AskAi /> back to Trust to re-enable. "Don't take our word for it": opens the visitor's AI assistant with a prepared question about Paidlyo. */
+export function AskAi() {
   return (
     <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 rounded-3xl bg-cream-deep p-7 text-center sm:p-10">
       <Sparkles className="size-7 text-brand" aria-hidden />
