@@ -99,8 +99,53 @@
   everyone like Team (members are redirected). No email reminders. DB pushed + types ✅, check + build ✅.
   Waiting on: browser test, approval.
 
+- [ ] Hero demo video — code done (`public/videos/paidlyo-demo.mp4`, 1080p H.264 ~3 Mbps (25 MB);
+  the original stored video-range pixels tagged full range (looked dim/grey), relabelled as BT.709
+  video range with pixels unchanged; 30 fps like the source; + poster; `HeroVideo` replaces `ProductPreview` in the hero: muted loop,
+  autoplay unless reduced motion, Pause/Play button; home stays static). Waiting on: browser check.
+
+- [ ] Landing SEO + trust — code done (H1/meta/H2s carry "time tracking and invoicing software",
+  billable hours, agencies/consultancies/small businesses/teams; new sections: Who it's for (cards
+  link to `/for/<slug>` only once that page is published), product tour (4 workflows; optional
+  `screenshot` per item: text-card grid until every item has one, then image rows), more features
+  (budgets, approvals, team rates, payments, currencies, CSV), pricing summary with team-size table
+  and trial terms, security & "who's behind Paidlyo"; FAQ + security/team answers;
+  SoftwareApplication `featureList` + `screenshot`). Waiting on: real app screenshots in
+  `public/screenshots/` (1600×1000, light mode), browser check, approval.
+- [ ] Marketing visuals — code done: floating glass pill header (`site-header.tsx` + `scroll-shell.tsx`
+  client island, more opaque after scroll), Product / Solutions dropdowns with icons
+  (`nav-menu.tsx` on hand-written `ui/navigation-menu.tsx` over Base UI; data `NAV_GROUPS` in
+  landing.ts; Solutions links switch to `/for/<slug>` once published), grouped mobile sheet; SVG
+  art in `components/marketing/illustrations/` (hero grid, blobs + floating chips xl+, Harvest →
+  Paidlyo import flow, shield lock), steps connector line, icons on audience/tour/steps/trust cards,
+  hover lift, CSS scroll-reveal (`animation-timeline: view()`; all motion off for reduced motion or
+  unsupported browsers). No new dependencies. Waiting on: app screenshots, browser check, approval.
+- [ ] Landing redesign (Harvest-like calm style, own brand/artwork) — code done: cream/white rhythm
+  (`bg-cream`, `bg-cream-deep`), type scale utilities `mk-h1/h2/h3/lead` in globals.css (70/50/26/19px),
+  vertical hero (underlined "bill by the hour", email pill → `/signup?email=` prefill, "Continue with
+  Google" via `signInWithProvider` (needs Google configured in Supabase), checks row, video on striped
+  panel; floating chips removed), Workflows row (5 line-art spots), Product tabs `#features` (6 tabs,
+  real screenshots on striped panels, all panels SSR'd, ARIA tabs), Feature bento (coded mini-UIs),
+  calmer remaining sections, framed final CTA with dashboard screenshot. Screenshots in
+  `public/screenshots/` are cropped from the demo video (budgets/approvals/team have none yet).
+  Content: `src/content/showcase.ts`. `/` still static. Update: tabs and final CTA now use coded,
+  clickable app mockups (`components/marketing/app-mock/`: timer ticks, group-by lines, discount,
+  copy link, record payments → Paid, report segments) instead of JPGs; hero email + Google in one
+  row, demo higher; "Who's behind Paidlyo" replaced by "Ask ChatGPT / Claude / Gemini (Google AI
+  Mode) / Perplexity" links with a prefilled question. Waiting on: browser check, approval.
+- [ ] Programmatic page templates — code done, no content (M2/M4/M5/M6 groundwork). Data in
+  `src/content/pages/` (Zod-validated at build, unique slugs): `/for/[slug]` audiences,
+  `/alternatives/[slug]`, `/compare/[slug]` (versus | pricing, Paidlyo always last column),
+  `/features/[slug]` + `/features` index, `/guides/[slug]` (BlogPosting). Templates in
+  `src/components/marketing/templates/` (breadcrumbs + BreadcrumbList, comparison table, price by
+  team size with competitor source + checked date, screenshots, related links). Each collection has
+  one `preview` entry (placeholders, noindex, not in sitemap, never linked) because Cache Components
+  needs ≥ 1 static param; unknown slugs 404 via `notFound()` (`dynamicParams` isn't allowed).
+  Sitemap adds published pages (+ `/features` once it has entries). Keyword sheet:
+  `files/paidlyo-pseo-keywords.xlsx`. Waiting on: content, approval.
+
 ## Next
-- [ ] M2 · Features pages
+- [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
 
 ## Technical decisions
 - Marketing pages: build metadata with `marketingMetadata()` (`src/lib/seo.ts`; Next merges

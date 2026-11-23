@@ -1,6 +1,18 @@
 import type { Metadata } from "next";
 import { JsonLd } from "@/components/marketing/json-ld";
-import { Faq, FeatureGrid, FinalCta, Hero, Steps, SwitchFromHarvest } from "@/components/marketing/sections";
+import {
+  Audiences,
+  Faq,
+  FinalCta,
+  Hero,
+  PricingSummary,
+  Steps,
+  SwitchFromHarvest,
+  Trust,
+} from "@/components/marketing/sections";
+import { FeatureBento } from "@/components/marketing/feature-bento";
+import { ProductTabs } from "@/components/marketing/product-tabs";
+import { Workflows } from "@/components/marketing/workflows";
 import { SITE } from "@/content/landing";
 import { faqJsonLd, softwareApplicationJsonLd } from "@/content/structured-data";
 import { marketingMetadata } from "@/lib/seo";
@@ -15,9 +27,14 @@ export default function HomePage() {
       <JsonLd data={softwareApplicationJsonLd()} />
       <JsonLd data={faqJsonLd()} />
       <Hero />
-      <FeatureGrid />
+      <Workflows />
+      <ProductTabs />
+      <FeatureBento />
+      <Audiences />
       <Steps />
       <SwitchFromHarvest />
+      <PricingSummary />
+      <Trust />
       <Faq />
       <FinalCta />
     </>

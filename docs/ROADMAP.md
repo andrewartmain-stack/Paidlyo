@@ -26,11 +26,11 @@ Independent of the dashboard after item 1, so it's a good candidate for a parall
 | # | Feature | Depends on | Notes |
 |---|---|---|---|
 | M1 | Marketing layout & SEO foundation | 1 | ✅ done · Header nav, mobile menu, footer, landing page sections, metadata defaults, `sitemap.ts`, `robots.ts`, OG image, Organization/WebSite JSON-LD |
-| M2 | Features pages | M1 | `/features` + one page per feature |
+| M2 | Features pages | M1 | 🔧 template ready (`/features`, `/features/[slug]`), content to write |
 | M3 | Pricing & legal pages | M1 | ✅ code done · Pricing, privacy, terms (Stripe requires legal pages) |
-| M4 | Blog / articles | M1 | List, article page, categories, BlogPosting JSON-LD; content format decision |
-| M5 | Alternatives & comparisons | M1 | `/alternatives/harvest`, `/compare/...` — highest-intent pages |
-| M6 | Programmatic SEO & free tools | M4, M5 | Templates by profession, invoice generator, rate calculator |
+| M4 | Blog / articles | M1 | 🔧 guide template ready (`/guides/[slug]`, BlogPosting); list page + content to do |
+| M5 | Alternatives & comparisons | M1 | 🔧 templates ready (`/alternatives/[slug]`, `/compare/[slug]`); content to write — highest-intent pages |
+| M6 | Programmatic SEO & free tools | M4, M5 | 🔧 audience template ready (`/for/[slug]`); free tools (invoice generator, rate calculator) to do |
 
 Before launch: M1–M3 at minimum, plus Google Search Console + sitemap submitted.
 

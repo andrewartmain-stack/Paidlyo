@@ -10,7 +10,10 @@ import { OAuthButtons } from "./oauth-buttons";
 
 export function SignupForm() {
   // ?next, e.g. an invite link to return to after signing up.
-  const next = useSearchParams().get("next") ?? "";
+  const params = useSearchParams();
+  const next = params.get("next") ?? "";
+  // ?email= pre-fills the field from the landing page; trimmed and only a hint, the action validates.
+  const emailParam = (params.get("email") ?? "").trim().slice(0, 254);
   const { onSubmit, pending, result, error, fieldErrors } = useFormAction(signUp);
 
   if (result?.ok && result.data.needsConfirmation) {
@@ -42,6 +45,7 @@ export function SignupForm() {
           label="Work email"
           type="email"
           autoComplete="email"
+          defaultValue={emailParam}
           required
           errors={fieldErrors.email}
         />

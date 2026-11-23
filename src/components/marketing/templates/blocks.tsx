@@ -1,0 +1,358 @@
+import Link from "next/link";
+import { ArrowRight, Check, ChevronRight, Minus } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { JsonLd } from "@/components/marketing/json-ld";
+import { ScreenshotFrame, SectionHeading } from "@/components/marketing/sections";
+import { HERO } from "@/content/landing";
+import { formatPlanPrice, PLAN } from "@/content/pricing";
+import { paidlyoMonthlyCents, toolMonthlyCents } from "@/content/pages/pricing-math";
+import type { ComparisonCell, Screenshot, ToolPrice } from "@/content/pages/schema";
+import { breadcrumbJsonLd } from "@/content/structured-data";
+
+/* Building blocks shared by the programmatic page templates. Server components only. */
+
+export type Crumb = { name: string; path: string };
+
+/** Visible breadcrumb trail plus its BreadcrumbList JSON-LD. The last crumb is the current page. */
+export function Breadcrumbs({ items }: { items: Crumb[] }) {
+  return (
+    <>
+      <JsonLd data={breadcrumbJsonLd(items)} />
+      <nav aria-label="Breadcrumb">
+        <ol className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
+          {items.map((item, i) => {
+            const last = i === items.length - 1;
+            return (
+              <li key={item.path} className="flex items-center gap-1">
+                {last ? (
+                  <span aria-current="page" className="text-foreground">
+                    {item.name}
+                  </span>
+                ) : (
+                  <>
+                    <Link href={item.path} className="hover:text-foreground">
+                      {item.name}
+                    </Link>
+                    <ChevronRight className="size-3.5" aria-hidden />
+                  </>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </>
+  );
+}
+
+/** Shown on template previews only, so placeholder pages are never mistaken for real ones. */
+export function PreviewBanner() {
+  return (
+    <div role="note" className="border-b border-dashed bg-accent px-4 py-2 text-center text-sm text-accent-foreground">
+      Template preview with placeholder content. This page is not indexed or linked anywhere.
+    </div>
+  );
+}
+
+/** Page header with the single h1, breadcrumbs and the trial call to action. */
+export function PageHero({
+  crumbs,
+  eyebrow,
+  title,
+  description,
+  showCta = true,
+}: {
+  crumbs: Crumb[];
+  eyebrow?: string;
+  title: string;
+  description: string;
+  showCta?: boolean;
+}) {
+  return (
+    <section aria-labelledby="page-title" className="px-4 pt-10 pb-16 sm:px-6 sm:pt-14 sm:pb-20">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10">
+        <Breadcrumbs items={crumbs} />
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+          {eyebrow && (
+            <p className="rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">{eyebrow}</p>
+          )}
+          <h1 id="page-title" className="text-4xl leading-tight sm:text-5xl">
+            {title}
+          </h1>
+          <p className="max-w-2xl text-lg text-muted-foreground sm:text-xl">{description}</p>
+          {showCta && (
+            <div className="flex flex-col items-center gap-3">
+              <Link href={HERO.primaryCta.href} className={buttonVariants({ size: "lg" })}>
+                {HERO.primaryCta.label}
+                <ArrowRight aria-hidden />
+              </Link>
+              <p className="text-sm text-muted-foreground">{HERO.note}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** A titled grid of cards (problems, reasons, benefits, features). Cards with `href` link out. */
+export function CardSection({
+  id,
+  eyebrow,
+  title,
+  description,
+  items,
+  muted = false,
+}: {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  items: { title: string; text: string; href?: string }[];
+  muted?: boolean;
+}) {
+  return (
+    <section aria-labelledby={`${id}-title`} className={muted ? "bg-muted/60 py-20 sm:py-24" : "py-20 sm:py-24"}>
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6">
+        <SectionHeading id={`${id}-title`} eyebrow={eyebrow} title={title} description={description} />
+        <ul className={`grid gap-4 sm:grid-cols-2 ${items.length % 3 === 0 ? "lg:grid-cols-3" : ""}`}>
+          {items.map((item, i) => (
+            <li key={`${i}-${item.title}`} className="flex flex-col gap-3 rounded-2xl border bg-card p-6">
+              <h3 className="text-lg">{item.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+              {item.href && (
+                <Link href={item.href} className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-brand hover:underline">
+                  Learn more about {item.title.toLowerCase()}
+                  <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/** A worked billing example: label/value rows with an optional total. */
+export function ExampleCard({
+  title,
+  description,
+  rows,
+  total,
+}: {
+  title: string;
+  description: string;
+  rows: { label: string; value: string }[];
+  total?: { label: string; value: string };
+}) {
+  return (
+    <section aria-labelledby="example-title" className="py-20 sm:py-24">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:items-center">
+        <div className="flex flex-col gap-4">
+          <p className="text-sm font-semibold text-brand">Example</p>
+          <h2 id="example-title" className="text-3xl sm:text-4xl">
+            {title}
+          </h2>
+          <p className="text-lg text-muted-foreground">{description}</p>
+        </div>
+        <dl className="divide-y rounded-2xl border bg-card">
+          {rows.map((row, i) => (
+            <div key={`${row.label}-${i}`} className="flex items-center justify-between gap-4 px-6 py-4">
+              <dt className="text-muted-foreground">{row.label}</dt>
+              <dd className="text-right font-medium tabular-nums">{row.value}</dd>
+            </div>
+          ))}
+          {total && (
+            <div className="flex items-center justify-between gap-4 bg-muted/60 px-6 py-4">
+              <dt className="font-semibold">{total.label}</dt>
+              <dd className="text-right text-lg font-semibold tabular-nums">{total.value}</dd>
+            </div>
+          )}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+/** Up to four app screenshots with optional captions. Renders nothing when there are none. */
+export function ScreenshotGallery({ title, items }: { title: string; items: Screenshot[] }) {
+  if (items.length === 0) return null;
+  return (
+    <section aria-labelledby="screenshots-title" className="bg-muted/60 py-20 sm:py-24">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6">
+        <SectionHeading id="screenshots-title" eyebrow="Screenshots" title={title} />
+        <div className={items.length === 1 ? "mx-auto w-full max-w-4xl" : "grid gap-8 lg:grid-cols-2"}>
+          {items.map((shot) => (
+            <figure key={shot.src} className="flex flex-col gap-3">
+              <ScreenshotFrame src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} />
+              {shot.caption && <figcaption className="text-center text-sm text-muted-foreground">{shot.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Cell({ value }: { value: ComparisonCell }) {
+  if (value === true) {
+    return (
+      <>
+        <Check className="mx-auto size-5 text-brand" aria-hidden />
+        <span className="sr-only">Yes</span>
+      </>
+    );
+  }
+  if (value === false) {
+    return (
+      <>
+        <Minus className="mx-auto size-5 text-muted-foreground" aria-hidden />
+        <span className="sr-only">No</span>
+      </>
+    );
+  }
+  return <span className="text-sm">{value}</span>;
+}
+
+/** Feature comparison: one column per tool, Paidlyo last and highlighted. */
+export function ComparisonTable({
+  title,
+  columns,
+  rows,
+}: {
+  title: string;
+  columns: string[];
+  rows: { feature: string; values: ComparisonCell[] }[];
+}) {
+  const last = columns.length - 1;
+  return (
+    <section aria-labelledby="comparison-title" className="py-20 sm:py-24">
+      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 sm:px-6">
+        <SectionHeading id="comparison-title" eyebrow="Comparison" title={title} />
+        <div className="overflow-x-auto rounded-2xl border bg-card">
+          <table className="w-full min-w-[32rem] text-left">
+            <caption className="sr-only">{title}</caption>
+            <thead className="bg-muted/60 text-sm">
+              <tr>
+                <th scope="col" className="px-6 py-3 font-medium text-muted-foreground">
+                  Feature
+                </th>
+                {columns.map((column, i) => (
+                  <th key={column} scope="col" className={`px-6 py-3 text-center font-semibold ${i === last ? "text-brand" : ""}`}>
+                    {column}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {rows.map((row, i) => (
+                <tr key={`${i}-${row.feature}`}>
+                  <th scope="row" className="px-6 py-4 font-medium">
+                    {row.feature}
+                  </th>
+                  {row.values.map((value, i) => (
+                    <td key={i} className={`px-6 py-4 text-center ${i === last ? "bg-accent/40" : ""}`}>
+                      <Cell value={value} />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const usd = formatPlanPrice;
+
+/**
+ * Monthly cost by team size: each competitor, then Paidlyo. Every competitor price shows its
+ * plan, source and the date it was checked, so the numbers can be verified.
+ */
+export function PriceComparison({ title, tools, sizes }: { title: string; tools: ToolPrice[]; sizes: number[] }) {
+  return (
+    <section aria-labelledby="price-title" className="bg-muted/60 py-20 sm:py-24">
+      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 sm:px-6">
+        <SectionHeading id="price-title" eyebrow="Pricing" title={title} description="Monthly cost for the whole team." />
+        <div className="overflow-x-auto rounded-2xl border bg-card">
+          <table className="w-full min-w-[28rem] text-left">
+            <caption className="sr-only">{title}</caption>
+            <thead className="bg-muted/60 text-sm">
+              <tr>
+                <th scope="col" className="px-6 py-3 font-medium text-muted-foreground">
+                  Team size
+                </th>
+                {tools.map((tool) => (
+                  <th key={tool.name} scope="col" className="px-6 py-3 text-right font-semibold">
+                    {tool.name}
+                    <span className="block text-xs font-normal text-muted-foreground">{tool.plan}</span>
+                  </th>
+                ))}
+                <th scope="col" className="px-6 py-3 text-right font-semibold text-brand">
+                  Paidlyo
+                  <span className="block text-xs font-normal text-muted-foreground">Everything included</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {sizes.map((people) => (
+                <tr key={people}>
+                  <th scope="row" className="px-6 py-4 font-medium">
+                    {people === 1 ? "1 person" : `${people} people`}
+                  </th>
+                  {tools.map((tool) => (
+                    <td key={tool.name} className="px-6 py-4 text-right tabular-nums">
+                      {usd(toolMonthlyCents(tool, people))}
+                    </td>
+                  ))}
+                  <td className="bg-accent/40 px-6 py-4 text-right font-semibold tabular-nums">{usd(paidlyoMonthlyCents(people))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <ul className="flex flex-col gap-1 text-xs text-muted-foreground">
+          {tools.map((tool) => (
+            <li key={tool.name}>
+              {tool.name} {tool.plan}: {usd(tool.perPersonCents)} per person a month
+              {tool.billedAnnually && " billed annually"}
+              {tool.baseCents > 0 && ` plus ${usd(tool.baseCents)} a month`}
+              {tool.minSeats > 1 && `, minimum ${tool.minSeats} people`}. Source:{" "}
+              <a href={tool.source} rel="nofollow noopener" target="_blank" className="underline hover:text-foreground">
+                {tool.name} pricing
+              </a>
+              , checked {tool.checkedOn}.
+            </li>
+          ))}
+          <li>Paidlyo: {usd(PLAN.monthlyCents)} per person a month, billed monthly. Taxes may apply.</li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/** Internal links to related pages, with descriptive anchor text. */
+export function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
+  if (links.length === 0) return null;
+  return (
+    <nav aria-labelledby="related-title" className="px-4 pb-20 sm:px-6">
+      <div className="mx-auto flex max-w-3xl flex-col gap-4">
+        <h2 id="related-title" className="text-xl">
+          Related
+        </h2>
+        <ul className="flex flex-wrap gap-2">
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href} className="inline-flex rounded-full border bg-card px-4 py-2 text-sm hover:bg-accent">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+}

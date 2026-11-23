@@ -36,6 +36,8 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -64,6 +66,8 @@
 }
 
 :root {
+  --cream: #faf6ef;       /* marketing: warm paper background for hero and alternating sections */
+  --cream-deep: #f3ece0;  /* marketing: panels and cards on cream */
   --radius: 6px;
 
   --background: #ffffff;        /* canvas */
@@ -328,3 +332,92 @@
   86%, 100% { opacity: 0; }
 }
 /* ===== end Logo ===== */
+
+/* ===== Marketing animations (src/components/marketing) — CSS-only, motion-safe =====
+   Everything is gated on prefers-reduced-motion: no-preference; scroll-reveal additionally needs
+   scroll-driven animation support. Without either, content simply renders in its final state. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hand-drawn hero underline: stroke draws in once. */
+  .mk-underline { stroke-dasharray: 1; animation: mk-underline 0.9s 0.25s ease-out both; }
+  @keyframes mk-underline { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  .mk-import-file { animation: mk-import-file 5s ease-in-out infinite; }
+  .mk-import-check { transform-box: fill-box; transform-origin: 50% 50%; animation: mk-import-check 5s ease-in-out infinite; }
+  .mk-dash-flow { stroke-dasharray: 3 7; animation: mk-dash-flow 1.2s linear infinite; }
+  .mk-shield-glow { transform-box: fill-box; transform-origin: 50% 50%; animation: mk-shield-glow 4s ease-in-out infinite; }
+  .mk-lock-shackle { transform-box: fill-box; transform-origin: 20% 100%; animation: mk-shackle 5s ease-in-out infinite; }
+
+  @keyframes mk-dash-flow { to { stroke-dashoffset: -20; } }
+  @keyframes mk-shield-glow { 50% { transform: scale(1.06); opacity: 0.7; } }
+  @keyframes mk-shackle {
+    0%, 20% { transform: translateY(-5px); }
+    35%, 100% { transform: translateY(0); }
+  }
+  /* The sheet slides along the dotted path into the card, then the check pops. */
+  @keyframes mk-import-file {
+    0% { transform: translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    55% { transform: translateX(150px) scale(1); opacity: 1; }
+    68%, 100% { transform: translateX(166px) scale(0.5); opacity: 0; }
+  }
+  @keyframes mk-import-check {
+    0%, 60% { transform: scale(0); opacity: 0; }
+    72% { transform: scale(1.25); opacity: 1; }
+    80%, 92% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+
+  /* Scroll-reveal: fade + lift as an element enters the viewport. --mk-i staggers siblings.
+     Unsupported browsers skip this block and show the content immediately. */
+  @supports (animation-timeline: view()) {
+    .mk-reveal {
+      animation: mk-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--mk-i, 0) * 4%) entry calc(38% + var(--mk-i, 0) * 4%);
+    }
+    .mk-draw {
+      transform-origin: 0 50%;
+      animation: mk-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+    @keyframes mk-reveal {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes mk-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  }
+}
+/* ===== end Marketing animations ===== */
+
+/* ===== Marketing type scale (public site). Harvest-like sizes: calm, large, light headings. =====
+   Use on src/app/(marketing) pages only. Sizes step down on small screens. */
+@utility mk-h1 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 6vw, 4.375rem); /* 44px → 70px */
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+@utility mk-h2 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(2.125rem, 4.2vw, 3.125rem); /* 34px → 50px */
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+@utility mk-h3 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: clamp(1.375rem, 2vw, 1.625rem); /* 22px → 26px */
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+}
+@utility mk-lead {
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); /* 17px → 19px */
+  line-height: 1.4;
+}
+@utility mk-body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+/* ===== end Marketing type scale ===== */

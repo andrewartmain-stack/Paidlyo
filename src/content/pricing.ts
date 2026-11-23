@@ -50,6 +50,9 @@ export const PLAN_FEATURES: string[] = [
   "Payment tracking and partial payments",
   "Time, unbilled and outstanding reports",
   "CSV export of your data",
+  "Project budgets with alerts",
+  "Weekly timesheet approvals",
+  "Team roles and per-person rates",
   "Import from Harvest",
   "Multiple currencies",
 ];
