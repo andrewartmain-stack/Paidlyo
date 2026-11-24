@@ -27,7 +27,6 @@ import { AUTHOR } from "@/content/author";
 import { HERO } from "@/content/landing";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { paidlyoMonthlyCents, toolMonthlyCents } from "@/content/pages/pricing-math";
-import { pageCards } from "@/content/pages/cards";
 import type { CardIconKey } from "@/content/pages/icons";
 import type { PageType } from "@/content/pages/paths";
 import type { CalloutKind, ComparisonCell, LandingSection, Screenshot, ToolPrice } from "@/content/pages/schema";
@@ -366,18 +365,6 @@ export function PriceComparison({ title, tools, sizes }: { title: string; tools:
 }
 
 /** Internal links to related pages, with descriptive anchor text. */
-/** Links the author picked, shown as cards with the target page's cover. Links to unpublished pages are left out. */
-export async function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
-  const cards = await pageCards();
-  const items = links.flatMap((link): LinkCard[] => {
-    const target = cards.get(link.href.split(/[?#]/)[0]);
-    if (target) return [{ ...target, href: link.href, title: link.label }];
-    // Fixed pages (pricing, sign up …) have no cover: they get the branded placeholder.
-    return STATIC_LINKS.has(link.href.split(/[?#]/)[0]) ? [{ href: link.href, title: link.label, text: "" }] : [];
-  });
-  return <LinkGrid id="related" eyebrow="Keep reading" title="Related" links={items} />;
-}
-
 /** Text sections, each with an optional image; image rows alternate sides on wide screens. */
 const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
 export const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z`));
@@ -626,8 +613,6 @@ export function SectionRows({ sections }: { sections: LandingSection[] }) {
 
 /** Links to related pages (a product's variants and audiences, or a page's siblings). Renders nothing when empty. */
 export type LinkCard = { href: string; title: string; text: string; type?: PageType; image?: Screenshot };
-
-const STATIC_LINKS = new Set(["/", "/pricing", "/signup", "/login", "/terms", "/privacy"]);
 
 const TYPE_ICONS: Record<PageType, LucideIcon> = {
   product: Layers,

@@ -4,7 +4,7 @@ import type { AlternativePage } from "@/content/pages/schema";
 import { INDEX_COPY } from "@/content/pages/indexes";
 import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { CardSection, ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks, richFaq, SectionRows } from "./blocks";
+import { CardSection, ComparisonTable, PageHero, PreviewBanner, PriceComparison, richFaq, SectionRows } from "./blocks";
 
 /** /alternatives/<slug>: why switch from one competitor, side by side, and how to move. */
 export function AlternativeTemplate({ page }: { page: AlternativePage }) {
@@ -33,7 +33,6 @@ export function AlternativeTemplate({ page }: { page: AlternativePage }) {
       <Steps id="migration" eyebrow="Switching" title={`Move from ${page.competitor} in minutes`} items={page.migration} />
       <SectionRows sections={page.sections} />
       {page.faq.length > 0 && <Faq items={richFaq(page.faq)} title={`Switching from ${page.competitor}: questions`} />}
-      <RelatedLinks links={page.related} />
       <FinalCta />
     </>
   );

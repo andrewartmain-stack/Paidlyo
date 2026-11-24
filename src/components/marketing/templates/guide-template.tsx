@@ -6,7 +6,7 @@ import { INDEX_COPY } from "@/content/pages/indexes";
 import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { articleJsonLd, faqJsonLd } from "@/content/structured-data";
 import { AUTHOR } from "@/content/author";
-import { ArticleSidebar, AuthorBox, Breadcrumbs, Byline, LONG_FORM_MIN_SECTIONS, MobileToc, PreviewBanner, RelatedLinks, richFaq, SectionBody } from "./blocks";
+import { ArticleSidebar, AuthorBox, Breadcrumbs, Byline, LONG_FORM_MIN_SECTIONS, MobileToc, PreviewBanner, richFaq, SectionBody } from "./blocks";
 
 /** An image inside the article column, with an optional caption. */
 function ArticleImage({ image, priority = false }: { image: Screenshot; priority?: boolean }) {
@@ -83,7 +83,6 @@ export function GuideTemplate({ page }: { page: GuidePage }) {
         </div>
       </article>
       {page.faq.length > 0 && <Faq items={richFaq(page.faq)} />}
-      <RelatedLinks links={page.related} />
       <FinalCta />
     </>
   );

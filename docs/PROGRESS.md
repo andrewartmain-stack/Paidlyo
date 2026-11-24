@@ -219,6 +219,9 @@
   placeholder without a cover). Features and alternatives gained sections; comparison sections
   use the shared format.
 
+- [x] Related cards removed 2026-11-24: `related` links are no longer rendered (field kept for
+  existing data); internal links go inside the text.
+
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
 

@@ -4,7 +4,7 @@ import type { ComparisonPage } from "@/content/pages/schema";
 import { INDEX_COPY } from "@/content/pages/indexes";
 import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks, richFaq, SectionRows } from "./blocks";
+import { ComparisonTable, PageHero, PreviewBanner, PriceComparison, richFaq, SectionRows } from "./blocks";
 
 /** /compare/<slug>: "X vs Y" or one tool's pricing, with Paidlyo as the last column. */
 export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
@@ -48,7 +48,6 @@ export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
       />
       <SectionRows sections={page.sections} />
       {page.faq.length > 0 && <Faq items={richFaq(page.faq)} />}
-      <RelatedLinks links={page.related} />
       <FinalCta />
     </>
   );

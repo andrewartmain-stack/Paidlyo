@@ -163,7 +163,7 @@ CSV rules:
 - **Leave these empty:** `updated`, `published` (they default to the import date), and every
   `*.file` image column unless I give you a file name. If an image column is filled, also write
   its `alt` text (what the image shows).
-- **Links** (`href` columns, `related.N.href`, and links inside text) are internal paths starting
+- **Links** (`href` columns and links inside text) are internal paths starting
   with `/`, or full `https://` URLs for outside sources. You may link to any page in the approved
   page plan, even if it isn't published yet: the site shows such links as plain text until the
   page goes live, then turns them into links automatically. Never invent URLs outside the plan.
@@ -184,7 +184,8 @@ CSV rules:
 - **`faq.N.question` / `faq.N.answer`:** questions searchers actually ask, answered in 1–3
   sentences. Aim for 4. They're also published as FAQ structured data, so the answers must be
   accurate.
-- **`related.N.href` / `related.N.label`:** up to 3 internal links, with descriptive anchor text.
+- **`related.N.href` / `related.N.label`:** leave empty. They're no longer shown on the page; put
+  links to other pages inside the text instead.
 - **`teamSizes`:** 1–4 team sizes for the price table (for example `1 | 5 | 15`). Match them to
   the audience: freelancers `1 | 2 | 3`, agencies `5 | 10 | 25`.
 - **Author:** every page automatically shows "By Andrei Artemov, Founder of Paidlyo" with his photo.
@@ -346,7 +347,7 @@ The site creates these links automatically, so don't repeat them by hand:
 - the header menu, the footer and the sitemap.
 
 What you control:
-- `related.N` links, plus `href` on feature cards and highlights.
+- Links inside the text (`[anchor](/path)`), plus `href` on feature cards and highlights.
 - Link pages that genuinely help the reader next: a parent and its children, pages in the same
   cluster, the matching feature page.
 - Use descriptive, varied anchor text, not the exact keyword every time.

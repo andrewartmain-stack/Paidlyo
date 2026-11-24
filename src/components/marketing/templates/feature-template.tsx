@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/marketing/json-ld";
 import type { FeaturePage } from "@/content/pages/schema";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { CardSection, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, richFaq, SectionRows } from "./blocks";
+import { CardSection, PageHero, PreviewBanner, ScreenshotGallery, richFaq, SectionRows } from "./blocks";
 
 /** /features/<slug>: one capability, shown and explained step by step. */
 export function FeatureTemplate({ page }: { page: FeaturePage }) {
@@ -27,7 +27,6 @@ export function FeatureTemplate({ page }: { page: FeaturePage }) {
       <CardSection id="benefits" muted eyebrow="Why it helps" title="What you get" items={page.benefits} />
       <SectionRows sections={page.sections} />
       {page.faq.length > 0 && <Faq items={richFaq(page.faq)} title={`${page.name}: questions`} />}
-      <RelatedLinks links={page.related} />
       <FinalCta />
     </>
   );
