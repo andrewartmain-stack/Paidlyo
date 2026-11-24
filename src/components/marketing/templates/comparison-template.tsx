@@ -4,7 +4,7 @@ import type { ComparisonPage } from "@/content/pages/schema";
 import { INDEX_COPY } from "@/content/pages/indexes";
 import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks } from "./blocks";
+import { ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks, richFaq, SectionRows } from "./blocks";
 
 /** /compare/<slug>: "X vs Y" or one tool's pricing, with Paidlyo as the last column. */
 export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
@@ -46,23 +46,8 @@ export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
         tools={page.tools}
         sizes={page.teamSizes}
       />
-      {page.sections.length > 0 && (
-        <article className="px-4 py-20 sm:px-6 sm:py-24">
-          <div className="mx-auto flex max-w-3xl flex-col gap-10">
-            {page.sections.map((section) => (
-              <section key={section.heading} className="flex flex-col gap-4">
-                <h2 className="text-2xl sm:text-3xl">{section.heading}</h2>
-                {section.paragraphs.map((paragraph, i) => (
-                  <p key={i} className="text-lg leading-relaxed text-muted-foreground">
-                    {paragraph}
-                  </p>
-                ))}
-              </section>
-            ))}
-          </div>
-        </article>
-      )}
-      {page.faq.length > 0 && <Faq items={page.faq} />}
+      <SectionRows sections={page.sections} />
+      {page.faq.length > 0 && <Faq items={richFaq(page.faq)} />}
       <RelatedLinks links={page.related} />
       <FinalCta />
     </>

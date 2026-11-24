@@ -7,6 +7,11 @@ export const OG_IMAGE = { url: "/og.png", width: 1200, height: 630, alt: `${SITE
 /** A page-specific share image, e.g. a guide's cover. */
 export type ShareImage = { url: string; width: number; height: number; alt: string };
 
+/** A page's cover as its share image (undefined keeps the site image). */
+export function coverShareImage(cover?: { src: string; width: number; height: number; alt: string }): ShareImage | undefined {
+  return cover && { url: cover.src, width: cover.width, height: cover.height, alt: cover.alt };
+}
+
 /**
  * Metadata for a public marketing page. Next merges metadata shallowly, so a page's
  * `openGraph` / `twitter` replace the root layout's: build them in full here.

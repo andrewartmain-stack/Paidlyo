@@ -2,9 +2,9 @@ import { Faq, FinalCta, ScreenshotFrame, SectionHeading, TeamPriceTable } from "
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { ProductPage, VariantPage } from "@/content/pages/schema";
 import { faqJsonLd } from "@/content/structured-data";
-import { CardSection, LinkGrid, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, SectionRows, type Crumb } from "./blocks";
+import { CardSection, LinkGrid, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, SectionRows, type Crumb, type LinkCard, richFaq } from "./blocks";
 
-export type LinkGroup = { id: string; eyebrow?: string; title: string; links: { href: string; title: string; text: string }[] };
+export type LinkGroup = { id: string; eyebrow?: string; title: string; links: LinkCard[] };
 
 /**
  * Product (/invoicing) and variant (/invoicing/free) pages. Order: hero → screenshot → sections →
@@ -40,7 +40,7 @@ export function LandingTemplate({ page, crumbs, linkGroups }: { page: ProductPag
         </div>
       </section>
       <ScreenshotGallery title="See it in Paidlyo" items={rest} />
-      {page.faq.length > 0 && <Faq items={page.faq} />}
+      {page.faq.length > 0 && <Faq items={richFaq(page.faq)} />}
       <RelatedLinks links={page.related} />
       <FinalCta />
     </>

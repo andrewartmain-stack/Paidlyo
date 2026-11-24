@@ -155,7 +155,7 @@ describe("Sanity pages", () => {
     expect(errors).toEqual([]);
     expect(pages[0]).toMatchObject({ slug: "track-time", preview: false, faq: [], related: [] });
     expect(pages[0].cover).toEqual({ src: CMS_GUIDE.cover.src, width: 1600, height: 1000, alt: "Timer" });
-    expect(pages[0].sections[0]).toEqual({ id: "start", heading: "Start a timer", paragraphs: ["Pick a project."], bullets: [] });
+    expect(pages[0].sections[0]).toEqual({ id: "start", heading: "Start a timer", paragraphs: ["Pick a project."], bullets: [], calloutKind: "tip" });
   });
 
   it("turns yes / no comparison cells into checks", () => {

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AUTHOR } from "../author";
 import { CARD_ICONS } from "./icons";
+import { invalidLinks } from "./markdown";
 import { PRODUCT_SLUGS, RESERVED_VARIANT_SLUGS } from "./paths";
 
 /*
@@ -10,6 +11,10 @@ import { PRODUCT_SLUGS, RESERVED_VARIANT_SLUGS } from "./paths";
  */
 
 const text = z.string().trim().min(1);
+/** Text that may use the Markdown subset in markdown.ts; links must be internal (/…) or https. */
+const richText = text.refine((value) => invalidLinks(value).length === 0, {
+  message: "Links must start with / (a page on this site) or https://",
+});
 const isoDate = z.iso.date();
 
 export const slugSchema = z
@@ -28,12 +33,12 @@ const heroSchema = z.object({
   description: text,
 });
 
-const faqSchema = z.object({ question: text, answer: text });
+const faqSchema = z.object({ question: text, answer: richText });
 
 /** Optional icon from the fixed list in icons.ts. */
 const iconSchema = z.enum(CARD_ICONS).optional();
 
-const cardSchema = z.object({ title: text, text, icon: iconSchema });
+const cardSchema = z.object({ title: text, text: richText, icon: iconSchema });
 
 const linkSchema = z.object({
   href: z.string().startsWith("/", "Use an internal path, e.g. /features/timesheets"),
@@ -78,18 +83,31 @@ export const toolPriceSchema = z.object({
 
 const productSchema = z.enum(PRODUCT_SLUGS);
 
-/** A block of text with an optional image beside it (product and variant pages). */
-const sectionSchema = z.object({
+export const CALLOUT_KINDS = ["tip", "note", "warning", "stat"] as const;
+export type CalloutKind = (typeof CALLOUT_KINDS)[number];
+
+/**
+ * A text section, the same on every page type: a heading, formatted `body` (Markdown subset) or
+ * the older `paragraphs` + `bullets`, an optional highlighted box and an optional screenshot.
+ */
+const sectionFields = {
   heading: text,
-  paragraphs: z.array(text).min(1),
-  bullets: z.array(text).default([]),
-  /** One or two sentences shown in a highlighted box: the key takeaway or a tip. */
-  callout: text.optional(),
+  body: richText.optional(),
+  paragraphs: z.array(richText).default([]),
+  bullets: z.array(richText).default([]),
+  /** One or two sentences in a highlighted box. `stat`: put the figure in **bold**. */
+  callout: richText.optional(),
+  calloutKind: z.enum(CALLOUT_KINDS).default("tip"),
   image: screenshotSchema.optional(),
-});
+};
+const hasText = (section: { body?: string; paragraphs: string[] }) => Boolean(section.body) || section.paragraphs.length > 0;
+const TEXT_REQUIRED = { path: ["body"], message: "Add the section text (body)" };
+
+const sectionSchema = z.object(sectionFields).refine(hasText, TEXT_REQUIRED);
+const sectionsSchema = z.array(sectionSchema).max(5).default([]);
 
 /** A card that may link to a feature or other page. */
-const linkedCardSchema = z.object({ title: text, text, icon: iconSchema, href: z.string().startsWith("/").optional() });
+const linkedCardSchema = z.object({ title: text, text: richText, icon: iconSchema, href: z.string().startsWith("/").optional() });
 
 /** A comparison table cell: yes / no, or a short text such as "Paid add-on". */
 const cellSchema = z.union([z.boolean(), text]);
@@ -99,6 +117,8 @@ const pageBase = {
   slug: slugSchema,
   preview: z.boolean().default(false),
   seo: seoSchema,
+  /** Shown on cards linking to the page and used as its share image. */
+  cover: screenshotSchema.optional(),
   /** Target search keywords from the keyword research (not shown; keeps intent explicit). */
   keywords: z.array(text).min(1),
   faq: z.array(faqSchema).default([]),
@@ -141,8 +161,8 @@ export const audienceSchema = z.object({
     rows: z.array(z.object({ label: text, value: text })).min(2),
     total: z.object({ label: text, value: text }).optional(),
   }),
-  /** Optional longer text after the example: headings, paragraphs, bullets, an image. */
-  sections: z.array(sectionSchema).max(5).default([]),
+  /** Optional longer text after the example. */
+  sections: sectionsSchema,
   features: z.array(cardSchema.extend({ href: z.string().startsWith("/").optional() })).min(3).max(6),
   /** Team sizes for the price block, e.g. [3, 8, 20]. */
   teamSizes: z.array(z.number().int().positive()).min(1).max(4),
@@ -161,6 +181,7 @@ export const alternativeSchema = z.object({
   pricing: toolPriceSchema,
   teamSizes: z.array(z.number().int().positive()).min(1).max(4),
   migration: z.array(cardSchema).min(2).max(6),
+  sections: sectionsSchema,
 });
 
 /** /compare/<slug>: "X vs Y" or one tool's pricing explained; Paidlyo is always the last column. */
@@ -177,7 +198,7 @@ export const comparisonSchema = z
     /** `values` has one cell per tool, then Paidlyo's. */
     rows: z.array(z.object({ feature: text, values: z.array(cellSchema) })).min(3),
     teamSizes: z.array(z.number().int().positive()).min(1).max(4),
-    sections: z.array(z.object({ heading: text, paragraphs: z.array(text).min(1) })).default([]),
+    sections: sectionsSchema,
   })
   .superRefine((page, ctx) => {
     page.rows.forEach((row, i) => {
@@ -201,6 +222,7 @@ export const featurePageSchema = z.object({
   screenshots: z.array(screenshotSchema).max(4).default([]),
   steps: z.array(cardSchema).min(2).max(6),
   benefits: z.array(cardSchema).min(2).max(6),
+  sections: sectionsSchema,
 });
 
 /** /guides/<slug>: an article answering one question. Plain paragraphs and images, no markup. */
@@ -211,20 +233,8 @@ export const guideSchema = z.object({
   /** Defaults to the site author (content/author.ts). */
   author: text.default(AUTHOR.name),
   published: isoDate,
-  /** Shown under the title and used as the article image in search results. */
-  cover: screenshotSchema.optional(),
   sections: z
-    .array(
-      z.object({
-        id: slugSchema,
-        heading: text,
-        paragraphs: z.array(text).min(1),
-        bullets: z.array(text).default([]),
-        callout: text.optional(),
-        /** Shown after the section's text. */
-        image: screenshotSchema.optional(),
-      }),
-    )
+    .array(z.object({ id: slugSchema, ...sectionFields }).refine(hasText, TEXT_REQUIRED))
     .min(1),
 });
 

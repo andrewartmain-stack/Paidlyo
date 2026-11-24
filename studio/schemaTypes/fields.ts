@@ -159,7 +159,7 @@ const keywords = defineField({
 });
 
 /** Search fields every page has. */
-export const pageSearch = [seo, keywords];
+export const pageSearch = [seo, keywords, image("cover", "Cover image (on cards linking here, and the share image)")];
 
 /** Slug, then search fields. `perProduct`: the slug only has to be unique within its product. */
 export const pageStart = (source: string, { perProduct = false } = {}) => [
@@ -173,7 +173,47 @@ export const pageStart = (source: string, { perProduct = false } = {}) => [
   ...pageSearch,
 ];
 
-/** Text blocks with an optional image: required (1–8) on product pages, optional (≤ 5) on audiences. */
+const hiddenWhenEmpty = ({ value }: { value?: unknown }) => !Array.isArray(value) || value.length === 0;
+
+/** Fields of a text section, the same on every page type (guides add an anchor). */
+export const sectionTextFields = [
+  text("heading", "Heading"),
+  text("body", "Text", {
+    rows: 14,
+    optional: true,
+    description:
+      'Formatting: **bold** · [link text](/invoicing/online) · "- " bullets · "1. " numbered · > "Quote" — Name, Company · | table | rows | · ### Subheading · blank line = new paragraph.',
+  }),
+  // Older plain fields: shown only on sections that already use them.
+  defineField({ name: "paragraphs", title: "Paragraphs (old format)", type: "array", of: [{ type: "text", rows: 4 }], hidden: hiddenWhenEmpty }),
+  defineField({ name: "bullets", title: "Bullets (old format)", type: "array", of: [{ type: "string" }], hidden: hiddenWhenEmpty }),
+  defineField({
+    name: "calloutKind",
+    title: "Highlighted box type",
+    type: "string",
+    options: {
+      list: [
+        { value: "tip", title: "Tip (lightbulb)" },
+        { value: "note", title: "Note (info)" },
+        { value: "warning", title: "Warning" },
+        { value: "stat", title: "Key number: start the box with the figure in **bold**" },
+      ],
+      layout: "radio",
+      direction: "horizontal",
+    },
+    initialValue: "tip",
+  }),
+  calloutField,
+  image("image", "Screenshot (optional)"),
+];
+
+/** A section needs its text: `body`, or the old paragraphs. */
+export const sectionHasText = (value: unknown) => {
+  const section = (value ?? {}) as { body?: string; paragraphs?: unknown[] };
+  return section.body || section.paragraphs?.length ? true : "Add the section text";
+};
+
+/** Text sections with an optional screenshot each: required (1–8) on product pages, optional (≤ 5) elsewhere. */
 export const sectionsField = ({ min, max }: { min: number; max: number }) =>
   defineField({
     name: "sections",
@@ -183,13 +223,8 @@ export const sectionsField = ({ min, max }: { min: number; max: number }) =>
       defineArrayMember({
         type: "object",
         name: "landingSection",
-        fields: [
-          text("heading", "Heading"),
-          defineField({ name: "paragraphs", title: "Paragraphs", type: "array", of: [{ type: "text", rows: 4 }], validation: (rule) => rule.required().min(1) }),
-          defineField({ name: "bullets", title: "Bullets", type: "array", of: [{ type: "string" }] }),
-          calloutField,
-          image("image", "Image"),
-        ],
+        fields: sectionTextFields,
+        validation: (rule) => rule.custom(sectionHasText),
         preview: { select: { title: "heading", media: "image" } },
       }),
     ],

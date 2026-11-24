@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/marketing/json-ld";
 import type { AudiencePage } from "@/content/pages/schema";
 import { PRODUCT_NAMES } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { CardSection, ExampleCard, LinkGrid, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, SectionRows, type Crumb } from "./blocks";
+import { CardSection, ExampleCard, LinkGrid, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, SectionRows, type Crumb, type LinkCard, richFaq } from "./blocks";
 
 /**
  * /{product}/for/<slug>: one product for one audience. Section order: problem → example →
@@ -16,7 +16,7 @@ export function AudienceTemplate({
 }: {
   page: AudiencePage;
   crumbs: Crumb[];
-  siblings: { href: string; title: string; text: string }[];
+  siblings: LinkCard[];
 }) {
   const [lead, ...rest] = page.screenshots;
   return (
@@ -51,7 +51,7 @@ export function AudienceTemplate({
         </div>
       </section>
       <ScreenshotGallery title={`Paidlyo for ${page.name.toLowerCase()}`} items={rest} />
-      {page.faq.length > 0 && <Faq items={page.faq} title={`Questions from ${page.name.toLowerCase()}`} />}
+      {page.faq.length > 0 && <Faq items={richFaq(page.faq)} title={`Questions from ${page.name.toLowerCase()}`} />}
       <LinkGrid id="more" eyebrow="More" title={`More about ${PRODUCT_NAMES[page.product].toLowerCase()} in Paidlyo`} links={siblings} muted />
       <RelatedLinks links={page.related} />
       <FinalCta />

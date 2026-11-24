@@ -5,7 +5,7 @@ import { getPages } from "@/content/pages";
 import { familyLinks } from "@/content/pages/family";
 import { isProduct, PAGE_PATHS, PRODUCT_NAMES, PRODUCT_SLUGS } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
-import { marketingMetadata } from "@/lib/seo";
+import { coverShareImage, marketingMetadata } from "@/lib/seo";
 
 /*
  * Product pages: /invoicing, /time-tracking, /time-tracking-and-invoicing (Product page in
@@ -26,7 +26,12 @@ async function load(product: string) {
 export async function generateMetadata({ params }: PageProps<"/[product]">): Promise<Metadata> {
   const page = await load((await params).product);
   if (!page) return {};
-  return marketingMetadata({ title: page.seo.title, description: page.seo.description, path: PAGE_PATHS.product(page.product) });
+  return marketingMetadata({
+    title: page.seo.title,
+    description: page.seo.description,
+    path: PAGE_PATHS.product(page.product),
+    image: coverShareImage(page.cover),
+  });
 }
 
 export default async function Page({ params }: PageProps<"/[product]">) {

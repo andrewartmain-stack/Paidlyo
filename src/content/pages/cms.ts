@@ -57,17 +57,17 @@ export const cmsTag = (type: PageType) => `cms:${type}`;
 
 /* GROQ: images become { src, width, height, alt, caption }; missing dates fall back to Sanity's. */
 const IMAGE = `{ "src": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, alt, caption }`;
-const COMMON = `..., "slug": slug.current, "updated": coalesce(updated, string::split(_updatedAt, "T")[0])`;
-const LANDING = `screenshots[]${IMAGE}, sections[]{..., image${IMAGE}}`;
+/* Every page type: cover, sections (with images) and screenshots; fields a type lacks come back null and are dropped. */
+const COMMON = `..., "slug": slug.current, "updated": coalesce(updated, string::split(_updatedAt, "T")[0]), cover${IMAGE}, sections[]{..., image${IMAGE}}, screenshots[]${IMAGE}`;
 const PROJECTIONS: Record<PageType, string> = {
   // A product page has no slug field: its slug is the product.
-  product: `${COMMON}, "slug": product, ${LANDING}`,
-  variant: `${COMMON}, ${LANDING}`,
-  audience: `${COMMON}, ${LANDING}`,
+  product: `${COMMON}, "slug": product`,
+  variant: COMMON,
+  audience: COMMON,
   alternative: COMMON,
   comparison: COMMON,
-  feature: `${COMMON}, screenshots[]${IMAGE}`,
-  guide: `${COMMON}, "published": coalesce(published, string::split(_createdAt, "T")[0]), cover${IMAGE}, sections[]{..., image${IMAGE}}`,
+  feature: COMMON,
+  guide: `${COMMON}, "published": coalesce(published, string::split(_createdAt, "T")[0])`,
 };
 
 /** Published documents of one type (pass `{ docType: cmsDocType(type) }` as params). */

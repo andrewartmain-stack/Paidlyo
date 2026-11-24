@@ -208,6 +208,16 @@
   end of long text, Person (jobTitle, image) in guide BlogPosting JSON-LD; guide `author`
   defaults to him. CSV columns `*.icon`, `sections.N.callout`; workbook + Claude instructions
   regenerated.
+- [x] Rich content 2026-11-24: one section format on all 7 page types (heading, `body` in a
+  Markdown subset — bold, links, bullet/numbered lists, pull quotes, tables, ### subheadings —
+  parsed by `content/pages/markdown.ts`, rendered by `components/marketing/rich-text.tsx`; old
+  paragraphs/bullets still accepted), optional screenshot per section, callout kinds
+  tip/note/warning/stat (no side border). Inline links render only when the target is live
+  (`linkablePaths()`), else plain text; links must be `/…` or `https://`. Bold/links also in card
+  texts, FAQ answers (JSON-LD gets plain text) and callouts. Optional `cover` on every page type:
+  share image + image on "More about…" and Related cards (`content/pages/cards.ts`; branded
+  placeholder without a cover). Features and alternatives gained sections; comparison sections
+  use the shared format.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

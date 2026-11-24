@@ -5,7 +5,7 @@ import { getPages, livePaths } from "@/content/pages";
 import { productCrumb, siblingLinks } from "@/content/pages/family";
 import { isProduct, PAGE_PATHS, PRODUCT_NAMES } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
-import { marketingMetadata } from "@/lib/seo";
+import { coverShareImage, marketingMetadata } from "@/lib/seo";
 
 /* Variant pages: /invoicing/free, /time-tracking/mac … (Product variant in Sanity). */
 
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/[product]/[varian
     description: page.seo.description,
     path: PAGE_PATHS.variant(page.product, page.slug),
     noindex: page.preview,
+    image: coverShareImage(page.cover),
   });
 }
 

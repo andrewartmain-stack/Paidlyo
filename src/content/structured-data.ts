@@ -1,4 +1,5 @@
 import { absoluteUrl } from "@/lib/site-url";
+import { plainText } from "./pages/markdown";
 import { FAQ, FEATURES, SITE, TOUR, type FaqItem } from "./landing";
 import { PLAN } from "./pricing";
 
@@ -48,7 +49,7 @@ export function faqJsonLd(items: FaqItem[] = FAQ) {
     mainEntity: items.map((item) => ({
       "@type": "Question",
       name: item.question,
-      acceptedAnswer: { "@type": "Answer", text: item.answer },
+      acceptedAnswer: { "@type": "Answer", text: plainText(item.answer) },
     })),
   };
 }

@@ -1,16 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, ChevronRight, Lightbulb, Minus } from "lucide-react";
+import {
+  ArrowLeftRight,
+  ArrowRight,
+  BookOpen,
+  ChartColumn,
+  Check,
+  ChevronRight,
+  Info,
+  Layers,
+  LayoutGrid,
+  Lightbulb,
+  Minus,
+  Scale,
+  Sparkles,
+  TriangleAlert,
+  UsersRound,
+  type LucideIcon,
+} from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { JsonLd } from "@/components/marketing/json-ld";
 import { CardIcon } from "@/components/marketing/card-icon";
+import { InlineText, RichText } from "@/components/marketing/rich-text";
 import { ScreenshotFrame, SectionHeading } from "@/components/marketing/sections";
 import { AUTHOR } from "@/content/author";
 import { HERO } from "@/content/landing";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { paidlyoMonthlyCents, toolMonthlyCents } from "@/content/pages/pricing-math";
+import { pageCards } from "@/content/pages/cards";
 import type { CardIconKey } from "@/content/pages/icons";
-import type { ComparisonCell, LandingSection, Screenshot, ToolPrice } from "@/content/pages/schema";
+import type { PageType } from "@/content/pages/paths";
+import type { CalloutKind, ComparisonCell, LandingSection, Screenshot, ToolPrice } from "@/content/pages/schema";
 import { breadcrumbJsonLd } from "@/content/structured-data";
 
 /* Building blocks shared by the programmatic page templates. Server components only. */
@@ -128,7 +148,9 @@ export function CardSection({
             <li key={`${i}-${item.title}`} className="flex flex-col gap-3 rounded-2xl border bg-card p-6">
               {item.icon && <CardIcon icon={item.icon} className="mb-1" />}
               <h3 className="text-lg">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                <InlineText text={item.text} />
+              </p>
               {item.href && (
                 <Link href={item.href} className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-brand hover:underline">
                   Learn more about {item.title.toLowerCase()}
@@ -344,26 +366,16 @@ export function PriceComparison({ title, tools, sizes }: { title: string; tools:
 }
 
 /** Internal links to related pages, with descriptive anchor text. */
-export function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
-  if (links.length === 0) return null;
-  return (
-    <nav aria-labelledby="related-title" className="px-4 pb-20 sm:px-6">
-      <div className="mx-auto flex max-w-3xl flex-col gap-4">
-        <h2 id="related-title" className="text-xl">
-          Related
-        </h2>
-        <ul className="flex flex-wrap gap-2">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className="inline-flex rounded-full border bg-card px-4 py-2 text-sm hover:bg-accent">
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
-  );
+/** Links the author picked, shown as cards with the target page's cover. Links to unpublished pages are left out. */
+export async function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
+  const cards = await pageCards();
+  const items = links.flatMap((link): LinkCard[] => {
+    const target = cards.get(link.href.split(/[?#]/)[0]);
+    if (target) return [{ ...target, href: link.href, title: link.label }];
+    // Fixed pages (pricing, sign up …) have no cover: they get the branded placeholder.
+    return STATIC_LINKS.has(link.href.split(/[?#]/)[0]) ? [{ href: link.href, title: link.label, text: "" }] : [];
+  });
+  return <LinkGrid id="related" eyebrow="Keep reading" title="Related" links={items} />;
 }
 
 /** Text sections, each with an optional image; image rows alternate sides on wide screens. */
@@ -412,11 +424,44 @@ export function AuthorBox({ compact = false, className }: { compact?: boolean; c
 }
 
 /** A highlighted takeaway under a section's text. */
-export function Callout({ text }: { text: string }) {
+const CALLOUTS: Record<Exclude<CalloutKind, "stat">, { label: string; icon: LucideIcon; box: string; chip: string }> = {
+  tip: { label: "Tip", icon: Lightbulb, box: "bg-accent/70", chip: "bg-primary text-primary-foreground" },
+  note: { label: "Note", icon: Info, box: "bg-muted", chip: "bg-background text-foreground" },
+  warning: { label: "Watch out", icon: TriangleAlert, box: "bg-warning/10", chip: "bg-warning/20 text-warning" },
+};
+
+/** A highlighted box under a section: a tip, a note, a warning, or a key number (`stat`, figure in **bold**). */
+export function Callout({ text, kind = "tip" }: { text: string; kind?: CalloutKind }) {
+  if (kind === "stat") {
+    // "**3 h** saved per invoice run": the leading bold part is the figure.
+    const figure = text.match(/^\*\*(.+?)\*\*/)?.[1];
+    const label = figure ? text.replace(/^\*\*.+?\*\*\s*/, "") : text;
+    return (
+      <aside className="flex items-center gap-5 rounded-3xl bg-cream px-6 py-5">
+        {figure ? (
+          <p className="font-heading text-4xl leading-none font-semibold text-brand sm:text-5xl">{figure}</p>
+        ) : (
+          <ChartColumn className="size-8 shrink-0 text-brand" aria-hidden />
+        )}
+        <p className="text-base leading-snug text-foreground">
+          <InlineText text={label} />
+        </p>
+      </aside>
+    );
+  }
+  const style = CALLOUTS[kind];
+  const Icon = style.icon;
   return (
-    <aside className="flex gap-3 rounded-2xl border-l-4 border-brand bg-accent/60 p-5">
-      <Lightbulb className="mt-0.5 size-5 shrink-0 text-brand" aria-hidden />
-      <p className="text-base leading-relaxed text-foreground">{text}</p>
+    <aside className={`flex gap-4 rounded-3xl p-5 ${style.box}`}>
+      <span className={`flex size-9 shrink-0 items-center justify-center rounded-full ${style.chip}`}>
+        <Icon className="size-4.5" aria-hidden />
+      </span>
+      <div className="flex flex-col gap-1">
+        <p className="text-sm font-semibold">{style.label}</p>
+        <p className="text-base leading-relaxed text-foreground">
+          <InlineText text={text} />
+        </p>
+      </div>
     </aside>
   );
 }
@@ -475,12 +520,16 @@ export function ArticleSidebar({ items }: { items: TocItem[] }) {
 }
 
 /** Paragraphs, bullets and callout of one text section. */
-function SectionBody({ section }: { section: { paragraphs: string[]; bullets: string[]; callout?: string } }) {
+export type SectionText = { body?: string; paragraphs: string[]; bullets: string[]; callout?: string; calloutKind?: CalloutKind };
+
+/** A section's text: formatted `body`, or the older paragraphs and bullets; then its callout. */
+export function SectionBody({ section, muted = true }: { section: SectionText; muted?: boolean }) {
   return (
     <>
+      {section.body && <RichText text={section.body} muted={muted} />}
       {section.paragraphs.map((paragraph, j) => (
-        <p key={j} className="text-lg leading-relaxed text-muted-foreground">
-          {paragraph}
+        <p key={j} className={`text-lg leading-relaxed ${muted ? "text-muted-foreground" : ""}`}>
+          <InlineText text={paragraph} />
         </p>
       ))}
       {section.bullets.length > 0 && (
@@ -488,14 +537,21 @@ function SectionBody({ section }: { section: { paragraphs: string[]; bullets: st
           {section.bullets.map((bullet, j) => (
             <li key={`${j}-${bullet}`} className="flex gap-2 text-lg">
               <Check className="mt-1 size-5 shrink-0 text-brand" aria-hidden />
-              {bullet}
+              <span>
+                <InlineText text={bullet} />
+              </span>
             </li>
           ))}
         </ul>
       )}
-      {section.callout && <Callout text={section.callout} />}
+      {section.callout && <Callout text={section.callout} kind={section.calloutKind} />}
     </>
   );
+}
+
+/** FAQ items with **bold** and links in the answers (the JSON-LD gets plain text). */
+export function richFaq(items: { question: string; answer: string }[]) {
+  return items.map((item) => ({ question: item.question, answer: <InlineText text={item.answer} /> }));
 }
 
 /** From this many sections on, text is laid out as an article with a sidebar. */
@@ -569,6 +625,46 @@ export function SectionRows({ sections }: { sections: LandingSection[] }) {
 }
 
 /** Links to related pages (a product's variants and audiences, or a page's siblings). Renders nothing when empty. */
+export type LinkCard = { href: string; title: string; text: string; type?: PageType; image?: Screenshot };
+
+const STATIC_LINKS = new Set(["/", "/pricing", "/signup", "/login", "/terms", "/privacy"]);
+
+const TYPE_ICONS: Record<PageType, LucideIcon> = {
+  product: Layers,
+  variant: Sparkles,
+  audience: UsersRound,
+  feature: LayoutGrid,
+  alternative: ArrowLeftRight,
+  comparison: Scale,
+  guide: BookOpen,
+};
+
+/** The linked page's cover, or a branded placeholder with its page-type icon. */
+function CardImage({ card }: { card: LinkCard }) {
+  if (card.image) {
+    return (
+      <Image
+        src={card.image.src}
+        alt=""
+        width={card.image.width}
+        height={card.image.height}
+        sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+        className="aspect-[16/10] w-full bg-muted object-cover"
+      />
+    );
+  }
+  const Icon = card.type ? TYPE_ICONS[card.type] : ArrowRight;
+  return (
+    <div aria-hidden className="relative flex aspect-[16/10] w-full items-end overflow-hidden bg-primary/30 p-5">
+      <div className="absolute -top-10 -right-10 size-40 rounded-full bg-primary/50" />
+      <span className="relative flex size-12 items-center justify-center rounded-2xl bg-background text-brand shadow-sm">
+        <Icon className="size-6" />
+      </span>
+    </div>
+  );
+}
+
+/** Cards linking to other pages, each with the page's cover on top. Renders nothing when empty. */
 export function LinkGrid({
   id,
   eyebrow,
@@ -579,7 +675,7 @@ export function LinkGrid({
   id: string;
   eyebrow?: string;
   title: string;
-  links: { href: string; title: string; text: string }[];
+  links: LinkCard[];
   muted?: boolean;
 }) {
   if (links.length === 0) return null;
@@ -587,15 +683,18 @@ export function LinkGrid({
     <section aria-labelledby={`${id}-title`} className={muted ? "bg-muted/60 py-20 sm:py-24" : "py-20 sm:py-24"}>
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6">
         <SectionHeading id={`${id}-title`} eyebrow={eyebrow} title={title} />
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {links.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="group flex h-full flex-col gap-2 rounded-2xl border bg-card p-6 hover:border-brand">
-                <span className="flex items-center justify-between gap-2 text-lg font-medium">
-                  {link.title}
-                  <ArrowRight className="size-4 text-brand transition-transform group-hover:translate-x-0.5" aria-hidden />
+              <Link href={link.href} className="group flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-colors hover:border-brand">
+                <CardImage card={link} />
+                <span className="flex flex-1 flex-col gap-2 p-5">
+                  <span className="flex items-center justify-between gap-2 text-lg font-medium">
+                    {link.title}
+                    <ArrowRight className="size-4 shrink-0 text-brand transition-transform group-hover:translate-x-0.5" aria-hidden />
+                  </span>
+                  {link.text && <span className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">{link.text}</span>}
                 </span>
-                <span className="text-sm leading-relaxed text-muted-foreground">{link.text}</span>
               </Link>
             </li>
           ))}

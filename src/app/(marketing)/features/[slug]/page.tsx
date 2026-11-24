@@ -4,7 +4,7 @@ import { FeatureTemplate } from "@/components/marketing/templates/feature-templa
 import { getPages } from "@/content/pages";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
-import { marketingMetadata } from "@/lib/seo";
+import { coverShareImage, marketingMetadata } from "@/lib/seo";
 
 /*
  * Pages from Sanity (studio/) plus the template preview in src/content/pages/features.ts. Slugs published
@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/features/[slug]">
     description: page.seo.description,
     path: PAGE_PATHS.feature(page.slug),
     noindex: page.preview,
+    image: coverShareImage(page.cover),
   });
 }
 

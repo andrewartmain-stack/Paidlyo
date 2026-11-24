@@ -5,7 +5,7 @@ import { getPages, livePaths } from "@/content/pages";
 import { productCrumb, siblingLinks } from "@/content/pages/family";
 import { isProduct, PAGE_PATHS } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
-import { marketingMetadata } from "@/lib/seo";
+import { coverShareImage, marketingMetadata } from "@/lib/seo";
 
 /* Audience pages: /invoicing/for/small-business, /time-tracking/for/agencies … (Audience page in Sanity). */
 
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/[product]/for/[au
     description: page.seo.description,
     path: PAGE_PATHS.audience(page.product, page.slug),
     noindex: page.preview,
+    image: coverShareImage(page.cover),
   });
 }
 

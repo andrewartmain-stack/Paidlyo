@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CARD_ICON_COMPONENTS } from "@/components/marketing/card-icon";
@@ -47,7 +47,6 @@ import {
   TOUR_INTRO,
   TRUST,
   type Audience,
-  type FaqItem,
   type Feature,
   type TourItem,
   type TrustItem,
@@ -518,7 +517,7 @@ export function AskAi() {
   );
 }
 
-export function Faq({ items = FAQ, title = "Questions, answered" }: { items?: FaqItem[]; title?: string }) {
+export function Faq({ items = FAQ, title = "Questions, answered" }: { items?: { question: string; answer: ReactNode }[]; title?: string }) {
   return (
     <section id="faq" aria-labelledby="faq-title" className="scroll-mt-20 bg-background py-24 sm:py-28">
       <div className="mx-auto flex max-w-3xl flex-col gap-12 px-4 sm:px-6">
