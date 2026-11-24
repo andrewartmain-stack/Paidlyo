@@ -3,23 +3,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/app-shell/logo";
 import { NAV_GROUPS, NAV_PLAIN_LINKS } from "@/content/landing";
 import { audiencePaths } from "@/content/pages";
+import { liveIndexes } from "@/content/pages/indexes";
 import { MarketingMobileNav } from "./mobile-nav";
-import type { ResolvedNavGroup } from "./nav-icons";
+import { resolveNavGroups, type ResolvedNavGroup } from "./nav-icons";
 import { MarketingNavMenu } from "./nav-menu";
 import { HeaderScrollShell } from "./scroll-shell";
 
-const AUDIENCE_FALLBACK = "/#who-its-for";
-
-/** Resolve audience slugs to published pages (fallback: the landing section). */
+/** Nav links for what's published now: audience pages, and index pages that have content. */
 async function resolveGroups(): Promise<ResolvedNavGroup[]> {
-  const paths = await audiencePaths();
-  return NAV_GROUPS.map((group) => ({
-    ...group,
-    items: group.items.map(({ href, audienceSlug, ...item }) => ({
-      ...item,
-      href: href ?? (audienceSlug ? paths.get(audienceSlug) : undefined) ?? AUDIENCE_FALLBACK,
-    })),
-  }));
+  const [paths, indexes] = await Promise.all([audiencePaths(), liveIndexes()]);
+  return resolveNavGroups(NAV_GROUPS, { audiencePaths: paths, liveIndexes: new Set(indexes.map((index) => index.type)) });
 }
 
 /** Public site header: floating glass pill. Static: no session reads; CMS data is cached, so pages stay prerendered. */

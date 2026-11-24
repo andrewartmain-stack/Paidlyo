@@ -1,7 +1,8 @@
 import { Faq, FinalCta, ScreenshotFrame, SectionHeading, TeamPriceTable } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { AudiencePage } from "@/content/pages/schema";
-import { PAGE_PATHS } from "@/content/pages/paths";
+import { INDEX_COPY } from "@/content/pages/indexes";
+import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
 import { CardSection, ExampleCard, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery } from "./blocks";
 
@@ -15,6 +16,7 @@ export function AudienceTemplate({ page }: { page: AudiencePage }) {
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },
+          { name: INDEX_COPY.audience.label, path: INDEX_PATHS.audience },
           { name: page.name, path: PAGE_PATHS.audience(page.slug) },
         ]}
         eyebrow={page.hero.eyebrow}

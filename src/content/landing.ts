@@ -3,6 +3,8 @@
  * no online card payments for invoices until item 10b ships. Plan prices live in pricing.ts.
  */
 
+import type { INDEX_PATHS } from "@/content/pages/paths";
+
 export const SITE = {
   name: "Paidlyo",
   tagline: "Time tracking and invoicing software for teams that bill by the hour",
@@ -31,7 +33,11 @@ export type NavIconKey =
   | "agency"
   | "consultancy"
   | "freelancer"
-  | "business";
+  | "business"
+  | "guide"
+  | "compare"
+  | "switch"
+  | "features";
 
 export type NavItem = {
   title: string;
@@ -41,9 +47,15 @@ export type NavItem = {
   href?: string;
   /** Audience page slug: links to the page once published, else to /#who-its-for. */
   audienceSlug?: string;
+  /** Index page: the item links to it and is shown only once that index has a published page. */
+  index?: keyof typeof INDEX_PATHS;
 };
 
-export type NavGroup = { label: string; columns: 1 | 2; items: NavItem[]; footer?: NavLink };
+/** Link under a dropdown: a fixed href, or an index page (shown once it has a published page). */
+export type NavGroupFooter = { label: string; href?: string; index?: keyof typeof INDEX_PATHS };
+
+/** A dropdown. Groups whose items are all hidden are left out of the header. */
+export type NavGroup = { label: string; columns: 1 | 2; items: NavItem[]; footer?: NavGroupFooter };
 
 /** Header dropdown menus (icons are keys; the components map them to lucide icons). */
 export const NAV_GROUPS: NavGroup[] = [
@@ -63,11 +75,22 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: "Solutions",
     columns: 1,
+    footer: { label: "All solutions", index: "audience" },
     items: [
       { title: "Agencies & studios", description: "Track client work and bill it fast.", icon: "agency", audienceSlug: "agencies" },
       { title: "Consultancies", description: "Bill expert time with clear reports.", icon: "consultancy", audienceSlug: "consultants" },
       { title: "Freelancers", description: "Simple tracking and invoicing, solo.", icon: "freelancer", audienceSlug: "freelancers" },
       { title: "Small businesses & teams", description: "One place for hours and invoices.", icon: "business", audienceSlug: "small-business" },
+    ],
+  },
+  {
+    label: "Resources",
+    columns: 1,
+    items: [
+      { title: "Guides", description: "How-tos on tracking hours and getting paid.", icon: "guide", index: "guide" },
+      { title: "Comparisons", description: "Tools side by side, with prices.", icon: "compare", index: "comparison" },
+      { title: "Alternatives", description: "Switching from another tool.", icon: "switch", index: "alternative" },
+      { title: "Features", description: "Everything Paidlyo does, page by page.", icon: "features", index: "feature" },
     ],
   },
 ];

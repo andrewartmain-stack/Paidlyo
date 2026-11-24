@@ -170,6 +170,11 @@
   cover). Noindex pages are now `noindex, follow`. Auth pages removed from robots.txt Disallow
   (`AUTH_PATHS`) so Google reads their noindex. Production `NEXT_PUBLIC_APP_URL` fixed (was
   localhost). User: add Search Console + submit sitemap.
+- [x] Nav for index pages 2026-11-24: header "Resources" dropdown (Guides, Comparisons,
+  Alternatives, Features) and "All solutions" under Solutions → new `/for` audience index.
+  `resolveNavGroups()` (nav-icons.ts) shows an item only when its index has a published page and
+  drops empty groups, so the header is unchanged until content exists. Mobile menu shows group
+  footers. Audience breadcrumbs go through `/for`.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

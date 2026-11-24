@@ -53,6 +53,11 @@ export function MarketingMobileNav({ groups, links }: MobileNavProps) {
                   );
                 })}
               </ul>
+              {group.footer && (
+                <Link href={group.footer.href} onClick={close} className={`block px-2 py-2 text-sm font-medium text-brand ${ROW}`}>
+                  {group.footer.label}
+                </Link>
+              )}
             </section>
           ))}
           <ul className="flex flex-col border-t pt-3">
