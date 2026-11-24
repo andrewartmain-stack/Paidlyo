@@ -17,7 +17,12 @@ import { indexItems, liveIndexes } from "@/content/pages/indexes";
 import { marketingMetadata, OG_IMAGE } from "@/lib/seo";
 
 // Sanity documents per test; the real module uses a Next cache scope and the network.
-vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: vi.fn(async () => []) }));
+// Cached and live reads return the same documents here.
+vi.mock("@/content/pages/cms-source", () => {
+  const fetchCmsDocs = vi.fn(async () => []);
+  return { fetchCmsDocs, fetchCmsDocsLive: fetchCmsDocs };
+});
+vi.mock("next/server", () => ({ connection: async () => {} }));
 
 afterEach(() => {
   vi.unstubAllEnvs();

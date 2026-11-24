@@ -10,7 +10,8 @@ import { marketingMetadata } from "@/lib/seo";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
 
 // The sitemap reads CMS pages through a Next cache scope; no Sanity documents here.
-vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: async () => [] }));
+vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: async () => [], fetchCmsDocsLive: async () => [] }));
+vi.mock("next/server", () => ({ connection: async () => {} }));
 
 afterEach(() => vi.unstubAllEnvs());
 

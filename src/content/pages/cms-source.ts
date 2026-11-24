@@ -23,3 +23,18 @@ export async function fetchCmsDocs(type: PageType): Promise<unknown[]> {
     return [];
   }
 }
+
+/**
+ * The same documents read on every call, through Sanity's CDN (Sanity refreshes it on publish).
+ * For the sitemap: on Vercel its cached copy wasn't refreshed by the webhook, so it reads live.
+ */
+export async function fetchCmsDocsLive(type: PageType): Promise<unknown[]> {
+  try {
+    return await sanity
+      .withConfig({ useCdn: true })
+      .fetch<unknown[]>(pagesQuery(type), { docType: cmsDocType(type) }, { cache: "no-store" });
+  } catch (error) {
+    console.error(`[cms] Could not load ${type} pages from Sanity:`, error instanceof Error ? error.message : error);
+    return [];
+  }
+}

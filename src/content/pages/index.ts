@@ -1,7 +1,7 @@
 import { ALTERNATIVE_PAGES } from "./alternatives";
 import { AUDIENCE_PAGES } from "./audiences";
 import { parseCmsPages, type PageByType, type PageType } from "./cms";
-import { fetchCmsDocs } from "./cms-source";
+import { fetchCmsDocs, fetchCmsDocsLive } from "./cms-source";
 import { COMPARISON_PAGES } from "./comparisons";
 import { FEATURE_PAGES } from "./features";
 import { GUIDE_PAGES } from "./guides";
@@ -17,23 +17,27 @@ const CODE_PAGES: { [K in PageType]: PageByType[K][] } = {
   guide: GUIDE_PAGES,
 };
 
+/** `live` reads Sanity on every call instead of the cached copy (sitemap only). */
+export type ReadOptions = { live?: boolean };
+
 /** Every page of one type: code pages first, then valid published Sanity documents with a new slug. */
-export async function getPages<T extends PageType>(type: T): Promise<PageByType[T][]> {
+export async function getPages<T extends PageType>(type: T, { live = false }: ReadOptions = {}): Promise<PageByType[T][]> {
   const code: PageByType[T][] = CODE_PAGES[type];
-  const { pages, errors } = parseCmsPages(type, await fetchCmsDocs(type));
+  const docs = live ? await fetchCmsDocsLive(type) : await fetchCmsDocs(type);
+  const { pages, errors } = parseCmsPages(type, docs);
   for (const error of errors) console.error(`[cms] Skipped ${type} "${error.slug}": ${error.message}`);
   const codeSlugs = new Set(code.map((page) => page.slug));
   return [...code, ...pages.filter((page) => !codeSlugs.has(page.slug))];
 }
 
 /** Every real (non-preview) programmatic page, for the sitemap. */
-export async function publishedPages(): Promise<{ path: string; updated: string }[]> {
+export async function publishedPages(options: ReadOptions = {}): Promise<{ path: string; updated: string }[]> {
   const [audiences, alternatives, comparisons, features, guides] = await Promise.all([
-    getPages("audience"),
-    getPages("alternative"),
-    getPages("comparison"),
-    getPages("feature"),
-    getPages("guide"),
+    getPages("audience", options),
+    getPages("alternative", options),
+    getPages("comparison", options),
+    getPages("feature", options),
+    getPages("guide", options),
   ]);
   return [
     ...published(audiences).map((p) => ({ path: PAGE_PATHS.audience(p.slug), updated: p.updated })),

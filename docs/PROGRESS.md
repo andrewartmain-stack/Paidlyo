@@ -159,8 +159,9 @@
   examples), `cd studio && npm run import -- <folder> [--dry-run] [--publish]` (logic in
   `src/content/pages/cms-rows.ts`, runs with `sanity login`, drafts by default, IDs
   `<type>Page-<slug>`). Live and tested 2026-11-24 (publish / edit / delete). Webhook uses
-  `revalidateTag(tag, { expire: 0 })` + `revalidatePath("/sitemap.xml")` (Vercel didn't refresh
-  the sitemap by tag); Sanity fetch uses `cache: "no-store"` so Next's fetch cache (untagged,
+  `revalidateTag(tag, { expire: 0 })`. The sitemap is dynamic (ƒ, `connection()`) and reads
+  Sanity live via its CDN (`fetchCmsDocsLive`): on Vercel a cached sitemap kept stale data even
+  after revalidateTag/revalidatePath, while pages refreshed fine. Cached Sanity fetch uses `cache: "no-store"` so Next's fetch cache (untagged,
   kept across builds) never serves stale content.
 - [x] SEO fixes 2026-11-24: index pages `/guides`, `/alternatives`, `/compare`
   (`src/content/pages/indexes.ts`, `IndexTemplate`; noindex + out of sitemap/footer until they

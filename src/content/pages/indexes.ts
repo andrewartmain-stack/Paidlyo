@@ -1,4 +1,4 @@
-import { getPages } from "./index";
+import { getPages, type ReadOptions } from "./index";
 import { INDEX_PATHS, PAGE_PATHS } from "./paths";
 import { published } from "./schema";
 
@@ -75,12 +75,12 @@ export async function indexItems(type: Exclude<IndexType, "feature">): Promise<I
 }
 
 /** Index pages that have at least one published page, for the footer and the sitemap. */
-export async function liveIndexes(): Promise<{ type: IndexType; path: string; label: string }[]> {
+export async function liveIndexes(options: ReadOptions = {}): Promise<{ type: IndexType; path: string; label: string }[]> {
   const [features, guides, alternatives, comparisons] = await Promise.all([
-    getPages("feature"),
-    getPages("guide"),
-    getPages("alternative"),
-    getPages("comparison"),
+    getPages("feature", options),
+    getPages("guide", options),
+    getPages("alternative", options),
+    getPages("comparison", options),
   ]);
   const counts: Record<IndexType, number> = {
     feature: published(features).length,
