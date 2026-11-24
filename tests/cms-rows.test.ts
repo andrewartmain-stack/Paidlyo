@@ -109,6 +109,29 @@ describe("validation and Sanity documents", () => {
     expect(validateContent("product", { ...row, product: "payroll" }, IMAGES)[0]).toMatch(/^product: /);
   });
 
+  it("validates an audience row with optional text sections", () => {
+    const row = rowToContent({
+      product: "invoicing",
+      slug: "small-business",
+      name: "Small businesses",
+      "seo.title": "Small Business Invoicing | Paidlyo",
+      "seo.description": "Invoices from tracked time.",
+      keywords: "small business invoicing",
+      "hero.title": "Invoicing for small businesses",
+      "hero.description": "Bill every hour.",
+      "painPoints.1.title": "A", "painPoints.1.text": "a", "painPoints.2.title": "B", "painPoints.2.text": "b",
+      "example.title": "Retainer", "example.description": "Monthly.",
+      "example.rows.1.label": "Design", "example.rows.1.value": "$900", "example.rows.2.label": "Dev", "example.rows.2.value": "$1,100",
+      "sections.1.heading": "How to choose",
+      "sections.1.paragraphs": "One, with a comma. | Two",
+      "sections.1.bullets": "Hours | Rates",
+      "features.1.title": "T", "features.1.text": "t", "features.2.title": "I", "features.2.text": "i", "features.3.title": "R", "features.3.text": "r",
+      teamSizes: "2 | 5",
+    });
+    expect(validateContent("audience", row, IMAGES)).toEqual([]);
+    expect(row).toMatchObject({ sections: [{ heading: "How to choose", paragraphs: ["One, with a comma.", "Two"], bullets: ["Hours", "Rates"] }] });
+  });
+
   it("refuses to build a document for an image that wasn't uploaded", () => {
     expect(() => toSanityDocument("guide", content, new Map())).toThrow(/timer\.png/);
   });

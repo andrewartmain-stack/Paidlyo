@@ -227,6 +227,14 @@ describe("product structure", () => {
     expect(audienceSchema.safeParse({ ...preview, product: undefined }).success).toBe(false);
   });
 
+  it("gives audience pages optional text sections (up to 5)", () => {
+    const [preview] = AUDIENCE_PAGES;
+    const section = { heading: "How to choose", paragraphs: ["First.", "Second."], bullets: ["A point"] };
+    expect(audienceSchema.parse({ ...preview, sections: undefined }).sections).toEqual([]);
+    expect(audienceSchema.parse({ ...preview, sections: [section] }).sections[0]).toMatchObject(section);
+    expect(audienceSchema.safeParse({ ...preview, sections: Array(6).fill(section) }).success).toBe(false);
+  });
+
   it("allows the same slug under two products but not twice under one", () => {
     const [preview] = AUDIENCE_PAGES;
     const doc = (product: string) => ({ ...preview, preview: undefined, slug: "agencies", product });

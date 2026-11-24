@@ -63,7 +63,7 @@ const PROJECTIONS: Record<PageType, string> = {
   // A product page has no slug field: its slug is the product.
   product: `${COMMON}, "slug": product, ${LANDING}`,
   variant: `${COMMON}, ${LANDING}`,
-  audience: `${COMMON}, screenshots[]${IMAGE}`,
+  audience: `${COMMON}, ${LANDING}`,
   alternative: COMMON,
   comparison: COMMON,
   feature: `${COMMON}, screenshots[]${IMAGE}`,

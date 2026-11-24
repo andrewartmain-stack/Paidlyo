@@ -134,6 +134,8 @@ export const audienceSchema = z.object({
     rows: z.array(z.object({ label: text, value: text })).min(2),
     total: z.object({ label: text, value: text }).optional(),
   }),
+  /** Optional longer text after the example: headings, paragraphs, bullets, an image. */
+  sections: z.array(sectionSchema).max(5).default([]),
   features: z.array(cardSchema.extend({ href: z.string().startsWith("/").optional() })).min(3).max(6),
   /** Team sizes for the price block, e.g. [3, 8, 20]. */
   teamSizes: z.array(z.number().int().positive()).min(1).max(4),

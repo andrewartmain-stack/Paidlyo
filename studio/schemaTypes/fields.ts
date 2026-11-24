@@ -157,8 +157,8 @@ export const pageStart = (source: string, { perProduct = false } = {}) => [
   ...pageSearch,
 ];
 
-/** Body of product and variant pages: sections with images, feature cards, screenshots, price. */
-export const landingFields = [
+/** Text blocks with an optional image: required (1–8) on product pages, optional (≤ 5) on audiences. */
+export const sectionsField = ({ min, max }: { min: number; max: number }) =>
   defineField({
     name: "sections",
     title: "Sections",
@@ -176,8 +176,12 @@ export const landingFields = [
         preview: { select: { title: "heading", media: "image" } },
       }),
     ],
-    validation: (rule) => rule.required().min(1).max(8),
-  }),
+    validation: (rule) => (min > 0 ? rule.required().min(min).max(max) : rule.max(max)),
+  });
+
+/** Body of product and variant pages: sections with images, feature cards, screenshots, price. */
+export const landingFields = [
+  sectionsField({ min: 1, max: 8 }),
   defineField({
     name: "highlights",
     title: "Feature cards",

@@ -195,6 +195,10 @@
   Solutions = audience pages; a dropdown with nothing published is hidden. "Timesheet approvals"
   removed from the nav (not built). Open: approvals still claimed in landing.ts (Consultancies
   card, feature list), showcase.ts and pricing.ts.
+- [x] Audience sections 2026-11-24: audience pages take optional `sections` (≤ 5: heading,
+  paragraphs, bullets, image), rendered after the billing example. Zod, GROQ, Studio
+  (`sectionsField()` shared with product pages), CSV columns `sections.N.*` after `example.*`,
+  workbook + Claude instructions regenerated. Existing audience rows stay valid.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
