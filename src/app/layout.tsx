@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE } from "@/content/landing";
+import { OG_IMAGE } from "@/lib/seo";
 import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -28,8 +29,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE.name,
     locale: "en_US",
+    images: [OG_IMAGE],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", images: [OG_IMAGE] },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -158,7 +158,17 @@
   (BlogPosting `image`). Spreadsheet import: `files/cms-templates/` (xlsx + CSV templates +
   examples), `cd studio && npm run import -- <folder> [--dry-run] [--publish]` (logic in
   `src/content/pages/cms-rows.ts`, runs with `sanity login`, drafts by default, IDs
-  `<type>Page-<slug>`). Waiting on: user creates dataset, deploys Studio, adds webhook + env.
+  `<type>Page-<slug>`). Live and tested 2026-11-24 (publish / edit / delete). Webhook uses
+  `revalidateTag(tag, { expire: 0 })` + `revalidatePath("/sitemap.xml")` (Vercel didn't refresh
+  the sitemap by tag); Sanity fetch uses `cache: "no-store"` so Next's fetch cache (untagged,
+  kept across builds) never serves stale content.
+- [x] SEO fixes 2026-11-24: index pages `/guides`, `/alternatives`, `/compare`
+  (`src/content/pages/indexes.ts`, `IndexTemplate`; noindex + out of sitemap/footer until they
+  have a page; footer "Resources" column; breadcrumbs go through them). Share image moved to
+  `/og.png` (`src/app/og.png/route.tsx`, `OG_IMAGE` in `marketingMetadata`; guides use their
+  cover). Noindex pages are now `noindex, follow`. Auth pages removed from robots.txt Disallow
+  (`AUTH_PATHS`) so Google reads their noindex. Production `NEXT_PUBLIC_APP_URL` fixed (was
+  localhost). User: add Search Console + submit sitemap.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

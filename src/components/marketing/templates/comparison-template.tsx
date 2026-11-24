@@ -1,7 +1,8 @@
 import { Faq, FinalCta } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { ComparisonPage } from "@/content/pages/schema";
-import { PAGE_PATHS } from "@/content/pages/paths";
+import { INDEX_COPY } from "@/content/pages/indexes";
+import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
 import { ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks } from "./blocks";
 
@@ -15,6 +16,7 @@ export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },
+          { name: INDEX_COPY.comparison.label, path: INDEX_PATHS.comparison },
           { name: page.hero.title, path: PAGE_PATHS.comparison(page.slug) },
         ]}
         eyebrow={page.hero.eyebrow}

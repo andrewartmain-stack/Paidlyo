@@ -2,7 +2,8 @@ import Image from "next/image";
 import { Faq, FinalCta } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { GuidePage, Screenshot } from "@/content/pages/schema";
-import { PAGE_PATHS } from "@/content/pages/paths";
+import { INDEX_COPY } from "@/content/pages/indexes";
+import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { articleJsonLd, faqJsonLd } from "@/content/structured-data";
 import { Breadcrumbs, PreviewBanner, RelatedLinks } from "./blocks";
 
@@ -50,6 +51,7 @@ export function GuideTemplate({ page }: { page: GuidePage }) {
           <Breadcrumbs
             items={[
               { name: "Home", path: "/" },
+              { name: INDEX_COPY.guide.label, path: INDEX_PATHS.guide },
               { name: page.title, path },
             ]}
           />

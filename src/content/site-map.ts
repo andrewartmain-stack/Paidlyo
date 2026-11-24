@@ -6,7 +6,14 @@ export const PUBLIC_PAGES: { path: string; changeFrequency: "weekly" | "monthly"
   { path: "/privacy", changeFrequency: "yearly", priority: 0.2 },
 ];
 
-/** Private areas: noindex in their layouts and disallowed in robots.txt. */
+/** Auth pages: crawlable, noindex in src/app/(auth)/layout.tsx, never in the sitemap. */
+export const AUTH_PATHS = ["/login", "/signup", "/forgot-password", "/reset-password"];
+
+/**
+ * Private areas: noindex in their layouts and disallowed in robots.txt. Log in / sign up /
+ * password pages are NOT listed: they're linked from every page, so they stay crawlable and
+ * Google reads their noindex instead of listing the bare URL.
+ */
 export const PRIVATE_PATHS = [
   "/app/",
   "/i/",
@@ -15,8 +22,4 @@ export const PRIVATE_PATHS = [
   "/onboarding",
   "/subscribe",
   "/join/",
-  "/login",
-  "/signup",
-  "/forgot-password",
-  "/reset-password",
 ];

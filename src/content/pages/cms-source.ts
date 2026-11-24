@@ -12,7 +12,9 @@ export async function fetchCmsDocs(type: PageType): Promise<unknown[]> {
   "use cache";
   cacheTag(cmsTag(type));
   try {
-    const docs = await sanity.fetch<unknown[]>(pagesQuery(type), { docType: cmsDocType(type) });
+    // Skip Next's fetch cache (untagged, 15 min, kept across builds): this "use cache" scope and
+    // the webhook decide freshness, so a publish or a redeploy always reads current content.
+    const docs = await sanity.fetch<unknown[]>(pagesQuery(type), { docType: cmsDocType(type) }, { cache: "no-store" });
     cacheLife("max");
     return docs;
   } catch (error) {

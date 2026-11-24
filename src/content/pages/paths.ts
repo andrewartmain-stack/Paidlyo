@@ -9,3 +9,11 @@ export const PAGE_PATHS = {
 
 /** Slug of the template sample in every collection (noindex, not in the sitemap, never linked). */
 export const PREVIEW_SLUG = "preview";
+
+/** Index page listing each page type (features, guides, alternatives, comparisons). */
+export const INDEX_PATHS = {
+  feature: "/features",
+  guide: "/guides",
+  alternative: "/alternatives",
+  comparison: "/compare",
+} as const;

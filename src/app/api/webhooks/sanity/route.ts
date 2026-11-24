@@ -1,4 +1,4 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { cmsTag, pageTypeFromDocType } from "@/content/pages/cms";
 import { isValidSanitySignature } from "@/lib/sanity-webhook";
@@ -34,5 +34,7 @@ export async function POST(request: Request) {
   // Expire now rather than stale-while-revalidate ("max"): pages built from this data (sitemap,
   // index pages) would otherwise re-render once from the stale copy and keep it.
   revalidateTag(cmsTag(type), { expire: 0 });
+  // On Vercel the sitemap route isn't refreshed by its data tags (seen 2026-11-24): purge it by path.
+  revalidatePath("/sitemap.xml");
   return Response.json({ revalidated: cmsTag(type) });
 }

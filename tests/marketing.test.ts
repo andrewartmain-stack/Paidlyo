@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import robots from "@/app/robots";
 import sitemap from "@/app/sitemap";
 import { FAQ, FEATURES, NAV_LINKS, SITE } from "@/content/landing";
-import { PRIVATE_PATHS } from "@/content/site-map";
+import { AUTH_PATHS, PRIVATE_PATHS } from "@/content/site-map";
 import { PRIVACY, TERMS } from "@/content/legal";
 import { formatPlanPrice, PLAN, PRICING_FAQ, PRICING_META, yearlyMonthsFree } from "@/content/pricing";
 import { faqJsonLd, organizationJsonLd, softwareApplicationJsonLd } from "@/content/structured-data";
@@ -40,15 +40,17 @@ describe("sitemap and robots", () => {
     expect(result.sitemap).toBe("https://paidlyo.com/sitemap.xml");
     const rules = Array.isArray(result.rules) ? result.rules[0] : result.rules;
     expect(rules.allow).toBe("/");
-    for (const path of ["/app/", "/i/", "/api/", "/auth/", "/onboarding", "/login", "/signup"]) {
+    for (const path of ["/app/", "/i/", "/api/", "/auth/", "/onboarding"]) {
       expect(rules.disallow).toContain(path);
     }
+    // Auth pages stay crawlable so Google sees their noindex tag.
+    for (const path of AUTH_PATHS) expect(rules.disallow).not.toContain(path);
   });
 
   it("never lists a private path in the sitemap", async () => {
     for (const entry of await sitemap()) {
       const path = new URL(entry.url).pathname;
-      expect(PRIVATE_PATHS.some((p) => path.startsWith(p))).toBe(false);
+      expect([...PRIVATE_PATHS, ...AUTH_PATHS].some((p) => path.startsWith(p))).toBe(false);
     }
   });
 });

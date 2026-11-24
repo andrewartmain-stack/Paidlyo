@@ -2,17 +2,20 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { HERO, SITE } from "@/content/landing";
+import { OG_IMAGE } from "@/lib/seo";
 
-// Social share image for the marketing pages (generated at build time).
-export const alt = `${SITE.name}: ${SITE.tagline}`;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+/*
+ * Social share image at a fixed URL (/og.png), generated at build time. Every marketing page
+ * points to it through marketingMetadata(); an `opengraph-image` file only reached the home page,
+ * because a page's own `openGraph` replaces the inherited one.
+ */
+const size = { width: OG_IMAGE.width, height: OG_IMAGE.height };
 
 // Read once at build time (module scope), so the image is prerendered instead of per request.
 const logo = await readFile(join(process.cwd(), "public/logo.png"));
 const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
-export default function OpenGraphImage() {
+export function GET() {
   return new ImageResponse(
     (
       <div
@@ -27,6 +30,7 @@ export default function OpenGraphImage() {
           color: "#0e0f0c",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse needs a plain <img>; next/image can't render here */}
         <img src={logoSrc} alt="" height={64} style={{ height: 64, width: "auto" }} />
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div

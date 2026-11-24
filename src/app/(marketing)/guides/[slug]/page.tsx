@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/guides/[slug]">):
     path: PAGE_PATHS.guide(page.slug),
     type: "article",
     noindex: page.preview,
+    ...(page.cover && { image: { url: page.cover.src, width: page.cover.width, height: page.cover.height, alt: page.cover.alt } }),
   });
 }
 

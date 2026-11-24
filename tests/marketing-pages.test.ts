@@ -13,7 +13,8 @@ import { comparisonSchema, defineCollection, featurePageSchema, findPage, publis
 import { cmsDocType, fromCms, pageTypeFromDocType, pagesQuery, parseCmsPages, stripNulls } from "@/content/pages/cms";
 import { fetchCmsDocs } from "@/content/pages/cms-source";
 import { breadcrumbJsonLd } from "@/content/structured-data";
-import { marketingMetadata } from "@/lib/seo";
+import { indexItems, liveIndexes } from "@/content/pages/indexes";
+import { marketingMetadata, OG_IMAGE } from "@/lib/seo";
 
 // Sanity documents per test; the real module uses a Next cache scope and the network.
 vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: vi.fn(async () => []) }));
@@ -159,6 +160,20 @@ describe("Sanity pages", () => {
     expect(errors[2].message).toMatch(/cover\.src/);
   });
 
+  it("lists index pages only once they have a published page", async () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://paidlyo.com");
+    expect(await liveIndexes()).toEqual([]);
+    expect(await indexItems("guide")).toEqual([]);
+    vi.mocked(fetchCmsDocs).mockImplementation(async (type) => (type === "guide" ? [CMS_GUIDE] : []));
+    expect(await liveIndexes()).toEqual([{ type: "guide", path: "/guides", label: "Guides" }]);
+    expect(await indexItems("guide")).toEqual([
+      { href: "/guides/track-time", title: CMS_GUIDE.title, text: CMS_GUIDE.description, linkLabel: "Read the guide" },
+    ]);
+    const urls = (await sitemap()).map((entry) => entry.url);
+    expect(urls).toContain("https://paidlyo.com/guides");
+    expect(urls).not.toContain("https://paidlyo.com/compare");
+  });
+
   it("merges Sanity pages after the code previews and publishes them", async () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://paidlyo.com");
     vi.mocked(fetchCmsDocs).mockImplementation(async (type) => (type === "guide" ? [CMS_GUIDE] : []));
@@ -197,15 +212,23 @@ describe("page SEO helpers", () => {
     expect(PAGE_PATHS.guide("what-is-time-tracking")).toBe("/guides/what-is-time-tracking");
   });
 
-  it("marks previews noindex and guides as articles", () => {
+  it("marks previews noindex (links still followed) and guides as articles", () => {
     expect(marketingMetadata({ title: "T", description: "D", path: "/for/preview", noindex: true }).robots).toEqual({
       index: false,
-      follow: false,
+      follow: true,
     });
     expect(marketingMetadata({ title: "T", description: "D", path: "/" }).robots).toBeUndefined();
     expect(marketingMetadata({ title: "T", description: "D", path: "/guides/x", type: "article" }).openGraph).toMatchObject({
       type: "article",
     });
+  });
+
+  it("gives every page a share image, or its own", () => {
+    const meta = marketingMetadata({ title: "T", description: "D", path: "/pricing" });
+    expect(meta.openGraph?.images).toEqual([OG_IMAGE]);
+    expect(meta.twitter?.images).toEqual([OG_IMAGE]);
+    const cover = { url: "https://cdn.sanity.io/images/x/production/a-1600x900.png", width: 1600, height: 900, alt: "Cover" };
+    expect(marketingMetadata({ title: "T", description: "D", path: "/guides/x", image: cover }).openGraph?.images).toEqual([cover]);
   });
 
   it("numbers breadcrumb items with absolute URLs", () => {

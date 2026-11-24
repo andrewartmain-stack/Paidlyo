@@ -1,7 +1,8 @@
 import { Faq, FinalCta, Steps } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { AlternativePage } from "@/content/pages/schema";
-import { PAGE_PATHS } from "@/content/pages/paths";
+import { INDEX_COPY } from "@/content/pages/indexes";
+import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
 import { CardSection, ComparisonTable, PageHero, PreviewBanner, PriceComparison, RelatedLinks } from "./blocks";
 
@@ -14,6 +15,7 @@ export function AlternativeTemplate({ page }: { page: AlternativePage }) {
       <PageHero
         crumbs={[
           { name: "Home", path: "/" },
+          { name: INDEX_COPY.alternative.label, path: INDEX_PATHS.alternative },
           { name: `${page.competitor} alternative`, path: PAGE_PATHS.alternative(page.slug) },
         ]}
         eyebrow={page.hero.eyebrow}

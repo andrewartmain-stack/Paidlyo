@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { isValidSanitySignature, signSanityPayload } from "@/lib/sanity-webhook";
 
 const revalidateTag = vi.fn();
-vi.mock("next/cache", () => ({ revalidateTag: (...args: unknown[]) => revalidateTag(...args) }));
+const revalidatePath = vi.fn();
+vi.mock("next/cache", () => ({
+  revalidateTag: (...args: unknown[]) => revalidateTag(...args),
+  revalidatePath: (...args: unknown[]) => revalidatePath(...args),
+}));
 
 const { POST } = await import("@/app/api/webhooks/sanity/route");
 
@@ -13,6 +17,7 @@ const send = (body: string, signature: string | null) =>
 afterEach(() => {
   vi.unstubAllEnvs();
   revalidateTag.mockReset();
+  revalidatePath.mockReset();
 });
 
 describe("Sanity webhook signature", () => {
@@ -45,6 +50,7 @@ describe("POST /api/webhooks/sanity", () => {
     const response = await send(body, signSanityPayload(body, SECRET, Date.now()));
     expect(response.status).toBe(200);
     expect(revalidateTag).toHaveBeenCalledWith("cms:guide", { expire: 0 });
+    expect(revalidatePath).toHaveBeenCalledWith("/sitemap.xml");
   });
 
   it("ignores documents that aren't pages", async () => {
