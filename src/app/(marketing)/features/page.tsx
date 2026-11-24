@@ -3,23 +3,26 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FeatureGrid, FinalCta, ProductTour } from "@/components/marketing/sections";
 import { PageHero } from "@/components/marketing/templates/blocks";
-import { FEATURE_PAGES } from "@/content/pages/features";
+import { getPages } from "@/content/pages";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { published } from "@/content/pages/schema";
 import { marketingMetadata } from "@/lib/seo";
 
-const FEATURES = published(FEATURE_PAGES);
+const getFeatures = async () => published(await getPages("feature"));
 
 /* Indexed (and in the sitemap) only once at least one real feature page exists. */
-export const metadata: Metadata = marketingMetadata({
-  title: "Time Tracking & Invoicing Features | Paidlyo",
-  description:
-    "Every Paidlyo feature: timesheets and timer, invoices from tracked time, project budgets, timesheet approvals, team rates, payment tracking and reports.",
-  path: "/features",
-  noindex: FEATURES.length === 0,
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return marketingMetadata({
+    title: "Time Tracking & Invoicing Features | Paidlyo",
+    description:
+      "Every Paidlyo feature: timesheets and timer, invoices from tracked time, project budgets, timesheet approvals, team rates, payment tracking and reports.",
+    path: "/features",
+    noindex: (await getFeatures()).length === 0,
+  });
+}
 
-export default function FeaturesPage() {
+export default async function FeaturesPage() {
+  const FEATURES = await getFeatures();
   return (
     <>
       <PageHero

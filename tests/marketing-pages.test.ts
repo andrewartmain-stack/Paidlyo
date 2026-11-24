@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import sitemap from "@/app/sitemap";
 import { AUDIENCES, TOUR } from "@/content/landing";
-import { audiencePath, publishedPages } from "@/content/pages";
+import { audiencePaths, getPages, publishedPages } from "@/content/pages";
 import { ALTERNATIVE_PAGES } from "@/content/pages/alternatives";
 import { AUDIENCE_PAGES } from "@/content/pages/audiences";
 import { COMPARISON_PAGES } from "@/content/pages/comparisons";
@@ -10,10 +10,19 @@ import { GUIDE_PAGES } from "@/content/pages/guides";
 import { PAGE_PATHS, PREVIEW_SLUG } from "@/content/pages/paths";
 import { paidlyoMonthlyCents, toolMonthlyCents, yearlySavingCents } from "@/content/pages/pricing-math";
 import { comparisonSchema, defineCollection, featurePageSchema, findPage, published } from "@/content/pages/schema";
+import { cmsDocType, fromCms, pageTypeFromDocType, pagesQuery, parseCmsPages, stripNulls } from "@/content/pages/cms";
+import { fetchCmsDocs } from "@/content/pages/cms-source";
 import { breadcrumbJsonLd } from "@/content/structured-data";
 import { marketingMetadata } from "@/lib/seo";
 
-afterEach(() => vi.unstubAllEnvs());
+// Sanity documents per test; the real module uses a Next cache scope and the network.
+vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: vi.fn(async () => []) }));
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.mocked(fetchCmsDocs).mockReset();
+  vi.mocked(fetchCmsDocs).mockResolvedValue([]);
+});
 
 const COLLECTIONS = [AUDIENCE_PAGES, ALTERNATIVE_PAGES, COMPARISON_PAGES, FEATURE_PAGES, GUIDE_PAGES];
 
@@ -44,14 +53,14 @@ describe("page collections", () => {
     }
   });
 
-  it("keeps previews out of the published list, the sitemap and landing links", () => {
+  it("keeps previews out of the published list, the sitemap and landing links", async () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://paidlyo.com");
     for (const pages of COLLECTIONS) {
       expect(published<{ slug: string; preview: boolean }>(pages).some((p) => p.slug === PREVIEW_SLUG)).toBe(false);
     }
-    expect(publishedPages().some((p) => p.path.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
-    expect(sitemap().some((entry) => entry.url.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
-    expect(audiencePath(PREVIEW_SLUG)).toBeUndefined();
+    expect((await publishedPages()).some((p) => p.path.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
+    expect((await sitemap()).some((entry) => entry.url.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
+    expect((await audiencePaths()).has(PREVIEW_SLUG)).toBe(false);
   });
 
   it("parses valid entries and applies defaults", () => {
@@ -86,6 +95,77 @@ describe("page collections", () => {
     const result = comparisonSchema.safeParse(bad);
     expect(result.success).toBe(false);
     expect(result.error?.issues[0].path).toEqual(["rows", 2, "values"]);
+  });
+});
+
+/** A guide as the GROQ projection returns it: nulls for empty fields, Sanity keys, images resolved. */
+const CMS_GUIDE = {
+  _id: "guidePage-track-time",
+  _type: "guidePage",
+  _rev: "abc",
+  slug: "track-time",
+  title: "How to track billable hours",
+  description: "Start a timer per task, then invoice the week.",
+  author: "Paidlyo team",
+  published: "2026-11-20",
+  updated: "2026-11-23",
+  seo: { title: "How to Track Billable Hours | Paidlyo", description: "A short guide." },
+  keywords: ["track billable hours"],
+  cover: { src: "https://cdn.sanity.io/images/f1ipt922/production/abc-1600x1000.png", width: 1600, height: 1000, alt: "Timer", caption: null },
+  sections: [
+    { _key: "a", id: "start", heading: "Start a timer", paragraphs: ["Pick a project."], bullets: null, image: null },
+  ],
+  faq: null,
+  related: null,
+};
+
+describe("Sanity pages", () => {
+  it("maps document types both ways", () => {
+    expect(cmsDocType("guide")).toBe("guidePage");
+    expect(pageTypeFromDocType("guidePage")).toBe("guide");
+    expect(pageTypeFromDocType("sanity.imageAsset")).toBeUndefined();
+    expect(pagesQuery("guide")).toContain("cover{");
+  });
+
+  it("drops nulls from objects and arrays", () => {
+    expect(stripNulls({ a: null, b: [1, null, { c: null, d: 2 }] })).toEqual({ b: [1, { d: 2 }] });
+  });
+
+  it("parses a projected document into a page with defaults", () => {
+    const { pages, errors } = parseCmsPages("guide", [CMS_GUIDE]);
+    expect(errors).toEqual([]);
+    expect(pages[0]).toMatchObject({ slug: "track-time", preview: false, faq: [], related: [] });
+    expect(pages[0].cover).toEqual({ src: CMS_GUIDE.cover.src, width: 1600, height: 1000, alt: "Timer" });
+    expect(pages[0].sections[0]).toEqual({ id: "start", heading: "Start a timer", paragraphs: ["Pick a project."], bullets: [] });
+  });
+
+  it("turns yes / no comparison cells into checks", () => {
+    const page = fromCms("alternative", { comparison: [{ feature: "Invoices", paidlyo: "Yes", competitor: "Paid add-on" }] });
+    expect(page).toMatchObject({ comparison: [{ paidlyo: true, competitor: "Paid add-on" }] });
+    expect(fromCms("comparison", { rows: [{ feature: "Timer", values: ["no", "yes", "Beta"] }] })).toMatchObject({
+      rows: [{ values: [false, true, "Beta"] }],
+    });
+  });
+
+  it("skips invalid, duplicate and reserved slugs with a reason", () => {
+    const { pages, errors } = parseCmsPages("guide", [
+      CMS_GUIDE,
+      CMS_GUIDE,
+      { ...CMS_GUIDE, slug: PREVIEW_SLUG },
+      { ...CMS_GUIDE, slug: "bad-image", cover: { ...CMS_GUIDE.cover, src: "https://evil.example/a.png" } },
+    ]);
+    expect(pages).toHaveLength(1);
+    expect(errors.map((e) => e.slug)).toEqual(["track-time", PREVIEW_SLUG, "bad-image"]);
+    expect(errors[2].message).toMatch(/cover\.src/);
+  });
+
+  it("merges Sanity pages after the code previews and publishes them", async () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://paidlyo.com");
+    vi.mocked(fetchCmsDocs).mockImplementation(async (type) => (type === "guide" ? [CMS_GUIDE] : []));
+    const guides = await getPages("guide");
+    expect(guides.map((g) => g.slug)).toEqual([PREVIEW_SLUG, "track-time"]);
+    expect(await publishedPages()).toEqual([{ path: "/guides/track-time", updated: "2026-11-23" }]);
+    expect((await sitemap()).some((entry) => entry.url === "https://paidlyo.com/guides/track-time")).toBe(true);
   });
 });
 

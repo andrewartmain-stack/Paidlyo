@@ -50,7 +50,7 @@ import {
   type TourItem,
   type TrustItem,
 } from "@/content/landing";
-import { audiencePath } from "@/content/pages";
+import { audiencePaths } from "@/content/pages";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { AiLogo } from "./ai-logos";
 import { HeroVideo } from "./hero-video";
@@ -165,14 +165,15 @@ export function Hero() {
   );
 }
 
-export function Audiences() {
+export async function Audiences() {
+  const paths = await audiencePaths();
   return (
     <section id="who-its-for" aria-labelledby="audiences-title" className="scroll-mt-20 bg-background py-24 sm:py-28">
       <div className="mx-auto flex max-w-6xl flex-col gap-14 px-4 sm:px-6">
         <SectionHeading id="audiences-title" eyebrow="Who it's for" title={AUDIENCES_INTRO.title} description={AUDIENCES_INTRO.description} />
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {AUDIENCES.map((audience) => {
-            const href = audiencePath(audience.slug);
+            const href = paths.get(audience.slug);
             const Icon = AUDIENCE_ICONS[audience.icon];
             return (
               <li key={audience.slug} className={cn("flex flex-col gap-4 rounded-3xl bg-cream p-7", SOFT_HOVER)}>

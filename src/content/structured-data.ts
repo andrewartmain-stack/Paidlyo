@@ -68,7 +68,16 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
 }
 
 /** BlogPosting for a guide. Dates are ISO (YYYY-MM-DD). */
-export function articleJsonLd(article: { title: string; description: string; path: string; author: string; published: string; updated: string }) {
+export function articleJsonLd(article: {
+  title: string;
+  description: string;
+  path: string;
+  author: string;
+  published: string;
+  updated: string;
+  /** Cover image: an absolute URL or a site path. */
+  image?: string;
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -78,6 +87,7 @@ export function articleJsonLd(article: { title: string; description: string; pat
     mainEntityOfPage: absoluteUrl(article.path),
     datePublished: article.published,
     dateModified: article.updated,
+    ...(article.image && { image: article.image.startsWith("/") ? absoluteUrl(article.image) : article.image }),
     author: { "@type": "Person", name: article.author },
     publisher: { "@type": "Organization", name: SITE.name, logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") } },
   };

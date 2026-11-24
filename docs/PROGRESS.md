@@ -144,10 +144,30 @@
   Sitemap adds published pages (+ `/features` once it has entries). Keyword sheet:
   `files/paidlyo-pseo-keywords.xlsx`. Waiting on: content, approval.
 
+- [ ] M5 · Sanity CMS for programmatic pages: code done 2026-11-23. Studio in `studio/` (own
+  package: `sanity`, React, styled-components; project `f1ipt922`, dataset `production`; one
+  document type per page type, `<type>Page`, fields mirror `src/content/pages/schema.ts`). Site
+  reads published docs with `@sanity/client` (`src/lib/sanity.ts`, `src/content/pages/cms*.ts`):
+  GROQ → Zod (invalid docs skipped + logged), `"use cache"` + `cacheTag("cms:<type>")`,
+  `cacheLife("max")`, or `"minutes"` when Sanity is unreachable (site falls back to code pages
+  instead of failing the build). `getPages(type)` = code previews + Sanity pages; header,
+  landing audience cards, sitemap and `/features` use it. `/api/webhooks/sanity` verifies
+  `sanity-webhook-signature` (`SANITY_WEBHOOK_SECRET`) and `revalidateTag`s the type. Slugs
+  published after a build render on first request (◐) and are cached. Images: Sanity CDN
+  (`cdn.sanity.io` in `images.remotePatterns`); guides gained `cover` + section `image`
+  (BlogPosting `image`). Spreadsheet import: `files/cms-templates/` (xlsx + CSV templates +
+  examples), `cd studio && npm run import -- <folder> [--dry-run] [--publish]` (logic in
+  `src/content/pages/cms-rows.ts`, runs with `sanity login`, drafts by default, IDs
+  `<type>Page-<slug>`). Waiting on: user creates dataset, deploys Studio, adds webhook + env.
+
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
 
 ## Technical decisions
+- Programmatic page content lives in Sanity (not in code); Zod in `schema.ts` stays the source
+  of truth: change a field there, in `studio/schemaTypes/` and in the CSV columns together.
+  `@sanity/image-url` skipped (next/image resizes Sanity URLs); Portable Text not used yet
+  (paragraphs are plain text; add `@portabletext/react` if inline links/bold are needed)
 - Marketing pages: build metadata with `marketingMetadata()` (`src/lib/seo.ts`; Next merges
   metadata shallowly), add each page to `PUBLIC_PAGES` in `src/content/site-map.ts`, keep copy in
   `src/content/`; never read the session in `(marketing)` (pages must stay static ○)

@@ -9,6 +9,9 @@ import { faqJsonLd, organizationJsonLd, softwareApplicationJsonLd } from "@/cont
 import { marketingMetadata } from "@/lib/seo";
 import { absoluteUrl, siteUrl } from "@/lib/site-url";
 
+// The sitemap reads CMS pages through a Next cache scope; no Sanity documents here.
+vi.mock("@/content/pages/cms-source", () => ({ fetchCmsDocs: async () => [] }));
+
 afterEach(() => vi.unstubAllEnvs());
 
 describe("site URL", () => {
@@ -21,9 +24,9 @@ describe("site URL", () => {
 });
 
 describe("sitemap and robots", () => {
-  it("lists public pages with absolute URLs", () => {
+  it("lists public pages with absolute URLs", async () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://paidlyo.com");
-    expect(sitemap().map((entry) => entry.url)).toEqual([
+    expect((await sitemap()).map((entry) => entry.url)).toEqual([
       "https://paidlyo.com/",
       "https://paidlyo.com/pricing",
       "https://paidlyo.com/terms",
@@ -42,8 +45,8 @@ describe("sitemap and robots", () => {
     }
   });
 
-  it("never lists a private path in the sitemap", () => {
-    for (const entry of sitemap()) {
+  it("never lists a private path in the sitemap", async () => {
+    for (const entry of await sitemap()) {
       const path = new URL(entry.url).pathname;
       expect(PRIVATE_PATHS.some((p) => path.startsWith(p))).toBe(false);
     }

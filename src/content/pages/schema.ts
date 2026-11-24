@@ -34,9 +34,18 @@ const linkSchema = z.object({
   label: text,
 });
 
-/** A real app screenshot in /public/screenshots (exported at 2x, e.g. 1600×1000). */
+/** Images uploaded to Sanity are served from its CDN; local ones live in /public/screenshots. */
+export const SANITY_IMAGE_PREFIX = "https://cdn.sanity.io/images/";
+
+/**
+ * An image: a real app screenshot in /public/screenshots (exported at 2x, e.g. 1600×1000) or an
+ * image uploaded to Sanity.
+ */
 export const screenshotSchema = z.object({
-  src: z.string().regex(/^\/screenshots\/[a-z0-9-]+\.(png|jpg|webp)$/),
+  src: z.union([
+    z.string().regex(/^\/screenshots\/[a-z0-9-]+\.(png|jpg|webp)$/),
+    z.url().startsWith(SANITY_IMAGE_PREFIX),
+  ]),
   alt: text,
   width: z.number().int().positive(),
   height: z.number().int().positive(),
@@ -149,13 +158,15 @@ export const featurePageSchema = z.object({
   benefits: z.array(cardSchema).min(2).max(6),
 });
 
-/** /guides/<slug>: an article answering one question. Plain paragraphs, no markup. */
+/** /guides/<slug>: an article answering one question. Plain paragraphs and images, no markup. */
 export const guideSchema = z.object({
   ...pageBase,
   title: text,
   description: text,
   author: text,
   published: isoDate,
+  /** Shown under the title and used as the article image in search results. */
+  cover: screenshotSchema.optional(),
   sections: z
     .array(
       z.object({
@@ -163,6 +174,8 @@ export const guideSchema = z.object({
         heading: text,
         paragraphs: z.array(text).min(1),
         bullets: z.array(text).default([]),
+        /** Shown after the section's text. */
+        image: screenshotSchema.optional(),
       }),
     )
     .min(1),

@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FeatureTemplate } from "@/components/marketing/templates/feature-template";
-import { FEATURE_PAGES } from "@/content/pages/features";
+import { getPages } from "@/content/pages";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
 import { marketingMetadata } from "@/lib/seo";
 
-/* Static pages from src/content/pages/features.ts. Unknown slugs 404 (dynamicParams isn't available with Cache Components). */
+/*
+ * Pages from Sanity (studio/) plus the template preview in src/content/pages/features.ts. Slugs published
+ * after the build render on first request and are cached; unknown slugs 404.
+ */
 
-export function generateStaticParams() {
-  return FEATURE_PAGES.map((page) => ({ slug: page.slug }));
+export async function generateStaticParams() {
+  return (await getPages("feature")).map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/features/[slug]">): Promise<Metadata> {
-  const page = findPage(FEATURE_PAGES, (await params).slug);
+  const page = findPage(await getPages("feature"), (await params).slug);
   if (!page) return {};
   return marketingMetadata({
     title: page.seo.title,
@@ -24,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/features/[slug]">
 }
 
 export default async function Page({ params }: PageProps<"/features/[slug]">) {
-  const page = findPage(FEATURE_PAGES, (await params).slug);
+  const page = findPage(await getPages("feature"), (await params).slug);
   if (!page) notFound();
   return <FeatureTemplate page={page} />;
 }

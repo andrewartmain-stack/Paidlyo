@@ -1,12 +1,31 @@
+import Image from "next/image";
 import { Faq, FinalCta } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
-import type { GuidePage } from "@/content/pages/schema";
+import type { GuidePage, Screenshot } from "@/content/pages/schema";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { articleJsonLd, faqJsonLd } from "@/content/structured-data";
 import { Breadcrumbs, PreviewBanner, RelatedLinks } from "./blocks";
 
 const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
 const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z`));
+
+/** An image inside the article column, with an optional caption. */
+function ArticleImage({ image, priority = false }: { image: Screenshot; priority?: boolean }) {
+  return (
+    <figure className="flex flex-col gap-2">
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={image.width}
+        height={image.height}
+        sizes="(min-width: 768px) 768px, 100vw"
+        priority={priority}
+        className="h-auto w-full rounded-2xl border bg-muted"
+      />
+      {image.caption && <figcaption className="text-center text-sm text-muted-foreground">{image.caption}</figcaption>}
+    </figure>
+  );
+}
 
 /** /guides/<slug>: an article with a table of contents, BlogPosting JSON-LD and links into the product. */
 export function GuideTemplate({ page }: { page: GuidePage }) {
@@ -22,6 +41,7 @@ export function GuideTemplate({ page }: { page: GuidePage }) {
           author: page.author,
           published: page.published,
           updated: page.updated,
+          image: page.cover?.src,
         })}
       />
       {page.faq.length > 0 && <JsonLd data={faqJsonLd(page.faq)} />}
@@ -40,6 +60,7 @@ export function GuideTemplate({ page }: { page: GuidePage }) {
               By {page.author} · Updated <time dateTime={page.updated}>{formatDate(page.updated)}</time>
             </p>
           </header>
+          {page.cover && <ArticleImage image={page.cover} priority />}
           {page.sections.length > 1 && (
             <nav aria-labelledby="toc-title" className="rounded-2xl border bg-card p-6">
               <h2 id="toc-title" className="text-base font-semibold">
@@ -73,6 +94,7 @@ export function GuideTemplate({ page }: { page: GuidePage }) {
                   ))}
                 </ul>
               )}
+              {section.image && <ArticleImage image={section.image} />}
             </section>
           ))}
         </div>

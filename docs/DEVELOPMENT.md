@@ -48,6 +48,9 @@ npm run dev               # http://localhost:3000
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe API + webhook signature (server-only) |
 | `STRIPE_PRICE_MONTHLY`, `STRIPE_PRICE_YEARLY` | Price ids (`price_…`) of the Paidlyo plan; amounts are set in Stripe |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Not used yet (hosted Checkout needs no client key) |
+| `SANITY_WEBHOOK_SECRET` | Secret of the Sanity webhook → `/api/webhooks/sanity` (refreshes pages on publish), server-only |
+| `SANITY_PROJECT_ID`, `SANITY_DATASET` | Optional overrides (default `f1ipt922` / `production`) |
+| `SANITY_READ_TOKEN` | Only if the dataset is made private (Viewer token), server-only |
 
 Tailwind v4 runs through PostCSS (`postcss.config.mjs`, `@tailwindcss/postcss`), as in the
 Next.js docs. If styles ever look stale in dev, stop the server and `rm -rf .next`.

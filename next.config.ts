@@ -8,10 +8,12 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    // Organization logos from Supabase Storage (public bucket).
-    remotePatterns: supabaseHost
-      ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }]
-      : [],
+    remotePatterns: [
+      // Organization logos from Supabase Storage (public bucket).
+      ...(supabaseHost ? [{ protocol: "https" as const, hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : []),
+      // Images uploaded to Sanity for the marketing pages (src/content/pages/cms.ts).
+      { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },
+    ],
   },
   experimental: {
     serverActions: {

@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AlternativeTemplate } from "@/components/marketing/templates/alternative-template";
-import { ALTERNATIVE_PAGES } from "@/content/pages/alternatives";
+import { getPages } from "@/content/pages";
 import { PAGE_PATHS } from "@/content/pages/paths";
 import { findPage } from "@/content/pages/schema";
 import { marketingMetadata } from "@/lib/seo";
 
-/* Static pages from src/content/pages/alternatives.ts. Unknown slugs 404 (dynamicParams isn't available with Cache Components). */
+/*
+ * Pages from Sanity (studio/) plus the template preview in src/content/pages/alternatives.ts. Slugs published
+ * after the build render on first request and are cached; unknown slugs 404.
+ */
 
-export function generateStaticParams() {
-  return ALTERNATIVE_PAGES.map((page) => ({ slug: page.slug }));
+export async function generateStaticParams() {
+  return (await getPages("alternative")).map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/alternatives/[slug]">): Promise<Metadata> {
-  const page = findPage(ALTERNATIVE_PAGES, (await params).slug);
+  const page = findPage(await getPages("alternative"), (await params).slug);
   if (!page) return {};
   return marketingMetadata({
     title: page.seo.title,
@@ -24,7 +27,7 @@ export async function generateMetadata({ params }: PageProps<"/alternatives/[slu
 }
 
 export default async function Page({ params }: PageProps<"/alternatives/[slug]">) {
-  const page = findPage(ALTERNATIVE_PAGES, (await params).slug);
+  const page = findPage(await getPages("alternative"), (await params).slug);
   if (!page) notFound();
   return <AlternativeTemplate page={page} />;
 }
