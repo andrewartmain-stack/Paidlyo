@@ -1,15 +1,25 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import sitemap from "@/app/sitemap";
 import { AUDIENCES, TOUR } from "@/content/landing";
-import { audiencePaths, getPages, publishedPages } from "@/content/pages";
+import { getPages, livePaths, publishedPages } from "@/content/pages";
 import { ALTERNATIVE_PAGES } from "@/content/pages/alternatives";
 import { AUDIENCE_PAGES } from "@/content/pages/audiences";
 import { COMPARISON_PAGES } from "@/content/pages/comparisons";
 import { FEATURE_PAGES } from "@/content/pages/features";
 import { GUIDE_PAGES } from "@/content/pages/guides";
-import { PAGE_PATHS, PREVIEW_SLUG } from "@/content/pages/paths";
+import { VARIANT_PAGES } from "@/content/pages/variants";
+import { PAGE_PATHS, pagePath, PREVIEW_SLUG } from "@/content/pages/paths";
 import { paidlyoMonthlyCents, toolMonthlyCents, yearlySavingCents } from "@/content/pages/pricing-math";
-import { comparisonSchema, defineCollection, featurePageSchema, findPage, published } from "@/content/pages/schema";
+import {
+  audienceSchema,
+  comparisonSchema,
+  defineCollection,
+  featurePageSchema,
+  findPage,
+  productPageSchema,
+  published,
+  variantPageSchema,
+} from "@/content/pages/schema";
 import { cmsDocType, fromCms, pageTypeFromDocType, pagesQuery, parseCmsPages, stripNulls } from "@/content/pages/cms";
 import { fetchCmsDocs } from "@/content/pages/cms-source";
 import { breadcrumbJsonLd } from "@/content/structured-data";
@@ -30,7 +40,7 @@ afterEach(() => {
   vi.mocked(fetchCmsDocs).mockResolvedValue([]);
 });
 
-const COLLECTIONS = [AUDIENCE_PAGES, ALTERNATIVE_PAGES, COMPARISON_PAGES, FEATURE_PAGES, GUIDE_PAGES];
+const COLLECTIONS = [VARIANT_PAGES, AUDIENCE_PAGES, ALTERNATIVE_PAGES, COMPARISON_PAGES, FEATURE_PAGES, GUIDE_PAGES];
 
 const FEATURE = {
   slug: "timesheets",
@@ -66,7 +76,7 @@ describe("page collections", () => {
     }
     expect((await publishedPages()).some((p) => p.path.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
     expect((await sitemap()).some((entry) => entry.url.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
-    expect((await audiencePaths()).has(PREVIEW_SLUG)).toBe(false);
+    expect([...(await livePaths())].some((path) => path.endsWith(`/${PREVIEW_SLUG}`))).toBe(false);
   });
 
   it("parses valid entries and applies defaults", () => {
@@ -189,6 +199,54 @@ describe("Sanity pages", () => {
   });
 });
 
+/** A product page as the GROQ projection returns it (slug = product). */
+const LANDING = {
+  seo: { title: "Invoicing Software | Paidlyo", description: "Invoices from tracked time." },
+  keywords: ["invoicing software"],
+  hero: { title: "Invoicing software", description: "Bill every hour." },
+  sections: [{ heading: "Invoices from time", paragraphs: ["Pick a client."], bullets: null, image: null }],
+  highlights: null,
+  screenshots: null,
+  teamSizes: [1, 5],
+  faq: null,
+  related: null,
+  updated: "2026-11-24",
+};
+
+describe("product structure", () => {
+  it("validates product, variant and audience pages against their URL rules", () => {
+    const ok = (schema: typeof productPageSchema | typeof variantPageSchema, type: "product" | "variant", doc: object) =>
+      schema.safeParse(fromCms(type, doc)).success;
+    expect(ok(productPageSchema, "product", { ...LANDING, slug: "invoicing", product: "invoicing" })).toBe(true);
+    expect(ok(productPageSchema, "product", { ...LANDING, slug: "billing", product: "invoicing" })).toBe(false);
+    expect(ok(productPageSchema, "product", { ...LANDING, slug: "payroll", product: "payroll" })).toBe(false);
+    const variant = { ...LANDING, product: "invoicing", name: "Free" };
+    expect(ok(variantPageSchema, "variant", { ...variant, slug: "free" })).toBe(true);
+    expect(ok(variantPageSchema, "variant", { ...variant, slug: "for" })).toBe(false);
+    const [preview] = AUDIENCE_PAGES;
+    expect(audienceSchema.safeParse({ ...preview, product: undefined }).success).toBe(false);
+  });
+
+  it("allows the same slug under two products but not twice under one", () => {
+    const [preview] = AUDIENCE_PAGES;
+    const doc = (product: string) => ({ ...preview, preview: undefined, slug: "agencies", product });
+    const { pages, errors } = parseCmsPages("audience", [doc("invoicing"), doc("time-tracking"), doc("invoicing")]);
+    expect(pages.map((page) => pagePath("audience", page))).toEqual(["/invoicing/for/agencies", "/time-tracking/for/agencies"]);
+    expect(errors).toEqual([{ slug: "agencies", message: "another document already uses /invoicing/for/agencies" }]);
+    expect(findPage(pages, "agencies", "time-tracking")?.product).toBe("time-tracking");
+  });
+
+  it("publishes product pages at the top level and lists live paths for the nav", async () => {
+    vi.mocked(fetchCmsDocs).mockImplementation(async (type) =>
+      type === "product" ? [{ ...LANDING, _id: "productPage-invoicing", product: "invoicing", slug: "invoicing" }] : [],
+    );
+    expect((await getPages("product")).map((page) => page.slug)).toEqual(["invoicing"]);
+    expect(await publishedPages()).toEqual([{ path: "/invoicing", updated: "2026-11-24" }]);
+    expect((await livePaths()).has("/invoicing")).toBe(true);
+    expect(pagesQuery("product")).toContain("defined(product)");
+  });
+});
+
 describe("pricing math", () => {
   const tool = { perPersonCents: 1200, baseCents: 0, minSeats: 1 };
 
@@ -210,7 +268,12 @@ describe("pricing math", () => {
 
 describe("page SEO helpers", () => {
   it("builds paths for every page type", () => {
-    expect(PAGE_PATHS.audience("agencies")).toBe("/for/agencies");
+    expect(PAGE_PATHS.product("invoicing")).toBe("/invoicing");
+    expect(PAGE_PATHS.variant("invoicing", "free")).toBe("/invoicing/free");
+    expect(PAGE_PATHS.audience("time-tracking", "agencies")).toBe("/time-tracking/for/agencies");
+    expect(pagePath("audience", { slug: "agencies", product: "time-tracking" })).toBe("/time-tracking/for/agencies");
+    expect(pagePath("guide", { slug: "x" })).toBe("/guides/x");
+    expect(() => pagePath("variant", { slug: "free" })).toThrow(/needs a product/);
     expect(PAGE_PATHS.alternative("harvest")).toBe("/alternatives/harvest");
     expect(PAGE_PATHS.comparison("harvest-pricing")).toBe("/compare/harvest-pricing");
     expect(PAGE_PATHS.feature("timesheets")).toBe("/features/timesheets");

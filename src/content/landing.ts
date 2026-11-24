@@ -3,7 +3,6 @@
  * no online card payments for invoices until item 10b ships. Plan prices live in pricing.ts.
  */
 
-import type { INDEX_PATHS } from "@/content/pages/paths";
 
 export const SITE = {
   name: "Paidlyo",
@@ -34,6 +33,7 @@ export type NavIconKey =
   | "consultancy"
   | "freelancer"
   | "business"
+  | "bundle"
   | "guide"
   | "compare"
   | "switch"
@@ -43,19 +43,32 @@ export type NavItem = {
   title: string;
   description: string;
   icon: NavIconKey;
-  /** Fixed destination. Omit when `audienceSlug` decides it. */
+  /** Fixed destination. */
   href?: string;
-  /** Audience page slug: links to the page once published, else to /#who-its-for. */
-  audienceSlug?: string;
-  /** Index page: the item links to it and is shown only once that index has a published page. */
-  index?: keyof typeof INDEX_PATHS;
+  /**
+   * A programmatic page (e.g. /invoicing/for/freelancers or /guides): linked once it's
+   * published, else `fallback`, else the item is hidden.
+   */
+  livePath?: string;
+  fallback?: string;
 };
 
-/** Link under a dropdown: a fixed href, or an index page (shown once it has a published page). */
-export type NavGroupFooter = { label: string; href?: string; index?: keyof typeof INDEX_PATHS };
+/** Link under a dropdown: a fixed href, or a page linked only once it's published. */
+export type NavGroupFooter = { label: string; href?: string; livePath?: string };
 
 /** A dropdown. Groups whose items are all hidden are left out of the header. */
 export type NavGroup = { label: string; columns: 1 | 2; items: NavItem[]; footer?: NavGroupFooter };
+
+/**
+ * Which audience page each "Who it's for" card and Solutions link points to: the product with the
+ * most search volume for that audience (keyword sheet). Linked once published.
+ */
+export const AUDIENCE_PAGES = {
+  agencies: "/time-tracking/for/agencies",
+  consultants: "/time-tracking/for/consultants",
+  freelancers: "/invoicing/for/freelancers",
+  "small-business": "/invoicing/for/small-business",
+} as const;
 
 /** Header dropdown menus (icons are keys; the components map them to lucide icons). */
 export const NAV_GROUPS: NavGroup[] = [
@@ -64,6 +77,10 @@ export const NAV_GROUPS: NavGroup[] = [
     columns: 2,
     footer: { href: "/#features", label: "All features" },
     items: [
+      // Product pages: shown once published in Sanity.
+      { title: "Invoicing software", description: "Invoices from tracked time, paid faster.", icon: "invoice", livePath: "/invoicing" },
+      { title: "Time tracking software", description: "Timers and timesheets for the whole team.", icon: "clock", livePath: "/time-tracking" },
+      { title: "Time tracking & invoicing", description: "Track hours and bill them in one tool.", icon: "bundle", livePath: "/time-tracking-and-invoicing" },
       { title: "Time tracking", description: "Timers and timesheets in one click.", icon: "clock", href: "/#features" },
       { title: "Invoicing", description: "Turn billable hours into invoices.", icon: "invoice", href: "/#features" },
       { title: "Reports & budgets", description: "Hours, amounts and budget progress per project.", icon: "chart", href: "/#features" },
@@ -75,22 +92,21 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: "Solutions",
     columns: 1,
-    footer: { label: "All solutions", index: "audience" },
     items: [
-      { title: "Agencies & studios", description: "Track client work and bill it fast.", icon: "agency", audienceSlug: "agencies" },
-      { title: "Consultancies", description: "Bill expert time with clear reports.", icon: "consultancy", audienceSlug: "consultants" },
-      { title: "Freelancers", description: "Simple tracking and invoicing, solo.", icon: "freelancer", audienceSlug: "freelancers" },
-      { title: "Small businesses & teams", description: "One place for hours and invoices.", icon: "business", audienceSlug: "small-business" },
+      { title: "Agencies & studios", description: "Track client work and bill it fast.", icon: "agency", livePath: AUDIENCE_PAGES.agencies, fallback: "/#who-its-for" },
+      { title: "Consultancies", description: "Bill expert time with clear reports.", icon: "consultancy", livePath: AUDIENCE_PAGES.consultants, fallback: "/#who-its-for" },
+      { title: "Freelancers", description: "Simple tracking and invoicing, solo.", icon: "freelancer", livePath: AUDIENCE_PAGES.freelancers, fallback: "/#who-its-for" },
+      { title: "Small businesses & teams", description: "One place for hours and invoices.", icon: "business", livePath: AUDIENCE_PAGES["small-business"], fallback: "/#who-its-for" },
     ],
   },
   {
     label: "Resources",
     columns: 1,
     items: [
-      { title: "Guides", description: "How-tos on tracking hours and getting paid.", icon: "guide", index: "guide" },
-      { title: "Comparisons", description: "Tools side by side, with prices.", icon: "compare", index: "comparison" },
-      { title: "Alternatives", description: "Switching from another tool.", icon: "switch", index: "alternative" },
-      { title: "Features", description: "Everything Paidlyo does, page by page.", icon: "features", index: "feature" },
+      { title: "Guides", description: "How-tos on tracking hours and getting paid.", icon: "guide", livePath: "/guides" },
+      { title: "Comparisons", description: "Tools side by side, with prices.", icon: "compare", livePath: "/compare" },
+      { title: "Alternatives", description: "Switching from another tool.", icon: "switch", livePath: "/alternatives" },
+      { title: "Features", description: "Everything Paidlyo does, page by page.", icon: "features", livePath: "/features" },
     ],
   },
 ];
@@ -119,9 +135,9 @@ export const HERO = {
     "Paidlyo demo: the dashboard, tracking time on a timesheet and turning unbilled hours into an invoice.",
 } as const;
 
-/** "Who it's for" cards. `slug` links the card to /for/<slug> once that audience page is published. */
+/** "Who it's for" cards. Each links to its page in AUDIENCE_PAGES once that page is published. */
 export type Audience = {
-  slug: string;
+  slug: keyof typeof AUDIENCE_PAGES;
   icon: "agency" | "consultancy" | "freelancer" | "business";
   title: string;
   text: string;

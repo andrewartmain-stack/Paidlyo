@@ -174,7 +174,21 @@
   Alternatives, Features) and "All solutions" under Solutions → new `/for` audience index.
   `resolveNavGroups()` (nav-icons.ts) shows an item only when its index has a published page and
   drops empty groups, so the header is unchanged until content exists. Mobile menu shows group
-  footers. Audience breadcrumbs go through `/for`.
+  footers.
+- [x] URL structure 2026-11-24 (from the keyword sheet: ~60% of volume sits under the three
+  products). Rules in `src/content/pages/paths.ts` (`pagePath()` builds every URL):
+  `/{product}` (Product page; invoicing | time-tracking | time-tracking-and-invoicing),
+  `/{product}/{variant}` (Product variant: free, online, mac, a country), `/{product}/for/{audience}`
+  (Audience page, now with a product; `/for` routes and index removed), `/features/{slug}`,
+  `/alternatives/{slug}`, `/compare/{slug}`, `/guides/{slug}`. Product page lists its variants and
+  audiences; sub-pages breadcrumb to the product (once live) and link to siblings
+  (`content/pages/family.ts`). Nav/landing link via `livePaths()` (`resolveNavGroups(groups, live)`;
+  Product menu shows the 3 product pages once published; Solutions → `AUDIENCE_PAGES`).
+  Studio: Product page + Product variant types, product picker on audiences (slug unique per
+  product), sidebar = URL folders (`studio/structure.ts`). CSV: products.csv, variants.csv,
+  `product` column on audiences. `ensureStatic = "navigation"` on the marketing layout: build
+  enforces static pages and unknown URLs get a real 404 on the first visit (was 200 shell).
+  Not built: `/best/*` (needs a multi-tool template), `/integrations/*` (none exist), `/templates/*`.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

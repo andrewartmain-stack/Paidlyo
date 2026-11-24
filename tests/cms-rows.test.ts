@@ -79,6 +79,36 @@ describe("validation and Sanity documents", () => {
     expect(toSanityDocument("guide", content, IMAGES, { publish: true })._id).toBe("guidePage-track-time");
   });
 
+  it("identifies product, variant and audience documents by product", () => {
+    const landing = { hero: { title: "T", description: "D" } };
+    expect(toSanityDocument("product", { product: "invoicing", ...landing }, IMAGES, { publish: true })).toMatchObject({
+      _id: "productPage-invoicing",
+      _type: "productPage",
+    });
+    expect(toSanityDocument("product", { product: "invoicing", ...landing }, IMAGES)).not.toHaveProperty("slug");
+    expect(toSanityDocument("variant", { product: "invoicing", slug: "free", ...landing }, IMAGES)._id).toBe("drafts.variantPage-invoicing-free");
+    expect(toSanityDocument("audience", { product: "time-tracking", slug: "agencies", ...landing }, IMAGES)._id).toBe(
+      "drafts.audiencePage-time-tracking-agencies",
+    );
+    expect(() => toSanityDocument("product", landing, IMAGES)).toThrow(/no product/);
+  });
+
+  it("validates a product row without a slug column", () => {
+    const row = rowToContent({
+      product: "invoicing",
+      "seo.title": "Invoicing Software | Paidlyo",
+      "seo.description": "Invoices from tracked time.",
+      keywords: "invoicing software",
+      "hero.title": "Invoicing",
+      "hero.description": "Bill every hour.",
+      "sections.1.heading": "Invoices",
+      "sections.1.paragraphs": "One | Two",
+      teamSizes: "1 | 5",
+    });
+    expect(validateContent("product", row, IMAGES)).toEqual([]);
+    expect(validateContent("product", { ...row, product: "payroll" }, IMAGES)[0]).toMatch(/^product: /);
+  });
+
   it("refuses to build a document for an image that wasn't uploaded", () => {
     expect(() => toSanityDocument("guide", content, new Map())).toThrow(/timer\.png/);
   });

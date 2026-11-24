@@ -1,16 +1,20 @@
 import type { z } from "zod";
-import { PREVIEW_SLUG } from "./paths";
+import { PAGE_TYPES, pagePath, PREVIEW_SLUG, type PageType } from "./paths";
 import {
   alternativeSchema,
   audienceSchema,
   comparisonSchema,
   featurePageSchema,
   guideSchema,
+  productPageSchema,
+  variantPageSchema,
   type AlternativePage,
   type AudiencePage,
   type ComparisonPage,
   type FeaturePage,
   type GuidePage,
+  type ProductPage,
+  type VariantPage,
 } from "./schema";
 
 /*
@@ -19,10 +23,11 @@ import {
  * validation is skipped (and logged) instead of rendering a broken page.
  */
 
-export const PAGE_TYPES = ["audience", "alternative", "comparison", "feature", "guide"] as const;
-export type PageType = (typeof PAGE_TYPES)[number];
+export { PAGE_TYPES, type PageType };
 
 export type PageByType = {
+  product: ProductPage;
+  variant: VariantPage;
   audience: AudiencePage;
   alternative: AlternativePage;
   comparison: ComparisonPage;
@@ -31,6 +36,8 @@ export type PageByType = {
 };
 
 export const PAGE_SCHEMAS: { [K in PageType]: z.ZodType<PageByType[K]> } = {
+  product: productPageSchema,
+  variant: variantPageSchema,
   audience: audienceSchema,
   alternative: alternativeSchema,
   comparison: comparisonSchema,
@@ -38,7 +45,7 @@ export const PAGE_SCHEMAS: { [K in PageType]: z.ZodType<PageByType[K]> } = {
   guide: guideSchema,
 };
 
-/** Sanity document type of each page type (`audiencePage`, …); must match studio/schemaTypes. */
+/** Sanity document type of each page type (`productPage`, `variantPage`, …); must match studio/schemaTypes. */
 export const cmsDocType = (type: PageType) => `${type}Page`;
 
 export function pageTypeFromDocType(docType: string): PageType | undefined {
@@ -51,7 +58,11 @@ export const cmsTag = (type: PageType) => `cms:${type}`;
 /* GROQ: images become { src, width, height, alt, caption }; missing dates fall back to Sanity's. */
 const IMAGE = `{ "src": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height, alt, caption }`;
 const COMMON = `..., "slug": slug.current, "updated": coalesce(updated, string::split(_updatedAt, "T")[0])`;
+const LANDING = `screenshots[]${IMAGE}, sections[]{..., image${IMAGE}}`;
 const PROJECTIONS: Record<PageType, string> = {
+  // A product page has no slug field: its slug is the product.
+  product: `${COMMON}, "slug": product, ${LANDING}`,
+  variant: `${COMMON}, ${LANDING}`,
   audience: `${COMMON}, screenshots[]${IMAGE}`,
   alternative: COMMON,
   comparison: COMMON,
@@ -61,7 +72,8 @@ const PROJECTIONS: Record<PageType, string> = {
 
 /** Published documents of one type (pass `{ docType: cmsDocType(type) }` as params). */
 export function pagesQuery(type: PageType): string {
-  return `*[_type == $docType && defined(slug.current)] | order(_createdAt asc) { ${PROJECTIONS[type]} }`;
+  const identified = type === "product" ? "defined(product)" : "defined(slug.current)";
+  return `*[_type == $docType && ${identified}] | order(_createdAt asc) { ${PROJECTIONS[type]} }`;
 }
 
 /** GROQ returns null for empty fields; Zod's optional fields expect them to be absent. */
@@ -119,13 +131,15 @@ export function parseCmsPages<T extends PageType>(type: T, docs: unknown[]): { p
       errors.push({ slug, message: `"${PREVIEW_SLUG}" is reserved for the template sample` });
       continue;
     }
-    if (seen.has(slug)) {
-      errors.push({ slug, message: "another document already uses this slug" });
-      continue;
-    }
     const result = PAGE_SCHEMAS[type].safeParse(fromCms(type, doc));
     if (result.success) {
-      seen.add(slug);
+      // Unique by URL: variants and audiences may share a slug under different products.
+      const path = pagePath(type, result.data);
+      if (seen.has(path)) {
+        errors.push({ slug, message: `another document already uses ${path}` });
+        continue;
+      }
+      seen.add(path);
       pages.push(result.data);
     } else {
       errors.push({ slug, message: result.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`).join("; ") });

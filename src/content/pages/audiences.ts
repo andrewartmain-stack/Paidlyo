@@ -2,7 +2,7 @@ import { PREVIEW_SLUG } from "./paths";
 import { audienceSchema, defineCollection } from "./schema";
 
 /*
- * Audience pages (/for/<slug>). Add one object per audience; the preview entry shows the template
+ * Audience pages (/{product}/for/<slug>). Add one object per audience; the preview entry shows the template
  * with placeholder text and is never indexed. Write unique content for each audience: their
  * workflow, a real billing example and their own FAQs (see the AI prompts in the keyword sheet).
  */
@@ -10,6 +10,7 @@ export const AUDIENCE_PAGES = defineCollection("audience", audienceSchema, [
   {
     slug: PREVIEW_SLUG,
     preview: true,
+    product: "invoicing",
     name: "[Audience]",
     seo: { title: "[Time Tracking for Audience] | Paidlyo", description: "[140–160 character description with the main keyword first.]" },
     keywords: ["[primary keyword]", "[secondary keyword]"],

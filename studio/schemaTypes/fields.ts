@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField } from "sanity";
+import { defineArrayMember, defineField, type SlugValidationContext } from "sanity";
 
 /*
  * Shared fields. Names and limits mirror src/content/pages/schema.ts (the site validates every
@@ -105,19 +105,95 @@ export const toolPrice = (name: string, title: string) =>
     preview: { select: { title: "name", subtitle: "plan" } },
   });
 
-/** Fields every page has: slug first, then search and links; dates are optional (Sanity's are used). */
-export const pageStart = (source: string) => [
-  defineField({ name: "slug", title: "Slug (URL)", type: "slug", options: { source }, validation: (rule) => rule.required() }),
-  seo,
+/** The three products (mirrors PRODUCT_SLUGS / PRODUCT_NAMES in src/content/pages/paths.ts). */
+export const PRODUCTS = [
+  { value: "invoicing", title: "Invoicing (/invoicing)" },
+  { value: "time-tracking", title: "Time tracking (/time-tracking)" },
+  { value: "time-tracking-and-invoicing", title: "Time tracking & invoicing (/time-tracking-and-invoicing)" },
+];
+
+export const productField = defineField({
+  name: "product",
+  title: "Product",
+  type: "string",
+  options: { list: PRODUCTS, layout: "radio" },
+  validation: (rule) => rule.required(),
+});
+
+/** A slug may repeat across products (/invoicing/for/agencies and /time-tracking/for/agencies). */
+async function uniqueWithinProduct(slug: string, context: SlugValidationContext): Promise<boolean> {
+  const { document, getClient } = context;
+  if (!document) return true;
+  const id = document._id.replace(/^drafts\./, "");
+  const count = await getClient({ apiVersion: "2025-02-06" }).fetch<number>(
+    `count(*[_type == $type && product == $product && slug.current == $slug && !(_id in [$id, "drafts." + $id])])`,
+    { type: document._type, product: document.product ?? null, slug, id },
+  );
+  return count === 0;
+}
+
+const keywords = defineField({
+  name: "keywords",
+  title: "Target keywords",
+  type: "array",
+  of: [{ type: "string" }],
+  options: { layout: "tags" },
+  description: "From the keyword research; not shown on the page.",
+  validation: (rule) => rule.required().min(1),
+});
+
+/** Search fields every page has. */
+export const pageSearch = [seo, keywords];
+
+/** Slug, then search fields. `perProduct`: the slug only has to be unique within its product. */
+export const pageStart = (source: string, { perProduct = false } = {}) => [
   defineField({
-    name: "keywords",
-    title: "Target keywords",
-    type: "array",
-    of: [{ type: "string" }],
-    options: { layout: "tags" },
-    description: "From the keyword research; not shown on the page.",
-    validation: (rule) => rule.required().min(1),
+    name: "slug",
+    title: "Slug (URL)",
+    type: "slug",
+    options: { source, ...(perProduct && { isUnique: uniqueWithinProduct }) },
+    validation: (rule) => rule.required(),
   }),
+  ...pageSearch,
+];
+
+/** Body of product and variant pages: sections with images, feature cards, screenshots, price. */
+export const landingFields = [
+  defineField({
+    name: "sections",
+    title: "Sections",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        name: "landingSection",
+        fields: [
+          text("heading", "Heading"),
+          defineField({ name: "paragraphs", title: "Paragraphs", type: "array", of: [{ type: "text", rows: 4 }], validation: (rule) => rule.required().min(1) }),
+          defineField({ name: "bullets", title: "Bullets", type: "array", of: [{ type: "string" }] }),
+          image("image", "Image (shown beside the text)"),
+        ],
+        preview: { select: { title: "heading", media: "image" } },
+      }),
+    ],
+    validation: (rule) => rule.required().min(1).max(8),
+  }),
+  defineField({
+    name: "highlights",
+    title: "Feature cards",
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        name: "highlight",
+        fields: [text("title", "Title"), text("text", "Text", { rows: 3 }), text("href", "Link (optional)", { optional: true, description: "e.g. /features/timesheets" })],
+        preview: { select: { title: "title", subtitle: "href" } },
+      }),
+    ],
+    validation: (rule) => rule.max(6),
+  }),
+  screenshots,
+  teamSizes,
 ];
 
 export const pageEnd = [

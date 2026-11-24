@@ -33,6 +33,7 @@ import { cn } from "@/lib/utils";
 import {
   ASK_AI,
   AUDIENCES,
+  AUDIENCE_PAGES,
   AUDIENCES_INTRO,
   FAQ,
   FEATURES,
@@ -50,7 +51,7 @@ import {
   type TourItem,
   type TrustItem,
 } from "@/content/landing";
-import { audiencePaths } from "@/content/pages";
+import { livePaths } from "@/content/pages";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { AiLogo } from "./ai-logos";
 import { HeroVideo } from "./hero-video";
@@ -166,14 +167,15 @@ export function Hero() {
 }
 
 export async function Audiences() {
-  const paths = await audiencePaths();
+  const live = await livePaths();
   return (
     <section id="who-its-for" aria-labelledby="audiences-title" className="scroll-mt-20 bg-background py-24 sm:py-28">
       <div className="mx-auto flex max-w-6xl flex-col gap-14 px-4 sm:px-6">
         <SectionHeading id="audiences-title" eyebrow="Who it's for" title={AUDIENCES_INTRO.title} description={AUDIENCES_INTRO.description} />
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {AUDIENCES.map((audience) => {
-            const href = paths.get(audience.slug);
+            const page = AUDIENCE_PAGES[audience.slug];
+            const href = live.has(page) ? page : undefined;
             const Icon = AUDIENCE_ICONS[audience.icon];
             return (
               <li key={audience.slug} className={cn("flex flex-col gap-4 rounded-3xl bg-cream p-7", SOFT_HOVER)}>

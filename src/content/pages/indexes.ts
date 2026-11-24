@@ -3,7 +3,8 @@ import { INDEX_PATHS, PAGE_PATHS } from "./paths";
 import { published } from "./schema";
 
 /*
- * Index pages for audiences, guides, alternatives and comparisons (features has its own page). Each one
+ * Index pages for guides, alternatives and comparisons (features has its own page; products
+ * list their own variant and audience pages). Each one
  * links to every published page of its type, so no page depends on the sitemap alone to be
  * found. An index stays noindex, out of the sitemap and out of the footer until it has a page.
  */
@@ -13,17 +14,6 @@ export type IndexType = keyof typeof INDEX_PATHS;
 export type IndexItem = { href: string; title: string; text: string; linkLabel: string };
 
 export const INDEX_COPY = {
-  audience: {
-    label: "Solutions",
-    seo: {
-      title: "Time Tracking Software for Every Team | Paidlyo",
-      description:
-        "Time tracking and invoicing for agencies, consultancies, freelancers and small businesses: see how Paidlyo fits the way your team bills clients.",
-    },
-    title: "Who Paidlyo is for",
-    description: "How agencies, consultancies, freelancers and small teams track time and bill clients with Paidlyo.",
-    empty: "Pages for each kind of team are on their way.",
-  },
   guide: {
     label: "Guides",
     seo: {
@@ -61,14 +51,6 @@ export const INDEX_COPY = {
 
 /** Cards for one index page: its published pages, in publishing order. */
 export async function indexItems(type: Exclude<IndexType, "feature">): Promise<IndexItem[]> {
-  if (type === "audience") {
-    return published(await getPages("audience")).map((page) => ({
-      href: PAGE_PATHS.audience(page.slug),
-      title: page.name,
-      text: page.hero.description,
-      linkLabel: `Paidlyo for ${page.name.toLowerCase()}`,
-    }));
-  }
   if (type === "guide") {
     return published(await getPages("guide")).map((page) => ({
       href: PAGE_PATHS.guide(page.slug),
@@ -95,22 +77,19 @@ export async function indexItems(type: Exclude<IndexType, "feature">): Promise<I
 
 /** Index pages that have at least one published page, for the footer and the sitemap. */
 export async function liveIndexes(options: ReadOptions = {}): Promise<{ type: IndexType; path: string; label: string }[]> {
-  const [audiences, features, guides, alternatives, comparisons] = await Promise.all([
-    getPages("audience", options),
+  const [features, guides, alternatives, comparisons] = await Promise.all([
     getPages("feature", options),
     getPages("guide", options),
     getPages("alternative", options),
     getPages("comparison", options),
   ]);
   const counts: Record<IndexType, number> = {
-    audience: published(audiences).length,
     feature: published(features).length,
     guide: published(guides).length,
     alternative: published(alternatives).length,
     comparison: published(comparisons).length,
   };
   const labels: Record<IndexType, string> = {
-    audience: INDEX_COPY.audience.label,
     feature: "Features",
     guide: INDEX_COPY.guide.label,
     alternative: INDEX_COPY.alternative.label,

@@ -1,18 +1,85 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { cards, cell, hero, image, pageEnd, pageStart, screenshots, teamSizes, text, toolPrice } from "./fields";
+import {
+  cards,
+  cell,
+  hero,
+  image,
+  landingFields,
+  pageEnd,
+  pageSearch,
+  pageStart,
+  PRODUCTS,
+  productField,
+  screenshots,
+  teamSizes,
+  text,
+  toolPrice,
+} from "./fields";
+
+const productTitle = (value?: string) => PRODUCTS.find((product) => product.value === value)?.title.split(" (")[0] ?? "";
 
 /*
- * One document type per page type. `<type>Page` names must match cmsDocType() in
+ * One document type per page type (URL rules: src/content/pages/paths.ts). `<type>Page` names must match cmsDocType() in
  * src/content/pages/cms.ts; field names match src/content/pages/schema.ts.
  */
 
-const audiencePage = defineType({
-  name: "audiencePage",
-  title: "Audience page (/for/…)",
+const productPage = defineType({
+  name: "productPage",
+  title: "Product page (/{product})",
   type: "document",
   fields: [
-    text("name", "Audience", { description: "e.g. Agencies" }),
-    ...pageStart("name"),
+    defineField({
+      ...productField,
+      description: "One page per product; its URL is the product, e.g. paidlyo.com/invoicing.",
+      validation: (rule) =>
+        rule.required().custom(async (value, context) => {
+          if (!value || !context.document) return true;
+          const id = context.document._id.replace(/^drafts\./, "");
+          const count = await context
+            .getClient({ apiVersion: "2025-02-06" })
+            .fetch<number>(`count(*[_type == "productPage" && product == $value && !(_id in [$id, "drafts." + $id])])`, { value, id });
+          return count === 0 ? true : "This product already has a page";
+        }),
+    }),
+    ...pageSearch,
+    hero,
+    ...landingFields,
+    ...pageEnd,
+  ],
+  preview: {
+    select: { product: "product", title: "hero.title" },
+    prepare: ({ product, title }) => ({ title: productTitle(product) || "New product page", subtitle: product ? `/${product} · ${title ?? ""}` : "" }),
+  },
+});
+
+const variantPage = defineType({
+  name: "variantPage",
+  title: "Product variant (/{product}/{variant})",
+  type: "document",
+  fields: [
+    productField,
+    text("name", "Variant", { description: "e.g. Free invoicing software, Mac app, UK" }),
+    ...pageStart("name", { perProduct: true }),
+    hero,
+    ...landingFields,
+    ...pageEnd,
+  ],
+  validation: (rule) =>
+    rule.custom((doc) => ((doc?.slug as { current?: string } | undefined)?.current === "for" ? '"for" is reserved for audience pages' : true)),
+  preview: {
+    select: { title: "name", product: "product", slug: "slug.current" },
+    prepare: ({ title, product, slug }) => ({ title, subtitle: product && slug ? `/${product}/${slug}` : "" }),
+  },
+});
+
+const audiencePage = defineType({
+  name: "audiencePage",
+  title: "Audience page (/{product}/for/{audience})",
+  type: "document",
+  fields: [
+    productField,
+    text("name", "Audience", { description: "e.g. Agencies, Law firms" }),
+    ...pageStart("name", { perProduct: true }),
     hero,
     cards("painPoints", "Pain points", 2, 6),
     defineField({
@@ -38,7 +105,10 @@ const audiencePage = defineType({
     screenshots,
     ...pageEnd,
   ],
-  preview: { select: { title: "name", subtitle: "slug.current" } },
+  preview: {
+    select: { title: "name", product: "product", slug: "slug.current" },
+    prepare: ({ title, product, slug }) => ({ title, subtitle: product && slug ? `/${product}/for/${slug}` : "" }),
+  },
 });
 
 const alternativePage = defineType({
@@ -208,4 +278,4 @@ const guidePage = defineType({
   preview: { select: { title: "title", subtitle: "slug.current", media: "cover" } },
 });
 
-export const schemaTypes = [audiencePage, alternativePage, comparisonPage, featurePage, guidePage];
+export const schemaTypes = [productPage, variantPage, audiencePage, featurePage, alternativePage, comparisonPage, guidePage];

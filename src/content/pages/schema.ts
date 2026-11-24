@@ -1,8 +1,9 @@
 import { z } from "zod";
+import { PRODUCT_SLUGS, RESERVED_VARIANT_SLUGS } from "./paths";
 
 /*
- * Data shapes for the programmatic SEO pages (audiences, alternatives, comparisons, features,
- * guides). Every collection is parsed with these schemas when the module loads, so a malformed
+ * Data shapes for the programmatic SEO pages (products, variants, audiences, features,
+ * alternatives, comparisons, guides; URL rules in paths.ts). Every collection is parsed with these schemas when the module loads, so a malformed
  * entry fails `next build` instead of shipping a broken page.
  */
 
@@ -70,6 +71,19 @@ export const toolPriceSchema = z.object({
   checkedOn: isoDate,
 });
 
+const productSchema = z.enum(PRODUCT_SLUGS);
+
+/** A block of text with an optional image beside it (product and variant pages). */
+const sectionSchema = z.object({
+  heading: text,
+  paragraphs: z.array(text).min(1),
+  bullets: z.array(text).default([]),
+  image: screenshotSchema.optional(),
+});
+
+/** A card that may link to a feature or other page. */
+const linkedCardSchema = z.object({ title: text, text, href: z.string().startsWith("/").optional() });
+
 /** A comparison table cell: yes / no, or a short text such as "Paid add-on". */
 const cellSchema = z.union([z.boolean(), text]);
 
@@ -85,9 +99,31 @@ const pageBase = {
   updated: isoDate,
 };
 
-/** /for/<slug>: one landing page per audience (agencies, consultants, …). */
+/** Body shared by product and variant pages. */
+const landingFields = {
+  hero: heroSchema,
+  sections: z.array(sectionSchema).min(1).max(8),
+  /** Feature cards, usually linking to /features/… pages. */
+  highlights: z.array(linkedCardSchema).max(6).default([]),
+  screenshots: z.array(screenshotSchema).max(4).default([]),
+  /** Team sizes for the price block, e.g. [1, 5, 15]. */
+  teamSizes: z.array(z.number().int().positive()).min(1).max(4),
+};
+
+/** /{product}: one page per product, the head term (/invoicing). Its slug is the product. */
+export const productPageSchema = z
+  .object({ ...pageBase, product: productSchema, ...landingFields })
+  .refine((page) => page.slug === page.product, { path: ["slug"], message: "A product page's slug is its product" });
+
+/** /{product}/{variant}: one angle on a product (free, online, app, mac, a country). */
+export const variantPageSchema = z
+  .object({ ...pageBase, product: productSchema, name: text, ...landingFields })
+  .refine((page) => !RESERVED_VARIANT_SLUGS.includes(page.slug), { path: ["slug"], message: '"for" is reserved for audience pages' });
+
+/** /{product}/for/{audience}: one product for one audience (agencies, law firms, …). */
 export const audienceSchema = z.object({
   ...pageBase,
+  product: productSchema,
   name: text,
   hero: heroSchema,
   painPoints: z.array(cardSchema).min(2).max(6),
@@ -181,6 +217,8 @@ export const guideSchema = z.object({
     .min(1),
 });
 
+export type ProductPage = z.infer<typeof productPageSchema>;
+export type VariantPage = z.infer<typeof variantPageSchema>;
 export type AudiencePage = z.infer<typeof audienceSchema>;
 export type AlternativePage = z.infer<typeof alternativeSchema>;
 export type ComparisonPage = z.infer<typeof comparisonSchema>;
@@ -189,8 +227,10 @@ export type GuidePage = z.infer<typeof guideSchema>;
 export type ToolPrice = z.infer<typeof toolPriceSchema>;
 export type Screenshot = z.infer<typeof screenshotSchema>;
 export type ComparisonCell = z.infer<typeof cellSchema>;
+export type LandingSection = z.infer<typeof sectionSchema>;
+export type LinkedCard = z.infer<typeof linkedCardSchema>;
 
-type Page = { slug: string; preview: boolean };
+type Page = { slug: string; preview: boolean; product?: string };
 
 /**
  * Parse a collection at build time: every entry must match the schema, slugs must be unique and
@@ -206,7 +246,8 @@ export function defineCollection<S extends z.ZodType<Page>>(name: string, schema
     return result.data;
   });
   if (pages.length === 0) throw new Error(`${name}: add at least one entry (the preview counts)`);
-  const slugs = pages.map((page) => page.slug);
+  // Variants and audiences may reuse a slug under different products.
+  const slugs = pages.map((page) => (page.product ? `${page.product}/${page.slug}` : page.slug));
   const duplicate = slugs.find((slug, i) => slugs.indexOf(slug) !== i);
   if (duplicate) throw new Error(`${name}: duplicate slug "${duplicate}"`);
   return pages;
@@ -217,6 +258,7 @@ export function published<T extends Page>(pages: T[]): T[] {
   return pages.filter((page) => !page.preview);
 }
 
-export function findPage<T extends Page>(pages: T[], slug: string): T | undefined {
-  return pages.find((page) => page.slug === slug);
+/** Find a page by slug (and product, for product, variant and audience pages). */
+export function findPage<T extends Page>(pages: T[], slug: string, product?: string): T | undefined {
+  return pages.find((page) => page.slug === slug && (product === undefined || page.product === product));
 }

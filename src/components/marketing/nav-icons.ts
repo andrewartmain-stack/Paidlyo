@@ -5,6 +5,7 @@ import {
   Briefcase,
   Building2,
   ChartColumn,
+  Layers,
   Clock,
   Download,
   FileText,
@@ -16,7 +17,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { NavGroup, NavIconKey, NavItem, NavLink } from "@/content/landing";
-import { INDEX_PATHS } from "@/content/pages/paths";
 
 export const NAV_ICONS: Record<NavIconKey, LucideIcon> = {
   clock: Clock,
@@ -29,36 +29,30 @@ export const NAV_ICONS: Record<NavIconKey, LucideIcon> = {
   consultancy: Briefcase,
   freelancer: User,
   business: Store,
+  bundle: Layers,
   guide: BookOpen,
   compare: Scale,
   switch: ArrowLeftRight,
   features: LayoutGrid,
 };
 
-export type ResolvedNavItem = Omit<NavItem, "href" | "audienceSlug" | "index"> & { href: string };
+export type ResolvedNavItem = Omit<NavItem, "href" | "livePath" | "fallback"> & { href: string };
 export type ResolvedNavGroup = Omit<NavGroup, "items" | "footer"> & { items: ResolvedNavItem[]; footer?: NavLink };
 
-type IndexKey = keyof typeof INDEX_PATHS;
-
-/** Where audience items go before their page exists. */
-export const AUDIENCE_FALLBACK = "/#who-its-for";
-
 /**
- * Turn the nav config into links: audience items point to their page (or the landing section),
- * index items and footers appear only once their index page has a published page, and a group
- * left with no items is dropped.
+ * Turn the nav config into links for what exists now: an item with `livePath` links there once
+ * that page is published, else to its `fallback`, else it's hidden. Groups left empty are dropped.
  */
-export function resolveNavGroups(
-  groups: NavGroup[],
-  { audiencePaths, liveIndexes }: { audiencePaths: Map<string, string>; liveIndexes: Set<IndexKey> },
-): ResolvedNavGroup[] {
+export function resolveNavGroups(groups: NavGroup[], live: Set<string>): ResolvedNavGroup[] {
+  const target = (link: { href?: string; livePath?: string; fallback?: string }) =>
+    link.livePath ? (live.has(link.livePath) ? link.livePath : link.fallback) : link.href;
   return groups.flatMap(({ items, footer, ...group }) => {
-    const resolved = items.flatMap(({ href, audienceSlug, index, ...item }) => {
-      if (index) return liveIndexes.has(index) ? [{ ...item, href: INDEX_PATHS[index] }] : [];
-      return [{ ...item, href: href ?? (audienceSlug ? audiencePaths.get(audienceSlug) : undefined) ?? AUDIENCE_FALLBACK }];
+    const resolved = items.flatMap(({ href, livePath, fallback, ...item }) => {
+      const to = target({ href, livePath, fallback });
+      return to ? [{ ...item, href: to }] : [];
     });
     if (resolved.length === 0) return [];
-    const footerHref = footer?.index ? (liveIndexes.has(footer.index) ? INDEX_PATHS[footer.index] : undefined) : footer?.href;
+    const footerHref = footer && target(footer);
     return [{ ...group, items: resolved, ...(footer && footerHref && { footer: { label: footer.label, href: footerHref } }) }];
   });
 }

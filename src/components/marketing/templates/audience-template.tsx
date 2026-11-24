@@ -1,24 +1,30 @@
 import { Faq, FinalCta, ScreenshotFrame, SectionHeading, TeamPriceTable } from "@/components/marketing/sections";
 import { JsonLd } from "@/components/marketing/json-ld";
 import type { AudiencePage } from "@/content/pages/schema";
-import { INDEX_COPY } from "@/content/pages/indexes";
-import { INDEX_PATHS, PAGE_PATHS } from "@/content/pages/paths";
+import { PRODUCT_NAMES } from "@/content/pages/paths";
 import { faqJsonLd } from "@/content/structured-data";
-import { CardSection, ExampleCard, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery } from "./blocks";
+import { CardSection, ExampleCard, LinkGrid, PageHero, PreviewBanner, RelatedLinks, ScreenshotGallery, type Crumb } from "./blocks";
 
-/** /for/<slug>: landing page for one audience. Section order: problem → example → features → price → proof → FAQ. */
-export function AudienceTemplate({ page }: { page: AudiencePage }) {
+/**
+ * /{product}/for/<slug>: one product for one audience. Section order: problem → example →
+ * features → price → proof → FAQ → the product's other pages.
+ */
+export function AudienceTemplate({
+  page,
+  crumbs,
+  siblings,
+}: {
+  page: AudiencePage;
+  crumbs: Crumb[];
+  siblings: { href: string; title: string; text: string }[];
+}) {
   const [lead, ...rest] = page.screenshots;
   return (
     <>
       {page.preview && <PreviewBanner />}
       {page.faq.length > 0 && <JsonLd data={faqJsonLd(page.faq)} />}
       <PageHero
-        crumbs={[
-          { name: "Home", path: "/" },
-          { name: INDEX_COPY.audience.label, path: INDEX_PATHS.audience },
-          { name: page.name, path: PAGE_PATHS.audience(page.slug) },
-        ]}
+        crumbs={crumbs}
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
@@ -44,6 +50,7 @@ export function AudienceTemplate({ page }: { page: AudiencePage }) {
       </section>
       <ScreenshotGallery title={`Paidlyo for ${page.name.toLowerCase()}`} items={rest} />
       {page.faq.length > 0 && <Faq items={page.faq} title={`Questions from ${page.name.toLowerCase()}`} />}
+      <LinkGrid id="more" eyebrow="More" title={`More about ${PRODUCT_NAMES[page.product].toLowerCase()} in Paidlyo`} links={siblings} muted />
       <RelatedLinks links={page.related} />
       <FinalCta />
     </>

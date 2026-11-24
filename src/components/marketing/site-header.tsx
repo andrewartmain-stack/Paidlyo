@@ -2,17 +2,15 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/app-shell/logo";
 import { NAV_GROUPS, NAV_PLAIN_LINKS } from "@/content/landing";
-import { audiencePaths } from "@/content/pages";
-import { liveIndexes } from "@/content/pages/indexes";
+import { livePaths } from "@/content/pages";
 import { MarketingMobileNav } from "./mobile-nav";
 import { resolveNavGroups, type ResolvedNavGroup } from "./nav-icons";
 import { MarketingNavMenu } from "./nav-menu";
 import { HeaderScrollShell } from "./scroll-shell";
 
-/** Nav links for what's published now: audience pages, and index pages that have content. */
+/** Nav links for what's published now (product, audience and index pages). */
 async function resolveGroups(): Promise<ResolvedNavGroup[]> {
-  const [paths, indexes] = await Promise.all([audiencePaths(), liveIndexes()]);
-  return resolveNavGroups(NAV_GROUPS, { audiencePaths: paths, liveIndexes: new Set(indexes.map((index) => index.type)) });
+  return resolveNavGroups(NAV_GROUPS, await livePaths());
 }
 
 /** Public site header: floating glass pill. Static: no session reads; CMS data is cached, so pages stay prerendered. */

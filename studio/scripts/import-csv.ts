@@ -6,8 +6,8 @@
  *   npm run import -- ../files/cms-templates --dry-run  # validate only, nothing is sent
  *   npm run import -- ../files/cms-templates --publish  # skip review: publish straight away
  *
- * The folder holds audiences.csv, alternatives.csv, comparisons.csv, features.csv and/or
- * guides.csv, plus an images/ folder for the files named in *.file columns. Rows are matched to
+ * The folder holds products.csv, variants.csv, audiences.csv, features.csv, alternatives.csv,
+ * comparisons.csv and/or guides.csv, plus an images/ folder for the files named in *.file columns. Rows are matched to
  * pages by slug, so importing again updates them. Runs with your `sanity login` (no token needed).
  */
 import { readFile } from "node:fs/promises";
@@ -71,7 +71,8 @@ for (const type of PAGE_TYPES) {
 
   for (const { line, record } of rows) {
     const content = rowToContent(record);
-    const label = `  row ${line} (${typeof content.slug === "string" ? content.slug : "no slug"})`;
+    const id = [content.product, content.slug].filter((part) => typeof part === "string").join("/");
+    const label = `  row ${line} (${id || "no slug"})`;
     const files = imageFiles(content);
     // Validate with placeholder images first, so invalid rows never upload anything.
     const errors = validateContent(type, content, new Map(files.map((file) => [file, PLACEHOLDER])));

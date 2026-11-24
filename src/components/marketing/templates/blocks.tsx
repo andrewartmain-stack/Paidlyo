@@ -6,7 +6,7 @@ import { ScreenshotFrame, SectionHeading } from "@/components/marketing/sections
 import { HERO } from "@/content/landing";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { paidlyoMonthlyCents, toolMonthlyCents } from "@/content/pages/pricing-math";
-import type { ComparisonCell, Screenshot, ToolPrice } from "@/content/pages/schema";
+import type { ComparisonCell, LandingSection, Screenshot, ToolPrice } from "@/content/pages/schema";
 import { breadcrumbJsonLd } from "@/content/structured-data";
 
 /* Building blocks shared by the programmatic page templates. Server components only. */
@@ -354,5 +354,89 @@ export function RelatedLinks({ links }: { links: { href: string; label: string }
         </ul>
       </div>
     </nav>
+  );
+}
+
+/** Text sections, each with an optional image; image rows alternate sides on wide screens. */
+export function SectionRows({ sections }: { sections: LandingSection[] }) {
+  return (
+    <div className="flex flex-col">
+      {sections.map((section, i) => {
+        const id = `section-${i + 1}`;
+        return (
+          <section key={id} aria-labelledby={id} className={i % 2 === 1 ? "bg-muted/60 py-20 sm:py-24" : "py-20 sm:py-24"}>
+            <div
+              className={`mx-auto grid gap-10 px-4 sm:px-6 ${section.image ? "max-w-6xl lg:grid-cols-2 lg:items-center" : "max-w-3xl"}`}
+            >
+              <div className={`flex flex-col gap-4 ${section.image && i % 2 === 1 ? "lg:order-2" : ""}`}>
+                <h2 id={id} className="text-3xl sm:text-4xl">
+                  {section.heading}
+                </h2>
+                {section.paragraphs.map((paragraph, j) => (
+                  <p key={j} className="text-lg leading-relaxed text-muted-foreground">
+                    {paragraph}
+                  </p>
+                ))}
+                {section.bullets.length > 0 && (
+                  <ul className="flex flex-col gap-2">
+                    {section.bullets.map((bullet, j) => (
+                      <li key={`${j}-${bullet}`} className="flex gap-2 text-lg">
+                        <Check className="mt-1 size-5 shrink-0 text-brand" aria-hidden />
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              {section.image && (
+                <figure className="flex flex-col gap-3">
+                  <ScreenshotFrame src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height} />
+                  {section.image.caption && (
+                    <figcaption className="text-center text-sm text-muted-foreground">{section.image.caption}</figcaption>
+                  )}
+                </figure>
+              )}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Links to related pages (a product's variants and audiences, or a page's siblings). Renders nothing when empty. */
+export function LinkGrid({
+  id,
+  eyebrow,
+  title,
+  links,
+  muted = false,
+}: {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  links: { href: string; title: string; text: string }[];
+  muted?: boolean;
+}) {
+  if (links.length === 0) return null;
+  return (
+    <section aria-labelledby={`${id}-title`} className={muted ? "bg-muted/60 py-20 sm:py-24" : "py-20 sm:py-24"}>
+      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 sm:px-6">
+        <SectionHeading id={`${id}-title`} eyebrow={eyebrow} title={title} />
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href} className="group flex h-full flex-col gap-2 rounded-2xl border bg-card p-6 hover:border-brand">
+                <span className="flex items-center justify-between gap-2 text-lg font-medium">
+                  {link.title}
+                  <ArrowRight className="size-4 text-brand transition-transform group-hover:translate-x-0.5" aria-hidden />
+                </span>
+                <span className="text-sm leading-relaxed text-muted-foreground">{link.text}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }

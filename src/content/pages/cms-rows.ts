@@ -181,7 +181,13 @@ export function validateContent(type: PageType, content: Obj, images: Map<string
     const image = uploaded(images, file);
     return { ...rest, src: image.url, width: image.width, height: image.height };
   }) as Obj;
-  const page = { updated: today(), ...(type === "guide" ? { published: today() } : {}), ...readShape };
+  const page = {
+    updated: today(),
+    ...(type === "guide" ? { published: today() } : {}),
+    // A product page's slug is its product (as the site's GROQ query projects it).
+    ...(type === "product" ? { slug: readShape.product } : {}),
+    ...readShape,
+  };
   const result = PAGE_SCHEMAS[type].safeParse(fromCms(type, page));
   return result.success ? [] : result.error.issues.map((issue) => `${issue.path.join(".") || "(row)"}: ${issue.message}`);
 }
@@ -196,27 +202,32 @@ function addKeys(value: Json): Json {
 }
 
 /**
- * The Sanity document for a valid row. Its ID comes from the type and slug, so importing the
- * sheet again updates the same page. Without `publish` it lands as a draft to review in the Studio.
+ * The Sanity document for a valid row. Its ID comes from the type, product and slug, so importing
+ * the sheet again updates the same page. Without `publish` it lands as a draft to review in the Studio.
  */
 export function toSanityDocument(type: PageType, content: Obj, images: Map<string, UploadedImage>, { publish = false } = {}): Obj {
   const { slug, ...fields } = content;
-  if (typeof slug !== "string") throw new Error("Row has no slug");
+  const product = typeof content.product === "string" ? content.product : undefined;
+  if (type === "product" ? !product : typeof slug !== "string") throw new Error(type === "product" ? "Row has no product" : "Row has no slug");
+  const identity = type === "product" ? product : product ? `${product}-${slug}` : slug;
   const withImages = mapImages(fields, ({ file, ...rest }) => ({
     _type: "image",
     asset: { _type: "reference", _ref: uploaded(images, file).assetId },
     ...rest,
   })) as Obj;
   return {
-    _id: `${publish ? "" : "drafts."}${cmsDocType(type)}-${slug}`,
+    _id: `${publish ? "" : "drafts."}${cmsDocType(type)}-${identity}`,
     _type: cmsDocType(type),
-    slug: { _type: "slug", current: slug },
+    // Product pages have no slug field: the product is the URL.
+    ...(type === "product" ? {} : { slug: { _type: "slug", current: slug } }),
     ...(addKeys(withImages) as Obj),
   };
 }
 
 /** CSV file name of each page type inside the import folder. */
 export const CSV_FILES: Record<PageType, string> = {
+  product: "products.csv",
+  variant: "variants.csv",
   audience: "audiences.csv",
   alternative: "alternatives.csv",
   comparison: "comparisons.csv",
