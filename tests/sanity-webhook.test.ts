@@ -44,7 +44,7 @@ describe("POST /api/webhooks/sanity", () => {
     const body = JSON.stringify({ _type: "guidePage", slug: "track-time" });
     const response = await send(body, signSanityPayload(body, SECRET, Date.now()));
     expect(response.status).toBe(200);
-    expect(revalidateTag).toHaveBeenCalledWith("cms:guide", "max");
+    expect(revalidateTag).toHaveBeenCalledWith("cms:guide", { expire: 0 });
   });
 
   it("ignores documents that aren't pages", async () => {

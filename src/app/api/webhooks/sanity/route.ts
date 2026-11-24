@@ -31,6 +31,8 @@ export async function POST(request: Request) {
   const type = pageTypeFromDocType(payload.data._type);
   if (!type) return Response.json({ received: true, ignored: payload.data._type });
 
-  revalidateTag(cmsTag(type), "max");
+  // Expire now rather than stale-while-revalidate ("max"): pages built from this data (sitemap,
+  // index pages) would otherwise re-render once from the stale copy and keep it.
+  revalidateTag(cmsTag(type), { expire: 0 });
   return Response.json({ revalidated: cmsTag(type) });
 }
