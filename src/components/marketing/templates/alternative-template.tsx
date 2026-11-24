@@ -21,6 +21,7 @@ export function AlternativeTemplate({ page }: { page: AlternativePage }) {
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
+        updated={page.updated}
       />
       <CardSection id="reasons" muted eyebrow={`Why teams leave ${page.competitor}`} title="Reasons to switch" items={page.reasons} />
       <ComparisonTable

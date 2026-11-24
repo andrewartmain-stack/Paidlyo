@@ -28,6 +28,7 @@ export function AudienceTemplate({
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
+        updated={page.updated}
       />
       {lead && (
         <div className="mx-auto -mt-4 max-w-5xl px-4 pb-16 sm:px-6">

@@ -73,6 +73,9 @@ export function articleJsonLd(article: {
   description: string;
   path: string;
   author: string;
+  /** Author photo (site path) and role, when the author is a known person. */
+  authorImage?: string;
+  authorRole?: string;
   published: string;
   updated: string;
   /** Cover image: an absolute URL or a site path. */
@@ -88,7 +91,12 @@ export function articleJsonLd(article: {
     datePublished: article.published,
     dateModified: article.updated,
     ...(article.image && { image: article.image.startsWith("/") ? absoluteUrl(article.image) : article.image }),
-    author: { "@type": "Person", name: article.author },
+    author: {
+      "@type": "Person",
+      name: article.author,
+      ...(article.authorRole && { jobTitle: article.authorRole }),
+      ...(article.authorImage && { image: absoluteUrl(article.authorImage) }),
+    },
     publisher: { "@type": "Organization", name: SITE.name, logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") } },
   };
 }

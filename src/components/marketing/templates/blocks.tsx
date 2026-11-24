@@ -1,11 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, ChevronRight, Minus } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, Lightbulb, Minus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { JsonLd } from "@/components/marketing/json-ld";
+import { CardIcon } from "@/components/marketing/card-icon";
 import { ScreenshotFrame, SectionHeading } from "@/components/marketing/sections";
+import { AUTHOR } from "@/content/author";
 import { HERO } from "@/content/landing";
 import { formatPlanPrice, PLAN } from "@/content/pricing";
 import { paidlyoMonthlyCents, toolMonthlyCents } from "@/content/pages/pricing-math";
+import type { CardIconKey } from "@/content/pages/icons";
 import type { ComparisonCell, LandingSection, Screenshot, ToolPrice } from "@/content/pages/schema";
 import { breadcrumbJsonLd } from "@/content/structured-data";
 
@@ -60,12 +64,15 @@ export function PageHero({
   eyebrow,
   title,
   description,
+  updated,
   showCta = true,
 }: {
   crumbs: Crumb[];
   eyebrow?: string;
   title: string;
   description: string;
+  /** Shows the author byline with this "Updated" date. */
+  updated?: string;
   showCta?: boolean;
 }) {
   return (
@@ -80,6 +87,7 @@ export function PageHero({
             {title}
           </h1>
           <p className="max-w-2xl text-lg text-muted-foreground sm:text-xl">{description}</p>
+          {updated && <Byline updated={updated} />}
           {showCta && (
             <div className="flex flex-col items-center gap-3">
               <Link href={HERO.primaryCta.href} className={buttonVariants({ size: "lg" })}>
@@ -108,7 +116,7 @@ export function CardSection({
   eyebrow?: string;
   title: string;
   description?: string;
-  items: { title: string; text: string; href?: string }[];
+  items: { title: string; text: string; href?: string; icon?: CardIconKey }[];
   muted?: boolean;
 }) {
   return (
@@ -118,6 +126,7 @@ export function CardSection({
         <ul className={`grid gap-4 sm:grid-cols-2 ${items.length % 3 === 0 ? "lg:grid-cols-3" : ""}`}>
           {items.map((item, i) => (
             <li key={`${i}-${item.title}`} className="flex flex-col gap-3 rounded-2xl border bg-card p-6">
+              {item.icon && <CardIcon icon={item.icon} className="mb-1" />}
               <h3 className="text-lg">{item.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{item.text}</p>
               {item.href && (
@@ -358,7 +367,176 @@ export function RelatedLinks({ links }: { links: { href: string; label: string }
 }
 
 /** Text sections, each with an optional image; image rows alternate sides on wide screens. */
+const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" });
+export const formatDate = (iso: string) => dateFormat.format(new Date(`${iso}T00:00:00Z`));
+
+function Avatar({ size }: { size: number }) {
+  return (
+    <Image
+      src={AUTHOR.avatar.src}
+      alt=""
+      width={size}
+      height={size}
+      sizes={`${size}px`}
+      className="shrink-0 rounded-full bg-muted object-cover"
+      style={{ width: size, height: size }}
+    />
+  );
+}
+
+/** "By Andrei Artemov · Updated 24 November 2026" with the author's photo. `author` overrides the name. */
+export function Byline({ updated, author = AUTHOR.name, className }: { updated: string; author?: string; className?: string }) {
+  return (
+    <p className={`flex items-center gap-2 text-sm text-muted-foreground ${className ?? ""}`}>
+      {author === AUTHOR.name && <Avatar size={28} />}
+      <span>
+        By <span className="font-medium text-foreground">{author}</span> · Updated{" "}
+        <time dateTime={updated}>{formatDate(updated)}</time>
+      </span>
+    </p>
+  );
+}
+
+/** Who wrote the page, shown at the end of long text (and in the sidebar on desktop). */
+export function AuthorBox({ compact = false, className }: { compact?: boolean; className?: string }) {
+  return (
+    <div className={`flex items-center gap-4 rounded-2xl border bg-card ${compact ? "p-4" : "p-6"} ${className ?? ""}`}>
+      <Avatar size={compact ? 44 : 64} />
+      <div className="flex flex-col">
+        {!compact && <p className="text-xs font-semibold tracking-wide text-brand uppercase">Written by</p>}
+        <p className="font-semibold">{AUTHOR.name}</p>
+        <p className="text-sm text-muted-foreground">{AUTHOR.role}</p>
+      </div>
+    </div>
+  );
+}
+
+/** A highlighted takeaway under a section's text. */
+export function Callout({ text }: { text: string }) {
+  return (
+    <aside className="flex gap-3 rounded-2xl border-l-4 border-brand bg-accent/60 p-5">
+      <Lightbulb className="mt-0.5 size-5 shrink-0 text-brand" aria-hidden />
+      <p className="text-base leading-relaxed text-foreground">{text}</p>
+    </aside>
+  );
+}
+
+export type TocItem = { id: string; heading: string };
+
+function TocList({ items }: { items: TocItem[] }) {
+  return (
+    <ol className="flex flex-col gap-2 text-sm">
+      {items.map((item) => (
+        <li key={item.id}>
+          <a href={`#${item.id}`} className="text-muted-foreground hover:text-brand">
+            {item.heading}
+          </a>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** Collapsible "On this page" list above the text (pass "lg:hidden" when a sidebar shows it on desktop). */
+export function MobileToc({ items, className }: { items: TocItem[]; className?: string }) {
+  return (
+    <details className={`rounded-2xl border bg-card p-5 ${className ?? ""}`}>
+      <summary className="cursor-pointer font-semibold">On this page</summary>
+      <div className="mt-4">
+        <TocList items={items} />
+      </div>
+    </details>
+  );
+}
+
+/** Sticky desktop sidebar beside long text: contents, author and a trial call to action. */
+export function ArticleSidebar({ items }: { items: TocItem[] }) {
+  return (
+    <aside aria-label="On this page" className="hidden lg:block">
+      <div className="sticky top-28 flex flex-col gap-6">
+        <nav aria-labelledby="sidebar-toc-title" className="rounded-2xl border bg-card p-5">
+          <h2 id="sidebar-toc-title" className="mb-3 text-sm font-semibold">
+            On this page
+          </h2>
+          <TocList items={items} />
+        </nav>
+        <AuthorBox compact />
+        <div className="flex flex-col gap-3 rounded-2xl bg-primary/25 p-5">
+          <p className="font-semibold">Try Paidlyo free for 14 days</p>
+          <p className="text-sm text-muted-foreground">{formatPlanPrice(PLAN.monthlyCents)} per person a month, every feature included.</p>
+          <Link href={HERO.primaryCta.href} className={buttonVariants({ size: "sm", className: "self-start" })}>
+            {HERO.primaryCta.label}
+            <ArrowRight aria-hidden />
+          </Link>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+/** Paragraphs, bullets and callout of one text section. */
+function SectionBody({ section }: { section: { paragraphs: string[]; bullets: string[]; callout?: string } }) {
+  return (
+    <>
+      {section.paragraphs.map((paragraph, j) => (
+        <p key={j} className="text-lg leading-relaxed text-muted-foreground">
+          {paragraph}
+        </p>
+      ))}
+      {section.bullets.length > 0 && (
+        <ul className="flex flex-col gap-2">
+          {section.bullets.map((bullet, j) => (
+            <li key={`${j}-${bullet}`} className="flex gap-2 text-lg">
+              <Check className="mt-1 size-5 shrink-0 text-brand" aria-hidden />
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+      {section.callout && <Callout text={section.callout} />}
+    </>
+  );
+}
+
+/** From this many sections on, text is laid out as an article with a sidebar. */
+export const LONG_FORM_MIN_SECTIONS = 3;
+
+/** Long text: one reading column with images inline, the sidebar beside it, the author at the end. */
+function LongFormSections({ sections }: { sections: LandingSection[] }) {
+  const toc = sections.map((section, i) => ({ id: `section-${i + 1}`, heading: section.heading }));
+  return (
+    <div className="px-4 py-20 sm:px-6 sm:py-24">
+      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-col gap-14">
+          <MobileToc items={toc} className="lg:hidden" />
+          {sections.map((section, i) => (
+            <section key={toc[i].id} aria-labelledby={toc[i].id} className="flex scroll-mt-28 flex-col gap-4">
+              <h2 id={toc[i].id} className="text-3xl sm:text-4xl">
+                {section.heading}
+              </h2>
+              <SectionBody section={section} />
+              {section.image && (
+                <figure className="flex flex-col gap-3">
+                  <ScreenshotFrame src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height} />
+                  {section.image.caption && <figcaption className="text-center text-sm text-muted-foreground">{section.image.caption}</figcaption>}
+                </figure>
+              )}
+            </section>
+          ))}
+          <AuthorBox className="lg:hidden" />
+        </div>
+        <ArticleSidebar items={toc} />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Text sections of product, variant and audience pages. Up to two: alternating full-width rows
+ * with the image beside the text. Three or more: an article column with a sticky sidebar.
+ */
 export function SectionRows({ sections }: { sections: LandingSection[] }) {
+  if (sections.length >= LONG_FORM_MIN_SECTIONS) return <LongFormSections sections={sections} />;
   return (
     <div className="flex flex-col">
       {sections.map((section, i) => {
@@ -372,21 +550,7 @@ export function SectionRows({ sections }: { sections: LandingSection[] }) {
                 <h2 id={id} className="text-3xl sm:text-4xl">
                   {section.heading}
                 </h2>
-                {section.paragraphs.map((paragraph, j) => (
-                  <p key={j} className="text-lg leading-relaxed text-muted-foreground">
-                    {paragraph}
-                  </p>
-                ))}
-                {section.bullets.length > 0 && (
-                  <ul className="flex flex-col gap-2">
-                    {section.bullets.map((bullet, j) => (
-                      <li key={`${j}-${bullet}`} className="flex gap-2 text-lg">
-                        <Check className="mt-1 size-5 shrink-0 text-brand" aria-hidden />
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <SectionBody section={section} />
               </div>
               {section.image && (
                 <figure className="flex flex-col gap-3">

@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { AUTHOR } from "../author";
+import { CARD_ICONS } from "./icons";
 import { PRODUCT_SLUGS, RESERVED_VARIANT_SLUGS } from "./paths";
 
 /*
@@ -28,7 +30,10 @@ const heroSchema = z.object({
 
 const faqSchema = z.object({ question: text, answer: text });
 
-const cardSchema = z.object({ title: text, text });
+/** Optional icon from the fixed list in icons.ts. */
+const iconSchema = z.enum(CARD_ICONS).optional();
+
+const cardSchema = z.object({ title: text, text, icon: iconSchema });
 
 const linkSchema = z.object({
   href: z.string().startsWith("/", "Use an internal path, e.g. /features/timesheets"),
@@ -78,11 +83,13 @@ const sectionSchema = z.object({
   heading: text,
   paragraphs: z.array(text).min(1),
   bullets: z.array(text).default([]),
+  /** One or two sentences shown in a highlighted box: the key takeaway or a tip. */
+  callout: text.optional(),
   image: screenshotSchema.optional(),
 });
 
 /** A card that may link to a feature or other page. */
-const linkedCardSchema = z.object({ title: text, text, href: z.string().startsWith("/").optional() });
+const linkedCardSchema = z.object({ title: text, text, icon: iconSchema, href: z.string().startsWith("/").optional() });
 
 /** A comparison table cell: yes / no, or a short text such as "Paid add-on". */
 const cellSchema = z.union([z.boolean(), text]);
@@ -201,7 +208,8 @@ export const guideSchema = z.object({
   ...pageBase,
   title: text,
   description: text,
-  author: text,
+  /** Defaults to the site author (content/author.ts). */
+  author: text.default(AUTHOR.name),
   published: isoDate,
   /** Shown under the title and used as the article image in search results. */
   cover: screenshotSchema.optional(),
@@ -212,6 +220,7 @@ export const guideSchema = z.object({
         heading: text,
         paragraphs: z.array(text).min(1),
         bullets: z.array(text).default([]),
+        callout: text.optional(),
         /** Shown after the section's text. */
         image: screenshotSchema.optional(),
       }),

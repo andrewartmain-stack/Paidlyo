@@ -16,13 +16,16 @@ import {
   defineCollection,
   featurePageSchema,
   findPage,
+  guideSchema,
   productPageSchema,
   published,
   variantPageSchema,
 } from "@/content/pages/schema";
 import { cmsDocType, fromCms, pageTypeFromDocType, pagesQuery, parseCmsPages, stripNulls } from "@/content/pages/cms";
 import { fetchCmsDocs } from "@/content/pages/cms-source";
-import { breadcrumbJsonLd } from "@/content/structured-data";
+import { articleJsonLd, breadcrumbJsonLd } from "@/content/structured-data";
+import { AUTHOR } from "@/content/author";
+import { CARD_ICONS } from "@/content/pages/icons";
 import { indexItems, liveIndexes } from "@/content/pages/indexes";
 import { marketingMetadata, OG_IMAGE } from "@/lib/seo";
 
@@ -321,5 +324,32 @@ describe("landing sections", () => {
   it("has unique tour ids and audience slugs", () => {
     expect(new Set(TOUR.map((t) => t.id)).size).toBe(TOUR.length);
     expect(new Set(AUDIENCES.map((a) => a.slug)).size).toBe(AUDIENCES.length);
+  });
+});
+
+describe("readability fields and author", () => {
+  const [audience] = AUDIENCE_PAGES;
+  const [guide] = GUIDE_PAGES;
+
+  it("accepts card icons from the fixed list only", () => {
+    const icon = (value: string) =>
+      audienceSchema.safeParse({ ...audience, painPoints: audience.painPoints.map((card) => ({ ...card, icon: value })) }).success;
+    expect(CARD_ICONS.every((value) => icon(value))).toBe(true);
+    expect(icon("rocket-ship")).toBe(false);
+  });
+
+  it("keeps a section callout and defaults guide authors to the site author", () => {
+    const section = { heading: "H", paragraphs: ["P"], callout: "Key takeaway." };
+    expect(audienceSchema.parse({ ...audience, sections: [section] }).sections[0].callout).toBe("Key takeaway.");
+    expect(guideSchema.parse({ ...guide, author: undefined }).author).toBe(AUTHOR.name);
+  });
+
+  it("names the author with photo and role in Article JSON-LD", () => {
+    const data = articleJsonLd({
+      title: "T", description: "D", path: "/guides/t", author: AUTHOR.name, published: "2026-01-01", updated: "2026-01-02",
+      authorImage: AUTHOR.avatar.src, authorRole: AUTHOR.role,
+    });
+    expect(data.author).toMatchObject({ "@type": "Person", name: "Andrei Artemov", jobTitle: "Founder of Paidlyo" });
+    expect(data.author.image).toMatch(/\/authors\/andrei-artemov\.jpg$/);
   });
 });

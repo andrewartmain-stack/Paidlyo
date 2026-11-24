@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import {
+  calloutField,
   cards,
   cell,
   hero,
@@ -246,7 +247,7 @@ const guidePage = defineType({
     text("title", "Title"),
     ...pageStart("title"),
     text("description", "Lead (short answer first)", { rows: 3 }),
-    text("author", "Author"),
+    text("author", "Author", { optional: true, description: "Leave empty for Andrei Artemov." }),
     defineField({ name: "published", title: "Published", type: "date", description: "Leave empty to use the creation date." }),
     image("cover", "Cover image"),
     defineField({
@@ -268,6 +269,7 @@ const guidePage = defineType({
             text("heading", "Heading"),
             defineField({ name: "paragraphs", title: "Paragraphs", type: "array", of: [{ type: "text", rows: 4 }], validation: (rule) => rule.required().min(1) }),
             defineField({ name: "bullets", title: "Bullets", type: "array", of: [{ type: "string" }] }),
+            calloutField,
             image("image", "Image"),
           ],
           preview: { select: { title: "heading", media: "image" } },

@@ -16,7 +16,8 @@ export function LandingTemplate({ page, crumbs, linkGroups }: { page: ProductPag
     <>
       {page.preview && <PreviewBanner />}
       {page.faq.length > 0 && <JsonLd data={faqJsonLd(page.faq)} />}
-      <PageHero crumbs={crumbs} eyebrow={page.hero.eyebrow} title={page.hero.title} description={page.hero.description} />
+      <PageHero crumbs={crumbs} eyebrow={page.hero.eyebrow} title={page.hero.title} description={page.hero.description}
+        updated={page.updated} />
       {lead && (
         <div className="mx-auto -mt-4 max-w-5xl px-4 pb-16 sm:px-6">
           <ScreenshotFrame src={lead.src} alt={lead.alt} width={lead.width} height={lead.height} />

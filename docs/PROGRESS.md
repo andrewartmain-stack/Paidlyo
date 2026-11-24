@@ -199,6 +199,15 @@
   paragraphs, bullets, image), rendered after the billing example. Zod, GROQ, Studio
   (`sectionsField()` shared with product pages), CSV columns `sections.N.*` after `example.*`,
   workbook + Claude instructions regenerated. Existing audience rows stay valid.
+- [x] Readable content pages 2026-11-24: optional card `icon` (fixed list `content/pages/icons.ts`
+  → lucide in `card-icon.tsx`) on painPoints/features/highlights/steps/benefits/reasons/migration;
+  optional `callout` on landing/audience/guide sections (highlighted box); 3+ sections render as an
+  article column with a sticky sidebar (contents, author, trial CTA; collapsible contents on
+  mobile); author Andrei Artemov ("Founder of Paidlyo", `content/author.ts`, photo
+  `public/authors/andrei-artemov.jpg`) as byline on every content page hero, author box at the
+  end of long text, Person (jobTitle, image) in guide BlogPosting JSON-LD; guide `author`
+  defaults to him. CSV columns `*.icon`, `sections.N.callout`; workbook + Claude instructions
+  regenerated.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

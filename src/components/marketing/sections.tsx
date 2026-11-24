@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { CARD_ICON_COMPONENTS } from "@/components/marketing/card-icon";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -91,7 +92,8 @@ const TOUR_ICONS: Record<TourItem["icon"], LucideIcon> = {
   chart: BarChart3,
 };
 
-const STEP_ICONS = { import: FileUp, timer: Timer, invoice: ReceiptText } satisfies Record<string, LucideIcon>;
+/** Landing steps use their own three icons; content pages may use any card icon. */
+const STEP_ICONS = { ...CARD_ICON_COMPONENTS, import: FileUp, timer: Timer, invoice: ReceiptText } satisfies Record<string, LucideIcon>;
 
 export function SectionHeading({ id, eyebrow, title, description }: { id: string; eyebrow?: string; title: string; description?: string }) {
   return (

@@ -20,6 +20,7 @@ export function FeatureTemplate({ page }: { page: FeaturePage }) {
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
+        updated={page.updated}
       />
       <ScreenshotGallery title={`${page.name} in Paidlyo`} items={page.screenshots} />
       <Steps id="how-it-works" eyebrow="How it works" title={`How ${page.name.toLowerCase()} works`} items={page.steps} />

@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, type SlugValidationContext } from "sanity";
+import { CARD_ICONS } from "../../src/content/pages/icons";
 
 /*
  * Shared fields. Names and limits mirror src/content/pages/schema.ts (the site validates every
@@ -39,10 +40,25 @@ export const hero = defineField({
   fields: [text("eyebrow", "Eyebrow", { optional: true }), text("title", "Title"), text("description", "Description", { rows: 3 })],
 });
 
+/** Optional card icon from the site's fixed list (src/content/pages/icons.ts). */
+export const iconField = defineField({
+  name: "icon",
+  title: "Icon (optional)",
+  type: "string",
+  options: { list: CARD_ICONS.map((icon) => ({ value: icon, title: icon })) },
+});
+
+/** Optional highlighted box under a section's text. */
+export const calloutField = text("callout", "Highlighted box (optional)", {
+  rows: 2,
+  optional: true,
+  description: "One or two sentences: the key takeaway or a tip.",
+});
+
 const card = defineArrayMember({
   type: "object",
   name: "card",
-  fields: [text("title", "Title"), text("text", "Text", { rows: 3 })],
+  fields: [text("title", "Title"), text("text", "Text", { rows: 3 }), iconField],
   preview: { select: { title: "title", subtitle: "text" } },
 });
 
@@ -171,7 +187,8 @@ export const sectionsField = ({ min, max }: { min: number; max: number }) =>
           text("heading", "Heading"),
           defineField({ name: "paragraphs", title: "Paragraphs", type: "array", of: [{ type: "text", rows: 4 }], validation: (rule) => rule.required().min(1) }),
           defineField({ name: "bullets", title: "Bullets", type: "array", of: [{ type: "string" }] }),
-          image("image", "Image (shown beside the text)"),
+          calloutField,
+          image("image", "Image"),
         ],
         preview: { select: { title: "heading", media: "image" } },
       }),
@@ -190,7 +207,7 @@ export const landingFields = [
       defineArrayMember({
         type: "object",
         name: "highlight",
-        fields: [text("title", "Title"), text("text", "Text", { rows: 3 }), text("href", "Link (optional)", { optional: true, description: "e.g. /features/timesheets" })],
+        fields: [text("title", "Title"), text("text", "Text", { rows: 3 }), iconField, text("href", "Link (optional)", { optional: true, description: "e.g. /features/timesheets" })],
         preview: { select: { title: "title", subtitle: "href" } },
       }),
     ],

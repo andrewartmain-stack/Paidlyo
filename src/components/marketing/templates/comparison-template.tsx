@@ -22,6 +22,7 @@ export function ComparisonTemplate({ page }: { page: ComparisonPage }) {
         eyebrow={page.hero.eyebrow}
         title={page.hero.title}
         description={page.hero.description}
+        updated={page.updated}
       />
       <section aria-labelledby="verdict-title" className="px-4 pb-16 sm:px-6">
         <div className="mx-auto flex max-w-4xl flex-col gap-6 rounded-2xl border bg-card p-6 sm:p-10">
