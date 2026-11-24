@@ -189,6 +189,12 @@
   `product` column on audiences. `ensureStatic = "navigation"` on the marketing layout: build
   enforces static pages and unknown URLs get a real 404 on the first visit (was 200 shell).
   Not built: `/best/*` (needs a multi-tool template), `/integrations/*` (none exist), `/templates/*`.
+- [x] Nav = published pages only 2026-11-24: no placeholder links to homepage sections. Product
+  menu = 3 products, then 6 feature pages (`/features/timesheets`, `invoice-from-time`,
+  `client-link`, `reports`, `billable-rates`, `harvest-import`), footer "All features" → `/features`;
+  Solutions = audience pages; a dropdown with nothing published is hidden. "Timesheet approvals"
+  removed from the nav (not built). Open: approvals still claimed in landing.ts (Consultancies
+  card, feature list), showcase.ts and pricing.ts.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

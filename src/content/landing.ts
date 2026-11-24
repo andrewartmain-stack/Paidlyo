@@ -75,28 +75,28 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: "Product",
     columns: 2,
-    footer: { href: "/#features", label: "All features" },
+    footer: { label: "All features", livePath: "/features" },
+    // Only published pages are shown: the 3 products, then one page per feature.
     items: [
-      // Product pages: shown once published in Sanity.
       { title: "Invoicing software", description: "Invoices from tracked time, paid faster.", icon: "invoice", livePath: "/invoicing" },
       { title: "Time tracking software", description: "Timers and timesheets for the whole team.", icon: "clock", livePath: "/time-tracking" },
       { title: "Time tracking & invoicing", description: "Track hours and bill them in one tool.", icon: "bundle", livePath: "/time-tracking-and-invoicing" },
-      { title: "Time tracking", description: "Timers and timesheets in one click.", icon: "clock", href: "/#features" },
-      { title: "Invoicing", description: "Turn billable hours into invoices.", icon: "invoice", href: "/#features" },
-      { title: "Reports & budgets", description: "Hours, amounts and budget progress per project.", icon: "chart", href: "/#features" },
-      { title: "Timesheet approvals", description: "Review and approve weekly hours.", icon: "approval", href: "/#features" },
-      { title: "Team & billable rates", description: "Set rates per person and project.", icon: "rates", href: "/#features" },
-      { title: "Import from Harvest", description: "Bring your clients and history over.", icon: "import", href: "/#switch-from-harvest" },
+      { title: "Timesheet & timer", description: "Log hours on a weekly grid or a live timer.", icon: "clock", livePath: "/features/timesheets" },
+      { title: "Invoices from tracked time", description: "Turn unbilled hours into an invoice in one click.", icon: "invoice", livePath: "/features/invoice-from-time" },
+      { title: "Client link & payments", description: "A no-login invoice link and payment tracking.", icon: "invoice", livePath: "/features/client-link" },
+      { title: "Reports & budgets", description: "Hours, amounts and budget progress per project.", icon: "chart", livePath: "/features/reports" },
+      { title: "Rates per project & task", description: "Set billable rates per project and task.", icon: "rates", livePath: "/features/billable-rates" },
+      { title: "Import from Harvest", description: "Bring your clients and history over.", icon: "import", livePath: "/features/harvest-import" },
     ],
   },
   {
     label: "Solutions",
     columns: 1,
     items: [
-      { title: "Agencies & studios", description: "Track client work and bill it fast.", icon: "agency", livePath: AUDIENCE_PAGES.agencies, fallback: "/#who-its-for" },
-      { title: "Consultancies", description: "Bill expert time with clear reports.", icon: "consultancy", livePath: AUDIENCE_PAGES.consultants, fallback: "/#who-its-for" },
-      { title: "Freelancers", description: "Simple tracking and invoicing, solo.", icon: "freelancer", livePath: AUDIENCE_PAGES.freelancers, fallback: "/#who-its-for" },
-      { title: "Small businesses & teams", description: "One place for hours and invoices.", icon: "business", livePath: AUDIENCE_PAGES["small-business"], fallback: "/#who-its-for" },
+      { title: "Agencies & studios", description: "Track client work and bill it fast.", icon: "agency", livePath: AUDIENCE_PAGES.agencies },
+      { title: "Consultancies", description: "Bill expert time with clear reports.", icon: "consultancy", livePath: AUDIENCE_PAGES.consultants },
+      { title: "Freelancers", description: "Simple tracking and invoicing, solo.", icon: "freelancer", livePath: AUDIENCE_PAGES.freelancers },
+      { title: "Small businesses & teams", description: "One place for hours and invoices.", icon: "business", livePath: AUDIENCE_PAGES["small-business"] },
     ],
   },
   {

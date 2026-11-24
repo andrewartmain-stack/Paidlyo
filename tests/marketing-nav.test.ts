@@ -6,29 +6,26 @@ const resolve = (live: string[]) => resolveNavGroups(NAV_GROUPS, new Set(live));
 const group = (live: string[], label: string) => resolve(live).find((g) => g.label === label);
 
 describe("header navigation", () => {
-  it("shows only fixed links while nothing is published", () => {
-    expect(resolve([]).map((g) => g.label)).toEqual(["Product", "Solutions"]);
-    expect(group([], "Product")?.items.some((item) => item.href === "/invoicing")).toBe(false);
-    expect(group([], "Solutions")?.items.every((item) => item.href === "/#who-its-for")).toBe(true);
+  it("shows no dropdowns while nothing is published", () => {
+    expect(resolve([])).toEqual([]);
   });
 
-  it("adds product pages to the Product menu once published", () => {
-    const items = group(["/invoicing"], "Product")?.items ?? [];
-    expect(items[0]).toMatchObject({ title: "Invoicing software", href: "/invoicing" });
-    expect(items.some((item) => item.href === "/time-tracking")).toBe(false);
+  it("links only published pages, never placeholders", () => {
+    const hrefs = resolve(["/invoicing", "/features/timesheets", AUDIENCE_PAGES.agencies, "/guides"]).flatMap((g) => g.items.map((item) => item.href));
+    expect(hrefs).toEqual(["/invoicing", "/features/timesheets", AUDIENCE_PAGES.agencies, "/guides"]);
   });
 
-  it("links audiences to their product's audience page once published", () => {
-    const solutions = group([AUDIENCE_PAGES["small-business"]], "Solutions");
-    expect(solutions?.items.find((item) => item.title.startsWith("Small"))?.href).toBe("/invoicing/for/small-business");
-    expect(solutions?.items.find((item) => item.title.startsWith("Agencies"))?.href).toBe("/#who-its-for");
+  it("lists products before features in the Product menu", () => {
+    const items = group(["/features/reports", "/invoicing"], "Product")?.items ?? [];
+    expect(items.map((item) => item.href)).toEqual(["/invoicing", "/features/reports"]);
   });
 
   it("shows only the index pages that have content", () => {
     expect(group(["/guides", "/compare"], "Resources")?.items.map((item) => item.href)).toEqual(["/guides", "/compare"]);
   });
 
-  it("keeps fixed footers like All features", () => {
-    expect(group([], "Product")?.footer).toEqual({ href: "/#features", label: "All features" });
+  it("adds All features once the /features index exists", () => {
+    expect(group(["/invoicing"], "Product")?.footer).toBeUndefined();
+    expect(group(["/invoicing", "/features/reports", "/features"], "Product")?.footer).toEqual({ href: "/features", label: "All features" });
   });
 });
