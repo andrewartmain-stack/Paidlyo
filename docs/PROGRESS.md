@@ -258,6 +258,11 @@
   Paidlyo signup" (email, name, workspace, currency, timezone, provider) via `after()` once the
   workspace exists (email + Google signups; invited members don't trigger it). Env (server-only):
   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID; bot @paidlyobot. Waiting on: chat ID + Vercel env.
+- [ ] Stripe live mode 2026-11-28: live account (RO) has charges + payouts enabled; product
+  `prod_VfZqt0YSxecvdk`, prices `price_1UexrrBKmGVJ0JpITnqymXeT` ($9/mo, paidlyo_monthly) and
+  `price_1UexrqBKmGVJ0JpIML8iWLTK` ($90/yr, paidlyo_yearly), webhook to paidlyo.com (6 events, since
+  2026-11-23); default customer portal created 2026-11-28 (was missing). Live /subscribe showed
+  "Plans aren't available" → Vercel Production env (key / price ids) to fix. No live subscriptions yet.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
