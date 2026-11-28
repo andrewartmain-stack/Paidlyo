@@ -9,8 +9,9 @@ import type { Database } from "@/types/supabase";
  */
 export function createAdminClient() {
   return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SECRET_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!.trim(),
+    // Trimmed: a pasted space or newline makes Supabase answer "Invalid API key".
+    process.env.SUPABASE_SECRET_KEY!.trim(),
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
 }
