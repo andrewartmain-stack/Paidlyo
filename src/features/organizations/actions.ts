@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { fail, ok, type ActionResult } from "@/lib/action-result";
+import { sendTelegram, signupMessage } from "@/lib/telegram";
 import { canManageOrg, findCurrentOrg, getCurrentOrg, LOGO_BUCKET } from "./queries";
 import {
   createOrganizationSchema,
@@ -36,6 +38,22 @@ export async function createOrganization(formData: FormData): Promise<ActionResu
   if (error) {
     if (error.hint === "already_member") redirect("/app");
     return fail(GENERIC_ERROR);
+  }
+
+  // Owner alert for each new workspace (a new lead), sent after the response.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user?.email) {
+    const message = signupMessage({
+      email: user.email,
+      name: typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : null,
+      workspace: parsed.data.name,
+      currency: parsed.data.currency,
+      timezone: parsed.data.timezone,
+      provider: typeof user.app_metadata?.provider === "string" ? user.app_metadata.provider : null,
+    });
+    after(() => sendTelegram(message));
   }
 
   // New organizations start their (card-required) free trial next.

@@ -253,6 +253,11 @@
   sharp on 1× screens; replacing the 6 video-frame JPGs in all 49 sections; budget/approval/unbilled topics got the
   matching new shot. ScreenshotFrame now uses quality 90 (`images.qualities: [75, 90]`) and
   `sizes` up to 768px. `public/screenshots/*.jpg` (old, unused by code) left as is.
+- [x] Telegram signup alerts 2026-11-28: `src/lib/telegram.ts` (`sendTelegram`, `signupMessage`;
+  plain fetch, 5 s timeout, never throws, no-op without env). `createOrganization` sends "New
+  Paidlyo signup" (email, name, workspace, currency, timezone, provider) via `after()` once the
+  workspace exists (email + Google signups; invited members don't trigger it). Env (server-only):
+  TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID; bot @paidlyobot. Waiting on: chat ID + Vercel env.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
