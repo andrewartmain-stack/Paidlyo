@@ -17,7 +17,10 @@ import type { SubscriptionStatus } from "@/features/billing/access";
 export async function POST(request: Request) {
   const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
   const signature = request.headers.get("stripe-signature");
-  if (!secret) return new Response("Webhook not configured", { status: 500 });
+  if (!secret) {
+    console.error("Stripe webhook: STRIPE_WEBHOOK_SECRET is not set");
+    return new Response("Webhook not configured", { status: 500 });
+  }
   if (!signature) return new Response("Missing signature", { status: 400 });
 
   const stripe = getStripe();
@@ -25,6 +28,8 @@ export async function POST(request: Request) {
   try {
     event = await stripe.webhooks.constructEventAsync(await request.text(), signature, secret);
   } catch {
+    // Usually STRIPE_WEBHOOK_SECRET belongs to another endpoint or mode (sandbox vs live).
+    console.error("Stripe webhook: invalid signature (check STRIPE_WEBHOOK_SECRET)");
     return new Response("Invalid signature", { status: 400 });
   }
 
@@ -43,8 +48,14 @@ export async function POST(request: Request) {
     .select("stripe_subscription_id, subscription_status")
     .eq("organization_id", organizationId)
     .maybeSingle();
-  if (readError) return new Response("Database error", { status: 500 });
-  if (!current) return Response.json({ received: true, ignored: "unknown organization" });
+  if (readError) {
+    console.error("Stripe webhook: billing read failed:", readError.message);
+    return new Response("Database error", { status: 500 });
+  }
+  if (!current) {
+    console.error("Stripe webhook: no billing row for organization", organizationId);
+    return Response.json({ received: true, ignored: "unknown organization" });
+  }
 
   const row = subscriptionToRow(subscription);
   const stored = {
@@ -55,7 +66,10 @@ export async function POST(request: Request) {
 
   const { error } = await admin.from("organization_billing").update(row).eq("organization_id", organizationId);
   // 500 makes Stripe retry later.
-  if (error) return new Response("Database error", { status: 500 });
+  if (error) {
+    console.error("Stripe webhook: billing update failed:", error.message);
+    return new Response("Database error", { status: 500 });
+  }
 
   return Response.json({ received: true });
 }
