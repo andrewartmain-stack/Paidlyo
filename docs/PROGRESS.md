@@ -102,7 +102,8 @@
 - [ ] Hero demo video — code done (`public/videos/paidlyo-demo.mp4`, 1080p H.264 ~3 Mbps (25 MB);
   the original stored video-range pixels tagged full range (looked dim/grey), relabelled as BT.709
   video range with pixels unchanged; 30 fps like the source; + poster; `HeroVideo` replaces `ProductPreview` in the hero: muted loop,
-  autoplay unless reduced motion, Pause/Play button; home stays static). Waiting on: browser check.
+  autoplay, Pause/Play button; home stays static). 2026-11-28: autoplays even with
+  prefers-reduced-motion (Windows reports it whenever "Animation effects" is off; it never played there).
 
 - [ ] Landing SEO + trust — code done (H1/meta/H2s carry "time tracking and invoicing software",
   billable hours, agencies/consultancies/small businesses/teams; new sections: Who it's for (cards
@@ -169,7 +170,9 @@
   `/og.png` (`src/app/og.png/route.tsx`, `OG_IMAGE` in `marketingMetadata`; guides use their
   cover). Noindex pages are now `noindex, follow`. Auth pages removed from robots.txt Disallow
   (`AUTH_PATHS`) so Google reads their noindex. Production `NEXT_PUBLIC_APP_URL` fixed (was
-  localhost). User: add Search Console + submit sitemap.
+  localhost). Search Console (Domain property, DNS TXT on Vercel) added and sitemap submitted
+  2026-11-28. Live check that day: all 96 sitemap URLs 200, indexable, self-canonical, one h1,
+  unique titles/descriptions, JSON-LD.
 - [x] Nav for index pages 2026-11-24: header "Resources" dropdown (Guides, Comparisons,
   Alternatives, Features) and "All solutions" under Solutions → new `/for` audience index.
   `resolveNavGroups()` (nav-icons.ts) shows an item only when its index has a published page and

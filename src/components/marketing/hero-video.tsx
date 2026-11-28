@@ -7,8 +7,8 @@ const SRC = "/videos/paidlyo-demo.mp4";
 const POSTER = "/videos/paidlyo-demo-poster.jpg";
 
 /**
- * Hero demo video: muted, looping, plays inline. Autoplays unless the visitor prefers reduced
- * motion; a Pause / Play button is always available (WCAG 2.2.2). The poster keeps the layout
+ * Hero demo video: muted, looping, plays inline and autoplays; a Pause / Play button is always
+ * available (WCAG 2.2.2). The poster keeps the layout
  * stable while the video loads.
  */
 export function HeroVideo({ label }: { label: string }) {
@@ -18,7 +18,8 @@ export function HeroVideo({ label }: { label: string }) {
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Autoplays even with prefers-reduced-motion (Windows reports it whenever "Animation effects"
+    // is off): the video is muted and the Pause button stops it.
     // Muted autoplay; ignore browsers that block it (the Play button still works).
     video.play().catch(() => {});
   }, []);
