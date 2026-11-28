@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps<"/alternatives/[slu
     description: page.seo.description,
     path: PAGE_PATHS.alternative(page.slug),
     noindex: page.preview,
-    image: coverShareImage(page.cover),
+    image: coverShareImage(page.cover, PAGE_PATHS.alternative(page.slug), page.hero.title),
   });
 }
 

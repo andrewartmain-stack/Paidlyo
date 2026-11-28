@@ -1,6 +1,7 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,10 +12,82 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import type { NavLink } from "@/content/landing";
+import type { DirectoryGroup } from "@/content/pages/directory";
 import { cn } from "cn";
-import { NAV_ICONS, type ResolvedNavGroup } from "./nav-icons";
+import { NAV_ICONS } from "./nav-icons";
 
-type NavMenuProps = { groups: ResolvedNavGroup[]; links: NavLink[] };
+type NavMenuProps = { groups: DirectoryGroup[]; links: NavLink[] };
+
+/**
+ * One dropdown: its sections on the left; hovering or focusing one shows its pages on the right.
+ * A group with a single section shows its pages straight away.
+ */
+function GroupPanel({ group }: { group: DirectoryGroup }) {
+  const [active, setActive] = useState(0);
+  const section = group.sections[active] ?? group.sections[0];
+  const single = group.sections.length === 1;
+
+  return (
+    <div className={cn("grid gap-2", single ? "w-[26rem]" : "w-[46rem] grid-cols-[16rem_1fr]")}>
+      {!single && (
+        <ul className="flex flex-col gap-0.5 border-r pr-2" aria-label={group.label}>
+          {group.sections.map((item, index) => {
+            const Icon = NAV_ICONS[item.icon];
+            return (
+              <li key={item.title}>
+                <button
+                  type="button"
+                  onMouseEnter={() => setActive(index)}
+                  onFocus={() => setActive(index)}
+                  onClick={() => setActive(index)}
+                  aria-current={index === active ? "true" : undefined}
+                  className={cn(
+                    "flex w-full items-center gap-3 rounded-lg p-2 text-left outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring",
+                    index === active && "bg-muted",
+                  )}
+                >
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
+                    <Icon aria-hidden="true" className="size-4" />
+                  </span>
+                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                    <span className="font-heading text-sm font-medium text-foreground">{item.title}</span>
+                    <span className="truncate text-xs text-muted-foreground">{item.description}</span>
+                  </span>
+                  <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-muted-foreground" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <div className="flex min-w-0 flex-col p-1">
+        <p className="px-2 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">{section.title}</p>
+        {section.links.length > 0 && (
+          <ul className={cn("grid gap-0.5", section.links.length > 4 && !single && "grid-cols-2")}>
+            {section.links.map((link) => (
+              <li key={link.href}>
+                <NavigationMenuLink render={<Link href={link.href} />} className="px-2 py-1.5 text-sm text-foreground">
+                  {link.label}
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
+        )}
+        {section.all && (
+          <div className="mt-auto border-t pt-1">
+            <NavigationMenuLink
+              render={<Link href={section.all.href} />}
+              className="mt-1 items-center justify-between px-2 py-2 text-sm font-medium text-brand"
+            >
+              {section.more > 0 ? `${section.all.label} (${section.links.length + section.more})` : section.all.label}
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </NavigationMenuLink>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 /** Desktop navigation: dropdown groups (Base UI navigation menu) plus plain links. */
 export function MarketingNavMenu({ groups, links }: NavMenuProps) {
@@ -25,35 +98,7 @@ export function MarketingNavMenu({ groups, links }: NavMenuProps) {
           <NavigationMenuItem key={group.label}>
             <NavigationMenuTrigger>{group.label}</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className={cn("grid gap-1", group.columns === 2 ? "w-[34rem] grid-cols-2" : "w-80")}>
-                {group.items.map((item) => {
-                  const Icon = NAV_ICONS[item.icon];
-                  return (
-                    <li key={item.title}>
-                      <NavigationMenuLink render={<Link href={item.href} />}>
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
-                          <Icon aria-hidden="true" className="size-4" />
-                        </span>
-                        <span className="flex flex-col gap-0.5">
-                          <span className="font-heading font-medium text-foreground">{item.title}</span>
-                          <span className="text-xs text-muted-foreground">{item.description}</span>
-                        </span>
-                      </NavigationMenuLink>
-                    </li>
-                  );
-                })}
-              </ul>
-              {group.footer ? (
-                <div className="mt-2 border-t pt-2">
-                  <NavigationMenuLink
-                    render={<Link href={group.footer.href} />}
-                    className="items-center justify-between py-2 font-medium text-brand"
-                  >
-                    {group.footer.label}
-                    <ArrowRight aria-hidden="true" className="size-4" />
-                  </NavigationMenuLink>
-                </div>
-              ) : null}
+              <GroupPanel group={group} />
             </NavigationMenuContent>
           </NavigationMenuItem>
         ))}

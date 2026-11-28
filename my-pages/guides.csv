@@ -1,0 +1,174 @@
+"slug","title","description","author","published","seo.title","seo.description","keywords","cover.file","cover.alt","cover.caption","sections.1.id","sections.1.heading","sections.1.body","sections.1.callout","sections.1.calloutKind","sections.1.image.file","sections.1.image.alt","sections.1.image.caption","sections.2.id","sections.2.heading","sections.2.body","sections.2.callout","sections.2.calloutKind","sections.2.image.file","sections.2.image.alt","sections.2.image.caption","sections.3.id","sections.3.heading","sections.3.body","sections.3.callout","sections.3.calloutKind","sections.3.image.file","sections.3.image.alt","sections.3.image.caption","sections.4.id","sections.4.heading","sections.4.body","sections.4.callout","sections.4.calloutKind","sections.4.image.file","sections.4.image.alt","sections.4.image.caption","sections.5.id","sections.5.heading","sections.5.body","sections.5.callout","sections.5.calloutKind","sections.5.image.file","sections.5.image.alt","sections.5.image.caption","faq.1.question","faq.1.answer","faq.2.question","faq.2.answer","faq.3.question","faq.3.answer","faq.4.question","faq.4.answer","related.1.href","related.1.label","related.2.href","related.2.label","related.3.href","related.3.label","updated"
+"what-is-time-tracking-software","What is time tracking software, and which kind does your business need?","Time tracking software records how long work takes, but tools do very different jobs: paying staff, billing clients or monitoring screens. This guide explains each kind in plain words, so you can pick the right one.","","","What Is Time Tracking Software? A Plain Guide | Paidlyo","What is time tracking software? The three main kinds, how project time tracking works, what businesses use it for, and how to choose the right tool.","what is time tracking software","","","","definition","What is time tracking software?","What is time tracking software? In short, **time tracking software** is a tool that records how much time people spend working, and usually on what. Instead of writing hours on paper or in a spreadsheet, people start a timer or fill in a timesheet, and the software keeps the records, adds them up and turns them into reports.
+
+That simple idea covers tools that do very different jobs. A cleaning company that pays staff by the hour, a design agency that bills clients by the hour, and a call centre that wants to see what's on employees' screens all use ""time tracking software"", but they need completely different features.
+
+So the useful question isn't just what is time tracking software. It's which question you want it to answer:
+
+- **When did people work?** For payroll, overtime and attendance.
+- **What did people work on?** For billing clients, pricing projects and planning.
+- **What were people doing at their computers?** For monitoring activity.
+
+Most tools are built around one of these. Choosing well starts with knowing which one is yours.","","","","","","types","The three main kinds of time tracking software","Here is how the three kinds compare:
+
+| Kind | Main question | Typical features | Who uses it |
+|---|---|---|---|
+| Attendance and payroll | When did people work? | Clock in and out, breaks, overtime, time off, scheduling | Shops, restaurants, field teams, hourly staff |
+| Project and billable time | What did people work on? | Timer, timesheet by client and project, billable flag, rates, invoices | Agencies, consultancies, freelancers, law and accounting firms |
+| Activity monitoring | What happened on the computer? | Screenshots, activity levels, app and website tracking | Some remote teams and outsourcing companies |
+
+Some products mix two kinds, for example payroll tools with simple project codes, or monitoring tools with invoicing. But each is usually strongest at its core job.
+
+A business that pays hourly staff but never bills clients probably needs the first kind. A business that sells its time to clients needs the second. The third is a separate decision about how much you want to monitor people, and it has real effects on trust inside a team.
+
+Some businesses genuinely need two kinds. A building services firm might pay engineers by the hour and also bill clients for the same hours. In that case, decide which side causes more work today. If payroll is the headache, start with an attendance tool. If invoicing is, start with a project tracker, and export hours for payroll.","Decide which question you need answered before you compare features. A great payroll tracker can be a poor billing tool, and the reverse.","tip","","","","how-it-works","How project time tracking works day to day","Because project time tracking is the kind most service businesses need, it's worth seeing how it works in practice. The details vary by tool, but the flow is usually the same:
+
+1. **Set up the structure.** Add clients, the projects you do for them, and the tasks inside each project, such as design, development or meetings.
+2. **Set rates.** Give a project or a task an hourly rate, so billable hours have a value.
+3. **Track time.** Start a timer when you begin a piece of work, or type hours into a weekly timesheet at the end of the day.
+4. **Mark it billable or not.** Client work is usually billable; internal meetings and admin usually aren't.
+5. **Review reports.** See hours by client, project and task, and compare projects with their budgets.
+6. **Invoice.** Turn unbilled billable hours into an invoice, priced at the right rates.
+
+In tools built for billing, step 6 is connected to steps 1 to 5. In simpler trackers, you export hours and build the invoice somewhere else. That difference matters more than it looks, because copying hours between tools is where billing mistakes often start.
+
+Most project trackers offer two ways to record time. A timer suits focused blocks of work, like a two-hour design session. A weekly timesheet suits people who switch between many short tasks, or who prefer to fill in their day once. Many teams use a mix of both, and the best tools make them feel like one record rather than two.","","","","","","why-it-matters","What businesses use time tracking for","Time tracking is often introduced for one reason and kept for several others.
+
+- **Billing correctly.** Every billable hour reaches an invoice, at the right rate.
+- **Pricing better.** Real hours from past projects make the next quote less of a guess.
+- **Spotting overruns.** Hours against a project budget show trouble early.
+- **Understanding workload.** Hours by client and task show where the team's week really goes.
+- **Paying people correctly,** for businesses that pay by the hour.
+
+The money involved is easy to underestimate. Here's an illustrative example for a 5-person team billing $90 an hour, where each person loses just two billable hours a week to work that never gets recorded:
+
+| | Figure |
+|---|---|
+| Lost hours per person per week | 2 |
+| Lost hours for the team per week | 10 |
+| Working weeks per year | 46 |
+| Lost billable value per year | $41,400 |
+
+The numbers are an example, not a measured average. But small, unrecorded tasks, such as quick calls and minor fixes, are exactly the kind of work time tracking is good at catching.","","","","","","choosing","How to choose time tracking software","Once you know which kind you need, a few questions narrow the choice:
+
+1. **How do you bill or pay?** Hourly billing needs clients, projects, rates and invoices. Payroll needs clock-in times and overtime.
+2. **Where does your team work?** Desks, phones, shared PCs or the field all point to different tools.
+3. **Do you want monitoring?** Decide this on purpose, not because a tool happens to include it.
+4. **What happens after tracking?** If hours become invoices, check how directly the tool connects the two.
+5. **What will it cost as you grow?** Look at per-person prices, base fees and which features sit on higher plans.
+
+Paidlyo is one option for the second kind: project and billable time for agencies, consultancies and freelancers, with invoices built from tracked hours, at $9 per person a month. It has no payroll, monitoring or mobile apps. You can see how it works in [Paidlyo time tracking](/time-tracking), read more about [tracking billable hours](/features/billable-hours), or compare options in our guide to [choosing the best time tracking software](/guides/what-is-the-best-time-tracking-software).","","","","","","What is time tracking software used for?","It records how long people work and on what. Businesses use it to pay staff, bill clients, price projects and understand workload.","What's the difference between time tracking and employee monitoring?","Time tracking records hours, often by client or project. Monitoring records activity, such as screenshots and apps used. Many time trackers don't monitor at all.","Do freelancers need time tracking software?","If you bill by the hour, it helps make sure every hour is billed. Even on fixed prices, tracked hours show your real hourly rate.","Is time tracking software the same as a timesheet?","A timesheet is one way to record time. Time tracking software usually includes timesheets, plus timers, reports and sometimes invoicing.","","","","","","",""
+"what-is-the-best-invoicing-software","What is the best invoicing software? It depends on how you bill","There's no single best invoicing software. The right tool depends on what you sell, how clients pay and where your books live. This guide helps you work out which kind of tool fits, with a few honest examples.","","","What Is the Best Invoicing Software? How to Choose | Paidlyo","What is the best invoicing software for your business? A practical way to choose by how you bill and get paid, a feature checklist and some honest examples.","what is the best invoicing software","","","","short-answer","What is the best invoicing software? The short answer","If you're asking **what is the best invoicing software**, the honest answer is that it depends on three things about your business, and the best tool for one company can be a poor fit for another.
+
+1. **What you charge for.** Products, fixed-price packages, monthly subscriptions or hours of work each need a different kind of invoice.
+2. **How clients pay you.** Card payments online, bank transfer, or through a client's own accounts system.
+3. **Where your books live.** Some tools are full accounting systems; others only create invoices and need exporting to your books.
+
+Answer those three questions first, and the list of sensible options gets short quickly. It also stops you comparing tools that were never built for your kind of work.
+
+A note on bias: we make Paidlyo, an invoicing and time tracking tool for teams that bill by the hour. We've tried to keep this guide useful whether or not you choose it, and we say clearly where other tools are a better fit. Competitor facts are taken from their own pricing pages, checked on the dates given.","","","","","","by-billing-model","Start with how you bill","The way you charge clients is the biggest factor. Here's what to look for in each case:
+
+| How you charge | What the invoicing tool needs | Kind of tool to consider |
+|---|---|---|
+| Products or stock | Item lists, stock levels, sales tax | Accounting or retail software |
+| Fixed-price projects or packages | Saved line items, estimates, deposits | General invoicing tools |
+| The same fee every month | Recurring invoices, automatic sending | Tools with recurring billing |
+| Hours of work | Time tracking, rates, invoices built from hours | Time tracking with invoicing |
+| Materials and progress stages | Progress billing, materials, retentions | Construction or trade software |
+
+Many businesses mix models, such as a monthly retainer plus hourly extras. In that case, pick the tool that handles your largest or most painful model well, and check that it can at least cope with the others.
+
+For hourly billing in particular, the key question is whether time and invoices live in the same place. If hours are tracked in one tool and invoices built in another, someone copies numbers across every month, and small amounts of work go missing on the way.","Write down how you billed your last ten invoices. That list tells you more about the right tool than any feature comparison.","tip","","","","checklist","Features that matter, and features that don't","Once you know the kind of tool, check the features that affect your day-to-day billing:
+
+- **Your branding.** Logo and business details on every invoice.
+- **Tax handling.** The ability to add the tax rates you need. The tool won't decide which rate applies; your accountant will.
+- **Currencies.** Essential if you have clients abroad.
+- **Payment tracking.** Recording full and partial payments, and seeing what's overdue.
+- **How clients receive invoices.** Email attachment, a link, or a client portal.
+- **Exports or integrations.** How invoices reach your accounting software.
+- **Price as you grow.** Per-user prices, flat fees and limits on invoices, clients or projects.
+
+Features that matter less than they look: dozens of invoice templates, colour themes, and dashboards you won't open. A clear invoice that reaches the right person and gets paid is the goal. Everything else is secondary.
+
+Also check the limits on free plans. Free tools often cap users, projects or invoices, which is fine until your business grows past them.
+
+### Common mistakes when choosing
+
+- **Choosing on price alone.** A free tool that needs an hour of copying every month isn't free.
+- **Ignoring your accountant.** If the export doesn't suit them, you'll pay for it later.
+- **Buying for a future you don't have yet.** A big suite with features you won't use for years adds setup time now.
+- **Forgetting the client.** If your clients' finance teams struggle with your invoices, payments slow down.","","","","","","examples","Some options and who they suit","This isn't a ranking, and there are many good tools not listed here. These examples show how different tools fit different needs, using facts from their own pricing pages.
+
+| Tool | What it is | Price when checked | A good fit if |
+|---|---|---|---|
+| Zoho Invoice | Free invoicing with time tracking, online payments and a client portal | Free, with limits of 2 users, 3 projects and 500 invoices a year (28 Nov 2026) | You're small and within the limits |
+| Wave | Invoicing plus bookkeeping for small businesses | Starter free; Pro $19 a month (28 Nov 2026) | You want invoices and books in one place |
+| Harvest | Time tracking with invoicing on every plan | Teams $11 per seat a month billed monthly (25 Nov 2026) | You want accounting and payment integrations |
+| Paidlyo | Team time tracking with invoices built from hours | $9 per person a month | You're a team that bills mainly by the hour |
+
+Each of these has trade-offs. Paidlyo, for example, has no card payments, recurring invoices or accounting integrations, while free tools come with caps. We've written more detailed comparisons: Paidlyo as a [Zoho Invoice alternative](/alternatives/zoho), as a [Wave alternative](/alternatives/wave) and as a [Harvest alternative](/alternatives/harvest).","","","","","","test","How to test invoicing software before you commit","A trial only helps if you use it on real work. A simple test plan:
+
+1. **Pick one real client** and set them up with their actual currency, tax and rates.
+2. **Recreate last month's invoice** for that client in the new tool. Compare it with what you actually sent.
+3. **Send a test invoice to yourself** and look at it the way your client will.
+4. **Record a partial payment** and check the outstanding balance is right.
+5. **Export the data** and ask whoever does your books whether it's usable.
+6. **Check what happens at your next growth step,** such as one more person or ten more clients.
+
+If the tool passes all six, it's probably a good fit. If it fails one that matters to you, such as payments or exports, keep looking.
+
+Paidlyo offers a 14-day trial; a card is needed to start, and nothing is charged until it ends. Many other tools have free plans or trials too, so test two or three side by side, with the same client and the same month of work in each. The differences show up quickly when the input is identical.","","","","","","What is the best free invoicing software?","It depends on your needs and the limits you can live with. Free plans often cap users, projects or invoices, so check those against your business before you commit.","What is the best invoicing software for hourly billing?","Look for a tool that tracks time and builds invoices from those hours, with rates per project or task, so nothing is copied by hand.","Do I need accounting software or just invoicing software?","If you also need bookkeeping, an accounting tool may cover both. If your accountant handles the books, a focused invoicing tool with good exports can be enough.","Is Paidlyo the best invoicing software?","Not for everyone. Paidlyo suits teams that bill by the hour. If you need card payments, recurring invoices or bookkeeping, another tool will fit better.","","","","","","",""
+"what-is-the-best-time-tracking-software","What is the best time tracking software for your team?","The best time tracking software is the one that answers your business's question and that your team will actually use. This guide matches common situations to the right kind of tool, with honest examples and a two-week test plan.","","","What Is the Best Time Tracking Software? | Paidlyo","What is the best time tracking software for your team? Match your situation to the right kind of tool, compare real examples and test it properly in two weeks.","what is the best time tracking software","","","","short-answer","What is the best time tracking software? The short answer","There's no single answer to **what is the best time tracking software**, because time trackers are built for different jobs. A tool that's perfect for paying shift workers can be clumsy for billing clients, and a tool built for billing won't help you schedule a warehouse.
+
+Two things decide what ""best"" means for you:
+
+1. **The question you need answered.** When people worked (payroll), what they worked on (billing and projects), or what they did at their computers (monitoring). If you're not sure which applies, our guide to [what time tracking software is](/guides/what-is-time-tracking-software) explains the three kinds.
+2. **Whether your team will use it.** The most powerful tracker is useless if half the team forgets to start it.
+
+This guide works through both. A note on bias: we make Paidlyo, a time tracker for teams that bill clients by the hour. We say clearly below where other tools fit better, and competitor facts come from their own pricing pages on the dates shown.","","","","","","scenarios","Match the tool to your situation","Find the row closest to your business:
+
+| Your situation | Kind of tool | Must-have features |
+|---|---|---|
+| Freelancer billing a few clients by the hour | Project time tracking with invoicing | Timer, rates, invoices from hours |
+| Agency or consultancy billing many clients | Project time tracking with invoicing | Rates per project or task, budgets, team reports |
+| Hourly staff paid through payroll | Attendance and payroll | Clock in and out, overtime, payroll export |
+| Field or site teams | Attendance with mobile apps | Mobile app, location features, scheduling |
+| Remote team where clients require activity proof | Monitoring | Screenshots, activity levels |
+| Developers who live in an issue tracker | Project time tracking with integrations | Integrations with your issue tracker |
+
+If two rows apply, pick the one that causes more work today. A design studio that also pays two part-time staff hourly usually has a bigger billing problem than a payroll problem, so a billing-focused tracker comes first.
+
+Be honest about monitoring. If nobody actually requires screenshots, consider whether you want them at all. Many service teams get accurate billing without them, and keep more trust inside the team.","","","","","","examples","Some real options, and who they suit","This isn't a ranking. These are a few well-known tools, described from their own pricing pages, to show how the categories play out:
+
+| Tool | Leans towards | Entry price when checked | A good fit if |
+|---|---|---|---|
+| Toggl Track | Fast tracking on every device, integrations | Starter $12 per user a month billed monthly (25 Nov 2026) | You want apps, a browser extension and calendar or Jira integrations |
+| Harvest | Tracking plus invoicing with integrations | Teams $11 per seat a month billed monthly (25 Nov 2026) | You want QuickBooks, Xero or Stripe connected |
+| QuickBooks Time | Workforce time for payroll | Premium $20 base plus $10 per user a month (25 Nov 2026) | You pay hourly staff and use QuickBooks |
+| Hubstaff | Monitoring and field features | Team $10 per seat a month (28 Nov 2026) | You need screenshots, activity data or geofencing |
+| Paidlyo | Client billing for teams | $9 per person a month | You bill clients by the hour and want invoices from tracked time |
+
+Each has trade-offs. Paidlyo, for example, has no mobile apps, approvals, integrations or free plan, while some of the others charge more for the features a growing team needs. For deeper comparisons, see [Harvest vs Toggl Track](/compare/harvest-vs-toggl-track) and Paidlyo as a [Hubstaff alternative](/alternatives/hubstaff).","Prices change often. Check each tool's official pricing page on the day you decide, and compare the plan that has the features you need, not just the cheapest one.","note","","","","adoption","The best tool is the one your team actually uses","Time tracking often fails not on features, but because people stop tracking after a few weeks. When you compare tools, look at what makes tracking easy for your team:
+
+- **Speed.** How many clicks to start a timer on the right client and task?
+- **Catching up.** Can people add forgotten time easily, in a weekly view?
+- **Where people work.** Desks, phones or shared PCs? The tool has to be where the work is.
+- **Trust.** Will people feel watched? Self-reported tools and monitoring tools feel very different.
+- **A clear reason.** Can you explain to the team why you're tracking, in one sentence?
+
+The last point matters more than any feature. ""We track time so every client is billed fairly and we stop doing free work"" is a reason people accept. ""Management wants visibility"" usually isn't.
+
+Keep the setup simple at the start, too. A short task list and clear project names make tracking feel quick, and you can add detail later once the habit has stuck.
+
+Watch for early warning signs during a trial: people filling in the whole week on Friday from memory, lots of hours on a vague ""general"" project, or one person quietly not tracking at all. Each one points to a setup problem or a missing reason, and each is easier to fix in week one than in month three.","","","","","","test-plan","A two-week test plan","Free plans and trials are only useful if you test with real work. A plan that fits in two weeks:
+
+1. **Day 1:** set up your real clients, projects, tasks and rates. Keep the task list short.
+2. **Days 1 to 5:** the whole team tracks everything, with the timer and the timesheet.
+3. **Day 5:** everyone reviews their own week. Note what was annoying or easy to forget.
+4. **Days 6 to 10:** keep tracking, and fix the setup issues you found.
+5. **Day 10:** run the reports you'd actually use, such as hours by client and unbilled time.
+6. **Day 10:** if you bill clients, create a real invoice from the tracked hours and compare it with what you'd normally send.
+
+If you're comparing two tools, run them one after the other with the same clients rather than at the same time. Asking people to track twice a day for two weeks tests their patience, not the tools.
+
+Then ask the team one question: would you happily keep using this? If the answer is yes and the reports answer your business question, you've found your best tool. Paidlyo's 14-day trial is long enough for this plan; a card is needed to start, and nothing is charged until it ends.","","","","","","What is the best free time tracking software?","Several tools have free plans with limits on users or features. The best one is the free plan whose limits your team fits within and whose features match your needs.","What is the best time tracking software for small businesses?","If you bill clients, choose a project time tracker with invoicing. If you pay hourly staff, choose an attendance and payroll tool.","Should time tracking software take screenshots?","Only if you genuinely need activity proof, for example because a client requires it. Many teams bill accurately without monitoring.","How long should I test a time tracker?","Two weeks of real use by the whole team is usually enough to see whether people keep tracking and the reports are useful.","","","","","","",""

@@ -1,4 +1,5 @@
 import { pageCards, type PageCard } from "./cards";
+import { coverFor } from "./covers";
 import { productFamily } from "./index";
 import { plainText } from "./markdown";
 import { PAGE_PATHS, PRODUCT_NAMES, type ProductSlug } from "./paths";
@@ -8,7 +9,7 @@ import { PAGE_PATHS, PRODUCT_NAMES, type ProductSlug } from "./paths";
  * the product page links down to every sub-page, and each sub-page links up and across.
  */
 
-export type FamilyLink = Omit<PageCard, "type"> & { type?: PageCard["type"] };
+export type FamilyLink = Pick<PageCard, "href" | "title" | "text" | "image"> & { type?: PageCard["type"] };
 
 export async function familyLinks(product: ProductSlug) {
   const { variants, audiences } = await productFamily(product);
@@ -18,14 +19,14 @@ export async function familyLinks(product: ProductSlug) {
       title: page.name,
       text: plainText(page.hero.description),
       type: "variant",
-      ...(page.cover && { image: page.cover }),
+      image: coverFor(PAGE_PATHS.variant(product, page.slug), page, page.hero.title),
     })),
     audiences: audiences.map((page): FamilyLink => ({
       href: PAGE_PATHS.audience(product, page.slug),
       title: `For ${page.name.toLowerCase()}`,
       text: plainText(page.hero.description),
       type: "audience",
-      ...(page.cover && { image: page.cover }),
+      image: coverFor(PAGE_PATHS.audience(product, page.slug), page, page.hero.title),
     })),
   };
 }
@@ -40,6 +41,8 @@ export function productCrumb(product: ProductSlug, live: Set<string>) {
 export async function siblingLinks(product: ProductSlug, currentPath: string, live: Set<string>, limit = 6): Promise<FamilyLink[]> {
   const { variants, audiences } = await familyLinks(product);
   const hubCard = live.has(PAGE_PATHS.product(product)) ? (await pageCards()).get(PAGE_PATHS.product(product)) : undefined;
-  const hub: FamilyLink[] = hubCard ? [{ ...hubCard, text: `Everything about ${PRODUCT_NAMES[product].toLowerCase()} in Paidlyo.` }] : [];
+  const hub: FamilyLink[] = hubCard
+    ? [{ href: hubCard.href, title: hubCard.title, image: hubCard.image, type: hubCard.type, text: `Everything about ${PRODUCT_NAMES[product].toLowerCase()} in Paidlyo.` }]
+    : [];
   return [...hub, ...audiences, ...variants].filter((link) => link.href !== currentPath).slice(0, limit);
 }

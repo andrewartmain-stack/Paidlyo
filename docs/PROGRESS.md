@@ -222,6 +222,22 @@
 - [x] Related cards removed 2026-11-24: `related` links are no longer rendered (field kept for
   existing data); internal links go inside the text.
 
+- [x] Covers + screenshots 2026-11-26: every page without an uploaded cover gets a generated one at
+  `/covers/<page path>` (`app/covers/[...path]/route.tsx`, `content/pages/covers.ts`), used on
+  link cards and as the share image. The 6 real app screenshots were added to 49 matching
+  sections on 29 pages in Sanity (one-off script, max 2 per page, none on "doesn't do"/pricing
+  sections).
+
+- [x] Photos 2026-11-27: 64 CC0 photos (StockSnap, found via the Openverse API; 2400px) chosen by
+  hand per topic and set in Sanity as the cover of every page without one (31) and as one section
+  photo per page (34). All 34 pages now have a cover; generated covers remain the fallback.
+- [x] Site directory 2026-11-28: header dropdowns and footer list every published page, built from
+  Sanity (`content/pages/directory.ts`, `siteDirectory()` in cards.ts). Product = each product +
+  its variants, Features; Solutions = Invoicing for… / Time tracking for…; Resources =
+  Alternatives, Comparisons, Guides. Desktop: sections left, pages right on hover; mobile: folding
+  sections. Up to 12 pages per section, then the product/index page link. Hand-written NAV_GROUPS
+  removed (it linked features that don't exist).
+
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)
 

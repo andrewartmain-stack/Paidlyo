@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps<"/[product]">): Pro
     title: page.seo.title,
     description: page.seo.description,
     path: PAGE_PATHS.product(page.product),
-    image: coverShareImage(page.cover),
+    image: coverShareImage(page.cover, PAGE_PATHS.product(page.product), page.hero.title),
   });
 }
 

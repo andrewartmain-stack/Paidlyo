@@ -2,18 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { NavLink } from "@/content/landing";
-import { NAV_ICONS, type ResolvedNavGroup } from "./nav-icons";
+import type { DirectoryGroup } from "@/content/pages/directory";
+import { NAV_ICONS } from "./nav-icons";
 
-type MobileNavProps = { groups: ResolvedNavGroup[]; links: NavLink[] };
+type MobileNavProps = { groups: DirectoryGroup[]; links: NavLink[] };
 
 const ROW =
   "rounded-xl outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring";
 
-/** Phone menu for the public site: groups with icons, plain links, Log in / Get started. */
+/** Phone menu for the public site: each group's sections fold open to their pages. */
 export function MarketingMobileNav({ groups, links }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -36,28 +37,42 @@ export function MarketingMobileNav({ groups, links }: MobileNavProps) {
                 {group.label}
               </h2>
               <ul className="flex flex-col">
-                {group.items.map((item) => {
-                  const Icon = NAV_ICONS[item.icon];
+                {group.sections.map((section) => {
+                  const Icon = NAV_ICONS[section.icon];
                   return (
-                    <li key={item.title}>
-                      <Link href={item.href} onClick={close} className={`flex items-start gap-3 p-2 ${ROW}`}>
-                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
-                          <Icon aria-hidden="true" className="size-4" />
-                        </span>
-                        <span className="flex flex-col">
-                          <span className="font-heading text-sm font-medium">{item.title}</span>
-                          <span className="text-xs text-muted-foreground">{item.description}</span>
-                        </span>
-                      </Link>
+                    <li key={section.title}>
+                      <details className="group/section">
+                        <summary className={`flex cursor-pointer list-none items-center gap-3 p-2 [&::-webkit-details-marker]:hidden ${ROW}`}>
+                          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
+                            <Icon aria-hidden="true" className="size-4" />
+                          </span>
+                          <span className="flex-1 font-heading text-sm font-medium">{section.title}</span>
+                          <ChevronDown
+                            aria-hidden="true"
+                            className="size-4 text-muted-foreground transition-transform group-open/section:rotate-180"
+                          />
+                        </summary>
+                        <ul className="mb-2 ml-[1.375rem] flex flex-col border-l pl-3">
+                          {section.links.map((link) => (
+                            <li key={link.href}>
+                              <Link href={link.href} onClick={close} className={`block px-2 py-1.5 text-sm ${ROW}`}>
+                                {link.label}
+                              </Link>
+                            </li>
+                          ))}
+                          {section.all && (
+                            <li>
+                              <Link href={section.all.href} onClick={close} className={`block px-2 py-1.5 text-sm font-medium text-brand ${ROW}`}>
+                                {section.all.label}
+                              </Link>
+                            </li>
+                          )}
+                        </ul>
+                      </details>
                     </li>
                   );
                 })}
               </ul>
-              {group.footer && (
-                <Link href={group.footer.href} onClick={close} className={`block px-2 py-2 text-sm font-medium text-brand ${ROW}`}>
-                  {group.footer.label}
-                </Link>
-              )}
             </section>
           ))}
           <ul className="flex flex-col border-t pt-3">

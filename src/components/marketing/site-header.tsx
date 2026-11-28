@@ -1,21 +1,16 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Logo } from "@/components/app-shell/logo";
-import { NAV_GROUPS, NAV_PLAIN_LINKS } from "@/content/landing";
-import { livePaths } from "@/content/pages";
+import { NAV_PLAIN_LINKS } from "@/content/landing";
+import { siteDirectory } from "@/content/pages/cards";
 import { MarketingMobileNav } from "./mobile-nav";
-import { resolveNavGroups, type ResolvedNavGroup } from "./nav-icons";
 import { MarketingNavMenu } from "./nav-menu";
 import { HeaderScrollShell } from "./scroll-shell";
 
-/** Nav links for what's published now (product, audience and index pages). */
-async function resolveGroups(): Promise<ResolvedNavGroup[]> {
-  return resolveNavGroups(NAV_GROUPS, await livePaths());
-}
-
 /** Public site header: floating glass pill. Static: no session reads; CMS data is cached, so pages stay prerendered. */
 export async function SiteHeader() {
-  const GROUPS = await resolveGroups();
+  // Every published page, grouped (content/pages/directory.ts).
+  const GROUPS = await siteDirectory();
   return (
     <header className="sticky top-3 z-50 px-4">
       <HeaderScrollShell>

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/[product]/for/[au
     description: page.seo.description,
     path: PAGE_PATHS.audience(page.product, page.slug),
     noindex: page.preview,
-    image: coverShareImage(page.cover),
+    image: coverShareImage(page.cover, PAGE_PATHS.audience(page.product, page.slug), page.hero.title),
   });
 }
 

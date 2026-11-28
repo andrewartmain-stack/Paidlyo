@@ -223,9 +223,9 @@ Optional fields that make pages easier to read:
   `check`, `alert`, `idea`, `link`, `import`, `export`, `lock`, `globe`, `mail`, `search`. Pick
   the one that matches the card's meaning (for example `alert` for a problem, `invoice` for
   invoicing). Give either every card in a group an icon or none of them.
-- **`cover.file` / `cover.alt`:** the page's cover image. It's shown on the cards that link to this
-  page from other pages and used as its share image. Recommend one for every page (section 10);
-  fill the columns only with file names I give you.
+- **`cover.file` / `cover.alt`:** optional. Every page automatically gets a branded cover (its title
+  on Paidlyo's colours), shown on the cards that link to it and used as its share image. Fill these
+  columns only when I give you a specific image file to use instead.
 - **`sections.N.callout`** + **`sections.N.calloutKind`:** a highlighted box under a section.
   `calloutKind` is one of:
   - `tip`: a practical tip;

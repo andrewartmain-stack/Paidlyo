@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps<"/[product]/[varian
     description: page.seo.description,
     path: PAGE_PATHS.variant(page.product, page.slug),
     noindex: page.preview,
-    image: coverShareImage(page.cover),
+    image: coverShareImage(page.cover, PAGE_PATHS.variant(page.product, page.slug), page.hero.title),
   });
 }
 
