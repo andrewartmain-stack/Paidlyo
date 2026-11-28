@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Logo } from "@/components/app-shell/logo";
-import { LEGAL_ENTITY } from "@/content/legal";
 import { LEGAL_LINKS, NAV_LINKS, SITE } from "@/content/landing";
 import { siteDirectory } from "@/content/pages/cards";
 
@@ -58,12 +57,7 @@ export async function SiteFooter() {
         </div>
       </div>
       <div className="border-t">
-        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-muted-foreground sm:px-6">
-          © {SITE.name} · Operated by {LEGAL_ENTITY.name}, {LEGAL_ENTITY.country} ·{" "}
-          <a href={`mailto:${LEGAL_ENTITY.email}`} className="hover:text-foreground">
-            {LEGAL_ENTITY.email}
-          </a>
-        </p>
+        <p className="mx-auto max-w-6xl px-4 py-6 text-xs text-muted-foreground sm:px-6">© {SITE.name}</p>
       </div>
     </footer>
   );
