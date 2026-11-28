@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
+    // 75 = Next's default for photos; 90 for app screenshots, where text must stay sharp.
+    qualities: [75, 90],
     remotePatterns: [
       // Organization logos from Supabase Storage (public bucket).
       ...(supabaseHost ? [{ protocol: "https" as const, hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : []),

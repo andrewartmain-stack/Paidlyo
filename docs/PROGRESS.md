@@ -237,6 +237,12 @@
   Alternatives, Comparisons, Guides. Desktop: sections left, pages right on hover; mobile: folding
   sections. Up to 12 pages per section, then the product/index page link. Hand-written NAV_GROUPS
   removed (it linked features that don't exist).
+- [x] Sharp app screenshots 2026-11-28: demo workspace "Northwind Studio" (owner maya.demo@paidlyo.com,
+  4 members, 6 clients, 10 projects, 8 weeks of time, 8 invoices, approvals) seeded through the app's
+  RPCs and marked subscribed (no Stripe customer). 10 screens captured at 1280×800, 2× (2560px PNG),
+  replacing the 6 video-frame JPGs in all 49 sections; budget/approval/unbilled topics got the
+  matching new shot. ScreenshotFrame now uses quality 90 (`images.qualities: [75, 90]`) and
+  `sizes` up to 768px. `public/screenshots/*.jpg` (old, unused by code) left as is.
 
 ## Next
 - [ ] Write content for the templates (start: top audiences, Harvest alternative + pricing)

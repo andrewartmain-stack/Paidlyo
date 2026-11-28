@@ -201,6 +201,9 @@ export async function Audiences() {
 }
 
 /** A real app screenshot in a light browser frame. */
+/** Allowed in next.config.ts `images.qualities`. */
+const SCREENSHOT_QUALITY = 90;
+
 export function ScreenshotFrame({ src, alt, width, height }: { src: string; alt: string; width: number; height: number }) {
   return (
     <div className="overflow-hidden rounded-2xl border bg-card shadow-[0_24px_60px_-30px_rgb(14_15_12/0.35)]">
@@ -209,7 +212,17 @@ export function ScreenshotFrame({ src, alt, width, height }: { src: string; alt:
         <span className="size-2.5 rounded-full bg-input" />
         <span className="size-2.5 rounded-full bg-input" />
       </div>
-      <Image src={src} alt={alt} width={width} height={height} sizes="(min-width: 1024px) 560px, 100vw" className="h-auto w-full" />
+      {/* App text must stay crisp: higher quality, and a width that covers the widest column (the
+          768px article), so the browser never upscales a smaller file. */}
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        quality={SCREENSHOT_QUALITY}
+        sizes="(min-width: 1024px) 768px, 100vw"
+        className="h-auto w-full"
+      />
     </div>
   );
 }
