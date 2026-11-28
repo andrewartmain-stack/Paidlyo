@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { ArrowLeftRight, BookOpen, FileText, Gavel, Tag } from "lucide-react";
+import { linkIcon } from "@/components/marketing/nav-icons";
 import { buildDirectory, DIRECTORY_LIMIT, navLabel, type DirectoryPage } from "@/content/pages/directory";
 
 const page = (href: string, navLabel: string, type: DirectoryPage["type"], product?: DirectoryPage["product"]): DirectoryPage => ({
@@ -75,5 +77,15 @@ describe("menu labels", () => {
       "What is time tracking software?",
     );
     expect(navLabel("guide", { title: "How to bill hours, step by step" })).toBe("How to bill hours");
+  });
+});
+
+describe("menu link icons", () => {
+  it("picks an icon from the page URL", () => {
+    expect(linkIcon("/invoicing/for/law-firms")).toBe(Gavel);
+    expect(linkIcon("/alternatives/toggl-track")).toBe(ArrowLeftRight);
+    expect(linkIcon("/compare/clockify-pricing")).toBe(Tag);
+    expect(linkIcon("/guides/what-is-invoicing-software")).toBe(BookOpen);
+    expect(linkIcon("/features/something-new")).toBe(FileText);
   });
 });

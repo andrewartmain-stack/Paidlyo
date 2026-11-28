@@ -1,0 +1,168 @@
+"slug","kind","seo.title","seo.description","keywords","cover.file","cover.alt","cover.caption","hero.eyebrow","hero.title","hero.description","tools.1.name","tools.1.plan","tools.1.perPersonCents","tools.1.baseCents","tools.1.minSeats","tools.1.billedAnnually","tools.1.source","tools.1.checkedOn","tools.2.name","tools.2.plan","tools.2.perPersonCents","tools.2.baseCents","tools.2.minSeats","tools.2.billedAnnually","tools.2.source","tools.2.checkedOn","verdict.summary","verdict.bestFor.1.tool","verdict.bestFor.1.text","verdict.bestFor.2.tool","verdict.bestFor.2.text","verdict.bestFor.3.tool","verdict.bestFor.3.text","rows.1.feature","rows.1.values","rows.2.feature","rows.2.values","rows.3.feature","rows.3.values","rows.4.feature","rows.4.values","rows.5.feature","rows.5.values","rows.6.feature","rows.6.values","teamSizes","sections.1.heading","sections.1.body","sections.1.callout","sections.1.calloutKind","sections.1.image.file","sections.1.image.alt","sections.1.image.caption","sections.2.heading","sections.2.body","sections.2.callout","sections.2.calloutKind","sections.2.image.file","sections.2.image.alt","sections.2.image.caption","sections.3.heading","sections.3.body","sections.3.callout","sections.3.calloutKind","sections.3.image.file","sections.3.image.alt","sections.3.image.caption","sections.4.heading","sections.4.body","sections.4.callout","sections.4.calloutKind","sections.4.image.file","sections.4.image.alt","sections.4.image.caption","sections.5.heading","sections.5.body","sections.5.callout","sections.5.calloutKind","sections.5.image.file","sections.5.image.alt","sections.5.image.caption","faq.1.question","faq.1.answer","faq.2.question","faq.2.answer","faq.3.question","faq.3.answer","faq.4.question","faq.4.answer","related.1.href","related.1.label","related.2.href","related.2.label","related.3.href","related.3.label","updated"
+"toggl-track-pricing","pricing","Toggl Track Pricing Explained for Teams | Paidlyo","Toggl Track pricing explained: Free, Starter and Premium plans, what each includes, and what a team really pays per month and per year. Checked November 2026.","toggl track pricing | toggl pricing | toggl track cost | toggl track plans | how much is toggl track","","","","Pricing explained","Toggl Track pricing: what each plan costs and what you get","A plain breakdown of Toggl Track's plans, the features that decide which one you need, and what a team of 5, 10 or 25 pays. Plus how it compares with Paidlyo.","Toggl Track","Starter","1200","0","1","no","https://toggl.com/track/pricing/","2026-11-28","","","","","","","","","Toggl Track is a polished time tracker with apps on every device and a free plan for very small teams. Billable rates start on Starter, and approvals and fixed-fee projects on Premium. If you mainly need team time tracking and invoices built from those hours, Paidlyo costs less per person on monthly billing and includes everything on one plan.","Toggl Track Free","Up to 3 people who only need to record time, without billable rates.","Toggl Track Premium","Teams that need timesheet approvals, mobile and desktop apps, or Jira and Asana integrations.","Paidlyo","Agencies, studios and consultancies that want time tracking and invoices from tracked hours at $9 per person a month.","Price per person, billed monthly","$12 on Starter, $24 on Premium | $9","Price per person, billed yearly","$9 on Starter, $16 on Premium | $7.50","Billable rates","Starter and up | yes","Invoices from tracked time","Not listed on pricing page | yes","Timesheet approvals","Premium | no","Mobile and desktop apps","yes | no","5 | 10 | 25","Toggl Track pricing at a glance","**Toggl Track pricing** has three main plans plus Enterprise. According to [Toggl's pricing page](https://toggl.com/track/pricing/), checked on 28 November 2026, the prices per user per month are:
+
+| Plan | Billed yearly | Billed monthly | Who it's for |
+|---|---|---|---|
+| Free | $0 | $0 | Very small teams, the FAQ says up to 3 users |
+| Starter | $9 | $12 | Teams that need billable rates and project estimates |
+| Premium | $16 | $24 | Teams that need approvals and fixed-fee projects |
+| Enterprise | Contact sales | Contact sales | Large organisations |
+
+The page doesn't label which prices are yearly and which are monthly, but the lower prices sit next to a ""save up to 33% a year"" toggle, so we've read them as yearly prices. Paid plans come with a 30-day trial.
+
+Toggl prices **per user**, so the bill grows in a straight line as your team grows. There are no flat platform fees on the self-serve plans.
+
+The real question for most teams isn't the price per user. It's which plan you need, because the features that matter for client work are spread across tiers. The next sections explain where the lines fall, and what that means for a typical agency or studio.","","","","","","Which Toggl Track plan do you need?","Three features usually decide the plan for agencies, studios and consultancies.
+
+**Billable rates.** The Free plan doesn't include billable rates. If you want hours priced at client rates, you need Starter or above. Premium adds rates by role and by project member.
+
+**Estimates and budgets.** Free has task estimates. Starter adds project estimates. Premium adds fixed-fee projects and project dashboards that compare time with estimates. If you sell fixed-price work and want to see how it's going, that points to Premium.
+
+**Timesheet approvals.** Only Premium includes approvals. If managers must sign off hours before billing or payroll, that alone decides the plan.
+
+Other points worth knowing:
+
+- **Apps:** web, mobile and desktop apps are listed for all plans, which is one of Toggl's strengths.
+- **Integrations:** Jira and Asana integrations are listed under Premium.
+- **Invoicing:** the pricing page doesn't list invoicing as a plan feature. Check how you'd create invoices from Toggl data before you commit, because for many service businesses that's the step that takes the most time.
+
+A simple rule: if you only record hours, Free or Starter may be enough. If you bill clients from hours and need approvals or fixed-fee tracking, plan for Premium.","Price the plan you'll need in six months, not today. Moving from Starter to Premium later can raise the per-user price by more than half on yearly billing.","tip","","","","What a team pays per month and per year","Here's what Toggl Track costs for common team sizes at the prices listed when we checked, compared with Paidlyo:
+
+| Team size | Toggl Starter, monthly | Toggl Premium, monthly | Paidlyo, monthly |
+|---|---|---|---|
+| 5 people | $60 | $120 | $45 |
+| 10 people | $120 | $240 | $90 |
+| 25 people | $300 | $600 | $225 |
+
+On yearly billing, the numbers change:
+
+| Team size | Toggl Starter, yearly | Toggl Premium, yearly | Paidlyo, yearly |
+|---|---|---|---|
+| 5 people | $540 | $960 | $450 |
+| 10 people | $1,080 | $1,920 | $900 |
+| 25 people | $2,700 | $4,800 | $2,250 |
+
+On yearly billing, Toggl Starter and Paidlyo are close: $9 against $7.50 per person a month. The gap widens on monthly billing and on Premium.
+
+Price isn't the whole picture, though. Toggl includes mobile and desktop apps, integrations on Premium and approvals, which Paidlyo doesn't have. Paidlyo includes invoices built from tracked time, project budgets and outstanding invoice reports on its single plan. For a fair comparison, price the plan that has what you need, not the cheapest plan on each list.","","","","","","Costs that don't show on the pricing page","The listed price is only part of what a tool costs. With Toggl Track, or any time tracker, a few other costs are worth thinking about.
+
+**The invoicing step.** If your time tracker doesn't create invoices directly from tracked hours, someone has to export the hours and rebuild them in an invoicing or accounting tool. For an agency with 15 clients, that can take a few hours every month. Multiply by your hourly cost, and it can outweigh the subscription.
+
+**Plan creep.** Teams often start on a lower plan and move up when they need one feature, such as approvals or fixed-fee projects. Every user then moves to the higher price, not just the person who needed the feature.
+
+**Paying for people who barely track.** With per-user pricing, check how the tool counts users. Some people, such as an owner who only looks at reports, may still need a paid seat.
+
+**Switching later.** Moving hours, projects and rates to another tool takes time. Choosing a tool that covers tracking and invoicing from the start avoids a second move.
+
+None of these is unique to Toggl. They're simply the questions to ask before choosing any plan. Our guide on [how much time tracking software costs](/guides/how-much-does-time-tracking-software-cost) covers them across more tools.","","","","","","Toggl Track or Paidlyo?","Both are time trackers, but they're built around different jobs.
+
+**Toggl Track is a strong choice if:**
+
+- people need to track time from phones or desktop apps;
+- you need timesheet approvals;
+- you rely on integrations such as Jira or Asana;
+- up to 3 people only need basic tracking, and the free plan covers it.
+
+**Paidlyo is a strong choice if:**
+
+- you bill clients by the hour and want invoices created from unbilled time in one click;
+- you want rates per project and task, budgets and outstanding invoices in one place;
+- you'd rather pay one simple price, $9 per person a month or $90 per person a year, with every feature included;
+- your team works on computers, so a browser-based tool is enough.
+
+Paidlyo has no free plan, no mobile apps, no approvals and no integrations. It does have a Harvest CSV importer, but no Toggl importer, so moving from Toggl means starting fresh with clients, projects and rates.
+
+If you're already on Toggl and the invoicing step is the problem, see our page on [Paidlyo as a Toggl Track alternative](/alternatives/toggl-track). For a side-by-side with Harvest, read [Harvest vs Toggl Track](/compare/harvest-vs-toggl-track).","","","","","","How much does Toggl Track cost?","When we checked, Starter was $9 per user a month billed yearly or $12 monthly, and Premium was $16 yearly or $24 monthly. Free costs nothing.","Is Toggl Track free?","Toggl Track has a free plan for a limited number of users; its FAQ said up to 3 when we checked. It doesn't include billable rates.","Which Toggl Track plan has timesheet approvals?","Approvals were listed on Premium only when we checked.","Is Paidlyo cheaper than Toggl Track?","Paidlyo is **$9 per person a month**, less than Toggl Starter on monthly billing. On yearly billing the two are close.","","","","","","",""
+"clockify-pricing","pricing","Clockify Pricing Explained: Plans and Seats | Paidlyo","Clockify pricing explained: Free, Basic, Standard, Pro and Enterprise, which features sit on which plan, and what a team pays. Checked November 2026.","clockify pricing | clockify plans | clockify cost | how much is clockify | clockify pricing per user","","","","Pricing explained","Clockify pricing: plans, seats and what you really pay","Clockify is known for its free plan and low prices. Here's how its five plans differ, which features push you up a tier, and how the totals compare with Paidlyo for teams that bill clients.","Clockify","Standard","699","0","1","no","https://clockify.me/pricing","2026-11-28","","","","","","","","","Clockify is one of the cheapest ways to track team time, and its free plan is generous for small teams. Invoicing starts on Standard and budgets on Pro, where the price gets close to Paidlyo's. Clockify wins on price and features like GPS and scheduling; Paidlyo is simpler, with every feature on one plan.","Clockify Free","Small teams that only need to record time and can live with one month of report data.","Clockify Standard or Pro","Teams that want low per-seat prices plus approvals, GPS, expenses or scheduling.","Paidlyo","Agencies and consultancies that want tracking, budgets and invoices on one plan at $9 per person a month.","Price per seat, billed monthly","$4.99 to $14.99 by plan | $9","Invoicing","Standard and up | yes","Project budgets and estimates","Pro and up | yes","Timesheet approvals","Standard and up | no","Expenses and GPS","Pro and up | no","Free plan","yes | no","5 | 10 | 25","Clockify pricing at a glance","**Clockify pricing** is built around a free plan and four paid tiers, all priced per seat. According to [Clockify's pricing page](https://clockify.me/pricing), checked on 28 November 2026:
+
+| Plan | Billed yearly | Billed monthly |
+|---|---|---|
+| Free | $0 | $0 |
+| Basic | $3.99 | $4.99 |
+| Standard | $5.49 | $6.99 |
+| Pro | $7.99 | $9.99 |
+| Enterprise | $11.99 | $14.99 |
+
+Prices are per seat per month in US dollars, and tax may be added at checkout. Clockify also sells a bundle with its sister products, priced slightly above Enterprise.
+
+Two details on seats matter for teams, especially as they grow:
+
+- **Every active or invited user occupies a paid seat,** including owners, admins and managers. Deactivated users don't.
+- **Kiosk-only users** who just clock in and out can be added as cheaper limited seats.
+
+Paid features can be tested for 7 days without a card. The trial starts automatically when you sign up.
+
+The free plan is described as being for up to 5 users, although the FAQ mentions inviting up to 4 people, so check the current limit when you sign up.","","","","","","What each Clockify plan adds","Clockify spreads features across plans more finely than most tools. For teams that bill clients, the lowest plan for each key feature is:
+
+| Feature | Lowest Clockify plan |
+|---|---|
+| Billable rates | Basic |
+| Invoicing | Standard |
+| QuickBooks integration | Standard |
+| Timesheet approval | Standard |
+| Time off | Standard |
+| Project budgets and estimates | Pro |
+| Expenses | Pro |
+| GPS tracking and scheduling | Pro |
+| Activity monitoring | Pro |
+
+So the plan you need depends on how you bill:
+
+- **Recording hours only:** Free may be enough, but reports cover one month of data.
+- **Billable rates without invoicing:** Basic.
+- **Invoicing from tracked time:** Standard.
+- **Fixed-price or capped work you need to watch:** Pro, because budgets start there.
+
+Take an 8-person design agency as an example. It bills most clients by the hour, so it needs billable rates and invoices, which means Standard at $6.99 per seat a month. Two of its clients have fixed-price retainers, and the owner wants to see hours against each retainer during the month. Budgets are on Pro, so the whole team moves to $9.99 per seat, even though only the owner looks at budgets. The monthly bill goes from about $56 to about $80.
+
+For many agencies and consultancies, the honest answer is Pro. Billing clients well usually needs both invoices and budgets, and Clockify puts budgets one tier above invoicing.","Check the report date range on the free plan. Only one month of data in reports makes year-end and client reviews harder.","warning","","","","What a team pays","Here's what common team sizes pay each month on Clockify's monthly prices, compared with Paidlyo:
+
+| Team size | Clockify Standard | Clockify Pro | Paidlyo |
+|---|---|---|---|
+| 5 people | $34.95 | $49.95 | $45 |
+| 10 people | $69.90 | $99.90 | $90 |
+| 25 people | $174.75 | $249.75 | $225 |
+
+And over a year on yearly billing:
+
+| Team size | Clockify Standard | Clockify Pro | Paidlyo |
+|---|---|---|---|
+| 5 people | $329.40 | $479.40 | $450 |
+| 10 people | $658.80 | $958.80 | $900 |
+| 25 people | $1,647 | $2,397 | $2,250 |
+
+Clockify Standard is clearly cheaper than Paidlyo. Clockify Pro costs a little more than Paidlyo on both monthly and yearly billing, and includes features Paidlyo doesn't have, such as expenses, GPS, scheduling and approvals.
+
+Clockify's tiers also mean the comparison depends on what you'd actually use. A team on Pro that never touches GPS, scheduling or kiosks is paying for features it doesn't need. A team that uses them gets a lot for the money.
+
+That's worth saying plainly: **on price alone, Clockify is hard to beat.** The reasons to choose something else are about how the tool fits your work, not the subscription. Our [Clockify alternative](/alternatives/clockify) page goes into that in more detail.","","","","","","Questions to ask before choosing a plan","A low price per seat is a good start, but a few questions decide what you'll actually pay and how well it works.
+
+**Which plan has everything you need?** List the features you'll use in the next year: rates, invoices, budgets, approvals, expenses. The plan is the lowest one that covers all of them, and everyone pays that price.
+
+**Who counts as a user?** On Clockify, every active or invited user takes a seat. If several people only look at reports, they still count.
+
+**How will invoices work?** Check how invoices are built from tracked time on your plan, what they look like, and how clients receive them. For many service businesses, month-end invoicing takes more time than tracking.
+
+**How much history do you need?** The free plan's one-month report range is fine for trying the tool, but not for comparing this quarter with last.
+
+**What happens when you grow?** Per-seat pricing scales smoothly, which is good. But check what changes at each tier boundary, such as a feature you'll need once you pass a certain team size or client count, so a later upgrade doesn't surprise you.
+
+**Is simple better for your team?** Feature-rich tools have more settings to learn. Some teams want GPS, kiosks and scheduling; others want a timer, a timesheet and an invoice.
+
+Our guide on [how much time tracking software costs](/guides/how-much-does-time-tracking-software-cost) compares these questions across more tools.","","","","","","Clockify or Paidlyo?","**Clockify fits well if:**
+
+- you want the lowest price per seat, or a free plan for a small team;
+- you need approvals, time off, GPS, scheduling, expenses or kiosks;
+- you want a QuickBooks integration or mobile apps;
+- you're comfortable choosing between five plans as your needs change.
+
+**Paidlyo fits well if:**
+
+- you bill clients by the hour and want invoices created from unbilled time in one click;
+- you want budgets, rates per project and task, and outstanding invoice reports without moving up a tier;
+- you prefer one price, $9 per person a month or $90 per person a year, with every feature included;
+- your team works on computers, so a browser-based tool is enough.
+
+Paidlyo has no free plan, no mobile apps, no approvals, no expenses and no integrations. It imports from Harvest, but not from Clockify, so switching means setting up clients, projects and rates again.
+
+For a direct comparison with Harvest, see [Harvest vs Clockify](/compare/harvest-vs-clockify), which looks at the costs for a 10-person team by need.","","","","","","How much does Clockify cost?","When we checked, paid plans ranged from $3.99 to $11.99 per seat a month billed yearly, or $4.99 to $14.99 monthly.","Is Clockify free?","Yes, Clockify has a free plan for a small number of users, with reports limited to one month of data.","Which Clockify plan includes invoicing?","Invoicing was listed from the Standard plan, at $5.49 per seat a month billed yearly.","Is Paidlyo cheaper than Clockify?","No, not usually. Paidlyo costs **$9 per person a month**, more than Clockify Standard and a little less than Clockify Pro.","","","","","","",""

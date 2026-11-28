@@ -14,7 +14,7 @@ import {
 import type { NavLink } from "@/content/landing";
 import type { DirectoryGroup } from "@/content/pages/directory";
 import { cn } from "cn";
-import { NAV_ICONS } from "./nav-icons";
+import { linkIcon, NAV_ICONS } from "./nav-icons";
 
 type NavMenuProps = { groups: DirectoryGroup[]; links: NavLink[] };
 
@@ -46,7 +46,7 @@ function GroupPanel({ group }: { group: DirectoryGroup }) {
                     index === active && "bg-muted",
                   )}
                 >
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-background text-foreground">
                     <Icon aria-hidden="true" className="size-4" />
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -64,13 +64,17 @@ function GroupPanel({ group }: { group: DirectoryGroup }) {
         <p className="px-2 pb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">{section.title}</p>
         {section.links.length > 0 && (
           <ul className={cn("grid gap-0.5", section.links.length > 4 && !single && "grid-cols-2")}>
-            {section.links.map((link) => (
-              <li key={link.href}>
-                <NavigationMenuLink render={<Link href={link.href} />} className="px-2 py-1.5 text-sm text-foreground">
-                  {link.label}
-                </NavigationMenuLink>
-              </li>
-            ))}
+            {section.links.map((link) => {
+              const Icon = linkIcon(link.href);
+              return (
+                <li key={link.href}>
+                  <NavigationMenuLink render={<Link href={link.href} />} className="flex-row items-center gap-2 px-2 py-1.5 text-sm text-foreground">
+                    <Icon aria-hidden="true" className="size-4 shrink-0 text-foreground" />
+                    <span className="min-w-0">{link.label}</span>
+                  </NavigationMenuLink>
+                </li>
+              );
+            })}
           </ul>
         )}
         {section.all && (

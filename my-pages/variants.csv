@@ -1,48 +1,66 @@
 "product","slug","name","seo.title","seo.description","keywords","cover.file","cover.alt","cover.caption","hero.eyebrow","hero.title","hero.description","sections.1.heading","sections.1.body","sections.1.callout","sections.1.calloutKind","sections.1.image.file","sections.1.image.alt","sections.1.image.caption","sections.2.heading","sections.2.body","sections.2.callout","sections.2.calloutKind","sections.2.image.file","sections.2.image.alt","sections.2.image.caption","sections.3.heading","sections.3.body","sections.3.callout","sections.3.calloutKind","sections.3.image.file","sections.3.image.alt","sections.3.image.caption","sections.4.heading","sections.4.body","sections.4.callout","sections.4.calloutKind","sections.4.image.file","sections.4.image.alt","sections.4.image.caption","sections.5.heading","sections.5.body","sections.5.callout","sections.5.calloutKind","sections.5.image.file","sections.5.image.alt","sections.5.image.caption","highlights.1.title","highlights.1.text","highlights.1.icon","highlights.1.href","highlights.2.title","highlights.2.text","highlights.2.icon","highlights.2.href","highlights.3.title","highlights.3.text","highlights.3.icon","highlights.3.href","highlights.4.title","highlights.4.text","highlights.4.icon","highlights.4.href","highlights.5.title","highlights.5.text","highlights.5.icon","highlights.5.href","highlights.6.title","highlights.6.text","highlights.6.icon","highlights.6.href","screenshots.1.file","screenshots.1.alt","screenshots.1.caption","screenshots.2.file","screenshots.2.alt","screenshots.2.caption","teamSizes","faq.1.question","faq.1.answer","faq.2.question","faq.2.answer","faq.3.question","faq.3.answer","faq.4.question","faq.4.answer","related.1.href","related.1.label","related.2.href","related.2.label","related.3.href","related.3.label","updated"
-"time-tracking","windows-desktop","Time tracking on Windows","Windows Time Tracking Software, Nothing to Install | Paidlyo","Windows time tracking software that runs in your browser: no installer, no admin rights, the same hours on every PC, plus invoices. $9 per person a month.","windows time tracking software | time tracking software for windows | time tracking software windows | time tracking software pc | desktop time tracking software | time tracking software desktop","","","","Windows","Windows time tracking software that works in your browser, with nothing to install","Track client hours on any Windows PC without an installer, admin rights or updates. Your timer, timesheet and invoices live in one online account, the same on every computer you use.","Windows time tracking software without an installer","Many people searching for **Windows time tracking software** expect to download a program. Paidlyo works differently: it runs in the web browser you already use on Windows. There's no installer, nothing for IT to approve, and no updates to manage.
+"time-tracking","uk","Time tracking in the UK","Time Tracking Software for UK Businesses | Paidlyo","Time tracking software for UK agencies and consultancies: billable hours in pounds, invoices from tracked time, no intrusive monitoring. $9 per person a month.","time tracking software for uk businesses | time tracking software uk | uk time tracking software","","","","United Kingdom","Time tracking software for UK businesses that bill clients by the hour","For UK agencies, studios and consultancies: track hours by client and project, price them in pounds or the client's currency, and turn them into invoices. No screenshots, no activity monitoring.","Choosing time tracking software for UK businesses","Choosing **time tracking software for UK businesses** starts with a simple question: what is the tracking for? The answer decides which kind of tool you need, and the UK has a few specific points worth knowing for each.
 
-That's a deliberate choice, with real trade-offs, and this page covers both sides. The short version:
-
-- **You get** the same timer, weekly timesheet, reports and invoices on every PC you sign in from, with all your team's hours in one shared account.
-- **You don't get** the things a desktop program can do in the background, such as tracking which apps you use, detecting idle time or working offline.
-
-Paidlyo is built for agencies, studios, consultancies and freelancers who bill clients by the hour. Time is tracked against a client, project and task, marked billable or not, and turned into invoices at your project or task rates. For that job, a browser tracker on Windows covers what most billing teams need from a desktop app, minus the install.","","","","","","Desktop app or browser: what changes on a Windows PC","Here is how a browser-based tracker like Paidlyo compares with a typical installed desktop tracker on Windows:
-
-| | Installed desktop tracker | Paidlyo in a browser |
+| What you need | Kind of tool | UK point to know |
 |---|---|---|
-| Setup | Download, install, often needs admin rights | Sign in |
-| Updates | Installed on each PC | Nothing to update |
-| Using two or more PCs | Install and sign in on each one | Sign in from any browser |
-| Company laptops with locked installs | May need IT approval | Usually no approval needed |
-| Background app or idle tracking | Often available | Not available |
-| Working without internet | Some apps support it | Needs a connection |
+| Bill clients for hours | Billable time tracker | Rates in sterling or the client's currency; VAT on invoices |
+| Record shifts for payroll | Clock-in and attendance tool | Working time rules and pay records |
+| Watch computer activity | Monitoring tool | Data protection guidance on monitoring workers |
 
-If your team moves between an office desktop, a home PC and a laptop, the browser approach removes a lot of small hassles. If you need a tracker that watches activity or works offline, a desktop program is the better fit.
+Paidlyo is the first kind. It's built for agencies, studios, consultancies and freelancers who bill clients by the hour. Everyone tracks time against a client, a project and a task, with a timer or a weekly timesheet. Rates are set per project or task, and invoices are built from unbilled hours.
 
-Take a consultant who works on a client's locked-down laptop three days a week, an office PC one day and a home PC on Fridays. With an installed tracker, that's three installs, one of which the client's IT team may refuse. With Paidlyo, it's three sign-ins, and every hour lands in the same timesheet. At month end, the invoice is built from all of them at once, without exporting anything from one machine to another.","","","","","","Making a browser tracker feel like a desktop app","A browser tab is easy to lose among twenty others, especially on a busy day. A few simple steps make Paidlyo feel almost like a desktop program on Windows:
+It isn't a clock-in system, a payroll tool or a monitoring tool. If your main need is recording shift times for hourly-paid staff, an attendance tool linked to payroll will suit you better. If your main need is knowing how many billable hours went into each client, read on.
 
-1. **Give it its own window.** Open Paidlyo in a separate browser window and keep it on one side of the screen or a second monitor.
-2. **Pin it to the taskbar.** Most Windows browsers let you create a shortcut or install a website as an app from the browser menu. It then opens from the taskbar or Start menu like any program.
-3. **Pin the tab** if you prefer to keep it in your main window, so it stays at the left and doesn't get closed by accident.
-4. **Start the timer when you start the task.** Make it part of opening the file or the ticket.
-5. **Fill gaps in the weekly timesheet** at the end of the day, for anything you didn't time.
+Many UK firms also bill clients abroad, especially in Europe and the US, and sometimes work with freelancers who bill them in turn. A billable time tracker that handles several currencies and lets freelancers track in the same place as staff keeps all of that in one record, instead of spreading it across spreadsheets and email.","","","","","","Tracking without monitoring your team","Many UK firms are wary of time tracking because they associate it with screenshots and activity scores. That's a reasonable concern. The Information Commissioner's Office (ICO) published guidance on monitoring workers in 2023. According to [the ICO's announcement](https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2023/10/ico-publishes-guidance-to-ensure-lawful-monitoring-in-the-workplace), data protection law doesn't prevent monitoring, but monitoring must be necessary and proportionate and must respect workers' rights. Employers are expected to tell workers about the nature, extent and reasons for monitoring, and to use the least intrusive method.
 
-None of these need admin rights or anything installed from Paidlyo. They use features that are already part of the browser, so they also work on a locked-down company laptop. You can read more about the day-to-day habits in [the Paidlyo timer](/features/timer).","Check your day's entries before you shut down the PC. Paidlyo has no idle detection, so a quick review catches a timer left running.","tip","","","","Company laptops, shared PCs and IT rules","Many companies lock down their Windows laptops so staff can't install software. Contractors and consultants working on a client's machine often face the same rule. A browser-based tracker avoids that problem: if you can open a website, you can track time.
+Paidlyo avoids most of that question by design. It records only:
 
-A few practical points for teams:
+- the hours people enter in the weekly timesheet, or time with the timer;
+- the client, project and task they choose;
+- whether the time is billable.
 
-- **Use your own sign-in on shared PCs,** and sign out when you're done, as you would with any online account.
-- **Keep work hours in one account.** Because everything is online, hours tracked on the office PC and the laptop appear in the same timesheet and reports.
-- **Give people the right role.** Paidlyo has owner, admin and member roles, so decide who handles billing before you invite the team.
-- **Agree how you'll handle no connection.** If someone works on a train or a site without internet, they note their hours and add them to the weekly timesheet later.
+It doesn't take screenshots, record apps or websites, or measure keyboard and mouse activity. For a team of professionals, self-reported time is usually all you need to bill accurately and see where time goes.
 
-For teams spread across locations, there's more on working from any browser in [online time tracking](/time-tracking/online).","","","","","","Who should choose a desktop tracker instead","Paidlyo isn't the right Windows time tracker for everyone. Choose an installed desktop program if:
+You should still tell your team why you're tracking time and how the data will be used, for example for client billing, budgets and pricing. Being open about it from the start is good practice, and it helps people record time honestly.","Write a short note for the team explaining what's tracked, who sees it and what it's used for. One paragraph prevents most worries.","tip","","","","A week of tracking at a London consultancy","Here's how a 6-person consultancy in London might use Paidlyo over a typical week.
 
-- **You need automatic tracking** of the apps and websites you use, so you don't have to start a timer.
-- **You need idle detection** that pauses the timer when you step away.
-- **You often work offline** for long periods.
-- **You want it free.** Some desktop trackers have free versions. Paidlyo has no free plan; it costs $9 per person a month after a 14-day trial.
+Each consultant starts the timer when they begin client work, or fills in the weekly timesheet at the end of each day. Entries go against a client, a project and a task, such as research, workshops, reporting or meetings. Internal work, like business development and training, is tracked as non-billable.
 
-Choose Paidlyo if you mainly need clean billable hours by client, project and task, invoices built from those hours, and the same data on every PC without installing anything. For the full weekly view, see [weekly timesheets](/features/timesheets).
+Rates are set in pounds on each project: £150 an hour for senior consultants and £95 for analysts, using separate tasks for each level. One client is in Germany, so their project uses euro rates, because Paidlyo sets a currency per client.
 
-If you're not sure, try it for a week on the PCs you actually use. Track your normal client work, check the timesheet on Friday, and see whether you missed the background features at all. The 14-day trial is long enough to run a full test and create a first invoice from real hours.","","","","","","Nothing to install","Runs in the browser you already use on Windows.","globe","","Browser timer","Start and stop a timer for any client, project and task.","timer","/features/timer","Weekly timesheet","Fill in the week and add anything you didn't time.","calendar","/features/timesheets","Same hours on every PC","Office desktop, home PC or laptop, one shared account.","users","","Invoices from tracked time","Turn unbilled hours into an invoice draft in one click.","invoice","/invoicing","CSV export","Open your hours in Excel whenever you need them.","export","","","","","","","","1 | 5 | 15","Is there a Paidlyo app for Windows?","No. Paidlyo runs in a web browser on Windows, with nothing to install. Your browser can pin it to the taskbar like an app.","Do I need admin rights to use Paidlyo on a work PC?","No. Paidlyo doesn't install anything, so if you can open a website, you can track time.","Does Paidlyo work offline on Windows?","No. It needs an internet connection. Note hours you work offline and add them to the weekly timesheet later.","Is there free time tracking software for Windows in Paidlyo?","No. Paidlyo has no free plan. It costs **$9 per person a month** after a 14-day trial, with every feature included.","","","","","","",""
+By Friday, the hours report shows:
+
+| Category | Hours | Share of the week |
+|---|---|---|
+| Billable client work | 162 | 72% |
+| Business development | 27 | 12% |
+| Internal and admin | 36 | 16% |
+| Total | 225 | 100% |
+
+That split is useful on its own. If billable time drops below what your pricing assumes, you'll see it within a week, not at the end of the quarter.
+
+At month end, the unbilled time report lists each client's hours, and invoices are created from them in one click, with VAT added where it applies. Our page on [UK invoicing](/invoicing/uk) explains what UK invoices need to show.","","","","","","Working hours, overtime and wellbeing","Consultancies and agencies are known for long hours in busy periods. GOV.UK explains that you [can't work more than 48 hours a week on average](https://www.gov.uk/maximum-weekly-working-hours), normally averaged over 17 weeks, unless you choose to opt out, and that employers need to keep some records about working hours.
+
+Paidlyo isn't designed as a working time compliance system. It doesn't record clock-in and clock-out times, breaks or rest periods, and it isn't a substitute for the records your HR or payroll process keeps. Check with an HR adviser what records apply to your staff.
+
+What Paidlyo can do is make heavy weeks **visible**. If people track all their working time, billable and non-billable, the hours reports show who's consistently working long weeks and which clients or projects are driving it. That's useful for:
+
+- spotting burnout risk before someone hands in their notice;
+- rebalancing work across the team;
+- having an honest conversation with a client whose project is taking far more time than agreed;
+- pricing future work so the hours fit a normal week.
+
+To make this work, ask people to track internal time too, not just billable hours. A week that shows 32 billable hours might really have been 50 hours at the desk, and only the full record shows it.","","","","","","Pricing, setup and limits","Paidlyo costs $9 per person a month, or $90 per person a year, with every feature included and unlimited clients, projects and invoices. Each active person who tracks time is one seat. There's no free plan; the 14-day trial needs a card to start, and nothing is charged until it ends.
+
+Setting up a UK team takes an afternoon:
+
+1. **Add your clients,** with sterling for UK clients and other currencies for clients abroad.
+2. **Create projects and tasks** with your rates, and budgets for capped work.
+3. **Invite the team** as members, with admins for anyone who manages projects or billing.
+4. **Explain what's tracked and why,** in a short note.
+5. **Track for a week,** then check the reports and adjust tasks if needed.
+
+If you're moving from Harvest, the CSV importer brings your data across, with a preview before anything is saved.
+
+Limits to know about: Paidlyo has **no mobile apps**, no timesheet approvals, no payroll, no clock-in kiosk and no Xero or QuickBooks integration. It runs in any browser on a computer. Reports export to CSV for your accountant or bookkeeper.
+
+For remote and hybrid teams specifically, see [time tracking for remote teams](/time-tracking/for/remote-teams).","","","","","","Rates in pounds","Or in each client's own currency.","money","/features/multi-currency","No monitoring","Only the time people enter or track.","lock","","Billable and internal time","See how the week really splits.","chart","/features/billable-hours","Invoices with VAT","Built from unbilled hours in one click.","invoice","/invoicing/uk","Project budgets","Watch hours against capped work.","budget","/features/project-budgets","Harvest importer","Bring your Harvest data across with a preview.","import","","","","","","","","3 | 8 | 20","Does Paidlyo monitor employees?","No. Paidlyo records only the time people enter or track with the timer. It takes no screenshots and doesn't record apps or activity.","Can I track time in pounds and euros?","Yes. Rates are set per project, and Paidlyo sets a currency per client.","Is Paidlyo a working time records system?","No. It doesn't record clock-in times or breaks. Check with an HR adviser which working time records you need to keep.","How much does Paidlyo cost in the UK?","**$9 per person a month**, or $90 per person a year, with every feature included and a 14-day trial.","","","","","","",""

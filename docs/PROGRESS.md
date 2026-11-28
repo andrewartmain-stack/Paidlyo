@@ -237,6 +237,12 @@
   Alternatives, Comparisons, Guides. Desktop: sections left, pages right on hover; mobile: folding
   sections. Up to 12 pages per section, then the product/index page link. Hand-written NAV_GROUPS
   removed (it linked features that don't exist).
+  Menu icons (black): category tiles are outlined black; every page link has its own icon from
+  `linkIcon(href)` in nav-icons.ts (audience/feature/variant slug map; alternatives, comparisons,
+  guides by section; unknown slugs → FileText). New audience slugs: add them to SLUG_ICONS.
+- [x] App screenshots on the 51 imageless CMS pages 2026-11-28 (86 sections, existing assets).
+  Covers and section photos for those pages still missing: StockSnap CDN now returns 403, so
+  photos wait on a Pexels API key.
 - [x] Sharp app screenshots 2026-11-28: demo workspace "Northwind Studio" (owner maya.demo@paidlyo.com,
   4 members, 6 clients, 10 projects, 8 weeks of time, 8 invoices, approvals) seeded through the app's
   RPCs and marked subscribed (no Stripe customer). 10 screens captured 2× at a 1240px window, main

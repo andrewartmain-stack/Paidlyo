@@ -7,7 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { NavLink } from "@/content/landing";
 import type { DirectoryGroup } from "@/content/pages/directory";
-import { NAV_ICONS } from "./nav-icons";
+import { linkIcon, NAV_ICONS } from "./nav-icons";
 
 type MobileNavProps = { groups: DirectoryGroup[]; links: NavLink[] };
 
@@ -43,7 +43,7 @@ export function MarketingMobileNav({ groups, links }: MobileNavProps) {
                     <li key={section.title}>
                       <details className="group/section">
                         <summary className={`flex cursor-pointer list-none items-center gap-3 p-2 [&::-webkit-details-marker]:hidden ${ROW}`}>
-                          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand">
+                          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-background text-foreground">
                             <Icon aria-hidden="true" className="size-4" />
                           </span>
                           <span className="flex-1 font-heading text-sm font-medium">{section.title}</span>
@@ -53,13 +53,17 @@ export function MarketingMobileNav({ groups, links }: MobileNavProps) {
                           />
                         </summary>
                         <ul className="mb-2 ml-[1.375rem] flex flex-col border-l pl-3">
-                          {section.links.map((link) => (
-                            <li key={link.href}>
-                              <Link href={link.href} onClick={close} className={`block px-2 py-1.5 text-sm ${ROW}`}>
-                                {link.label}
-                              </Link>
-                            </li>
-                          ))}
+                          {section.links.map((link) => {
+                            const LinkIcon = linkIcon(link.href);
+                            return (
+                              <li key={link.href}>
+                                <Link href={link.href} onClick={close} className={`flex items-center gap-2 px-2 py-1.5 text-sm ${ROW}`}>
+                                  <LinkIcon aria-hidden="true" className="size-4 shrink-0 text-foreground" />
+                                  {link.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
                           {section.all && (
                             <li>
                               <Link href={section.all.href} onClick={close} className={`block px-2 py-1.5 text-sm font-medium text-brand ${ROW}`}>

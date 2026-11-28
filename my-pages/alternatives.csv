@@ -1,240 +1,253 @@
 "slug","competitor","seo.title","seo.description","keywords","cover.file","cover.alt","cover.caption","hero.eyebrow","hero.title","hero.description","reasons.1.title","reasons.1.text","reasons.1.icon","reasons.2.title","reasons.2.text","reasons.2.icon","reasons.3.title","reasons.3.text","reasons.3.icon","reasons.4.title","reasons.4.text","reasons.4.icon","comparison.1.feature","comparison.1.paidlyo","comparison.1.competitor","comparison.2.feature","comparison.2.paidlyo","comparison.2.competitor","comparison.3.feature","comparison.3.paidlyo","comparison.3.competitor","comparison.4.feature","comparison.4.paidlyo","comparison.4.competitor","comparison.5.feature","comparison.5.paidlyo","comparison.5.competitor","comparison.6.feature","comparison.6.paidlyo","comparison.6.competitor","pricing.name","pricing.plan","pricing.perPersonCents","pricing.baseCents","pricing.minSeats","pricing.billedAnnually","pricing.source","pricing.checkedOn","teamSizes","migration.1.title","migration.1.text","migration.1.icon","migration.2.title","migration.2.text","migration.2.icon","migration.3.title","migration.3.text","migration.3.icon","sections.1.heading","sections.1.body","sections.1.callout","sections.1.calloutKind","sections.1.image.file","sections.1.image.alt","sections.1.image.caption","sections.2.heading","sections.2.body","sections.2.callout","sections.2.calloutKind","sections.2.image.file","sections.2.image.alt","sections.2.image.caption","sections.3.heading","sections.3.body","sections.3.callout","sections.3.calloutKind","sections.3.image.file","sections.3.image.alt","sections.3.image.caption","sections.4.heading","sections.4.body","sections.4.callout","sections.4.calloutKind","sections.4.image.file","sections.4.image.alt","sections.4.image.caption","sections.5.heading","sections.5.body","sections.5.callout","sections.5.calloutKind","sections.5.image.file","sections.5.image.alt","sections.5.image.caption","faq.1.question","faq.1.answer","faq.2.question","faq.2.answer","faq.3.question","faq.3.answer","faq.4.question","faq.4.answer","related.1.href","related.1.label","related.2.href","related.2.label","related.3.href","related.3.label","updated"
-"zoho","Zoho Invoice","Zoho Invoice Alternative for Teams Billing Hours | Paidlyo","A Zoho Invoice alternative for teams that outgrow the free plan: unlimited people, projects and invoices, built around tracked hours. $9 per person a month.","zoho invoice alternative | zoho invoicing software | zoho time tracking software","","","","Zoho Invoice alternative","A Zoho Invoice alternative for teams that bill hours and have outgrown the free plan","Zoho Invoice is free and capable, with limits on users, projects and invoices. If your team has grown past them and bills mainly by the hour, here's how Paidlyo compares, honestly.","No caps as you grow","Unlimited people, clients, projects and invoices on one plan.","users","Built around tracked hours","Every person tracks time, and invoices are built from it.","timer","Rates per task and budgets","Price each kind of work and watch project budgets.","budget","One simple price","$9 per person a month, with every feature included.","wallet","Price","$9 per person a month","Free","Users","Unlimited","Up to 2","Projects","Unlimited","Up to 3","Invoices","Unlimited","Up to 500 a year","Online card payments","no","yes","Recurring invoices","no","yes","Zoho Invoice","Free","0","0","1","no","https://www.zoho.com/us/invoice/pricing/","2026-11-28","3 | 6 | 12","Export your Zoho data","Download your invoices and time records as your history.","export","Set up clients and rates","Add active clients, projects, tasks, rates and currencies.","folder","Start on a set date","Track in Paidlyo from the first day of a month.","calendar","When a Zoho Invoice alternative makes sense","Before you look for a **Zoho Invoice alternative**, it's worth being clear about what you'd be leaving. Zoho invoicing software is hard to beat on price: Zoho Invoice is free. According to [its pricing page](https://www.zoho.com/us/invoice/pricing/), checked on 28 November 2026, it includes time tracking and projects, online payments, a customer portal, recurring invoices, and apps for iOS, Android, Windows and Mac. For many small businesses, that's everything they need.
+"express-invoice","Express Invoice","Express Invoice Alternative for Hourly Billing | Paidlyo","An Express Invoice alternative for teams billing hours: browser-based time tracking and invoices from tracked time, for the whole team. $9 per person a month.","express invoice alternative | express invoicing software | express invoice invoicing software | express invoice invoicing software free | express invoice billing and invoicing software","","","","Express Invoice alternative","An Express Invoice alternative for teams that bill their time","Express Invoice is desktop invoicing software from NCH, with a free version for one user. Paidlyo is a browser-based tool where a whole team tracks hours and invoices are built from them. Here's when each one fits.","Built for a team","Everyone signs in and tracks time, with roles for owners, admins and members.","users","Time on every invoice","Invoices are built from tracked hours, not typed by hand.","timer","Runs in the browser","Nothing to install; open it from any computer.","globe","Rates and budgets","Rates per project and task, and budgets you can watch.","budget","Time tracking","yes","Not mentioned","Where it runs","Web browser","Windows and Mac desktop","Free version","no","One user","Recurring invoices and quotes","no","yes","Mobile apps","no","yes","Multi-currency","yes","yes","Express Invoice","","","","","","https://www.nchsoftware.com/invoice/index.html","2026-11-28","1 | 3 | 8","Finish open invoices first","Let unpaid invoices run their course in Express Invoice.","receipt","Add clients and rates","Create clients, projects, tasks and rates in Paidlyo.","folder","Track, then invoice","Track a month of hours and bill from them.","invoice","What Express Invoice is good at","People searching for an **Express Invoice alternative** usually started with the free version and then outgrew it. It helps to be fair about what Express Invoice does well first. According to [NCH's product page](https://www.nchsoftware.com/invoice/index.html), checked on 28 November 2026:
 
-The free plan has limits, set out in the page's FAQ: up to two users, a maximum of three projects, and up to 500 invoices a year. Those limits are often the moment a team starts comparing tools. A third person joins, a fourth project starts, and the free tool no longer fits the team.
+- **It runs on your computer,** on Windows 7 to 11 and on macOS, with mobile apps for Android and iPhone.
+- **The free version doesn't expire.** It's for home users or businesses with one user, and includes most of the paid version's features.
+- **It covers more than invoices,** including quotes, orders, recurring invoices, payment reminders and statements for overdue accounts.
+- **It works offline,** so you can create invoices when the internet is down.
+- **It handles several businesses,** multiple tax rates and multiple currencies.
 
-Paidlyo is built for exactly that stage: agencies, studios and consultancies with a handful to a few dozen people who bill clients by the hour. It isn't free. It costs $9 per person a month, with unlimited people, clients, projects and invoices. This page explains when that's worth paying for, and when it isn't.","","","","","","Who should stay on Zoho Invoice","We'd rather you stay on a free tool that suits you than pay for one that doesn't. Zoho Invoice is likely the better choice if:
+The page doesn't list prices for the paid version, and we couldn't confirm them, so we don't quote them here.
 
-- **You work alone or with one other person** and don't expect that to change soon
-- **You have three or fewer active projects** at a time
-- **Clients pay by card online,** which Zoho Invoice supports and Paidlyo doesn't
-- **You bill the same amount every month,** where recurring invoices save time
-- **You want a client portal or mobile apps,** which Paidlyo doesn't have
+What the page doesn't mention is time tracking. Express invoicing software is built for typing invoice lines, such as items, quantities and prices. For a business that sells products or fixed services, that's exactly right.","","","","","","Where a team that bills hours gets stuck","The trouble starts when the business grows from one person to a team that bills by the hour. Three problems tend to appear together.
 
-Paidlyo also lacks some things Zoho Invoice lists, such as card payments and recurring invoices. Every Paidlyo invoice is built from tracked hours, and clients pay you directly, by bank transfer or however you agree, before you record the payment.
+**The free version stops fitting.** It's for one user. Once several people need to work in it, the free version is no longer the right tool, and you need to look at the paid version or something else.
 
-If several of the points above describe your business, keep using Zoho Invoice. If you've hit the user or project limits and your billing is mostly hours, read on.","Count your people and active projects before you compare tools. If you're within two users and three projects, a free plan may cover you completely.","tip","","","","Where growing teams outgrow the free plan","Here is an illustrative studio at three stages of growth, compared with the free plan's limits:
+**Hours live somewhere else.** Without time tracking, each person keeps hours in a spreadsheet, a notebook or another app. At month end, someone collects them, multiplies by the right rates and types the totals into invoice lines. Every step is a chance to miss an hour or apply the wrong rate.
 
-| Stage | People | Active projects | Within Zoho Invoice's free limits? |
+**It's tied to one computer.** Desktop software suits a single person at a single desk. NCH offers web access to the desktop version, but a team working from several places usually wants a tool everyone signs into directly.
+
+If none of these sound familiar, Express Invoice may be all you need, especially if you rely on its quotes, recurring invoices or offline mode, which Paidlyo doesn't have. For a wider look at the options, see our guide to [free invoicing software](/guides/is-there-any-free-invoicing-software).","","","","","","How Paidlyo handles the same month","Here's a month of billing for a 3-person bookkeeping and advisory practice, first the typical Express Invoice way and then in Paidlyo.
+
+### Without time tracking
+
+Each person logs hours in a spreadsheet. On the last day of the month, the owner collects three spreadsheets, sorts the hours by client, applies the rate for each kind of work and types the lines into each invoice. For 12 clients, that's 12 invoices built by hand.
+
+### In Paidlyo
+
+Each person tracks time with the timer or the weekly timesheet, picking the client, project and task. Rates are set once: $95 an hour for bookkeeping and $160 for advisory work.
+
+At month end, the owner opens a client's unbilled time:
+
+| Task | Hours | Rate | Amount |
 |---|---|---|---|
-| Founder and one designer | 2 | 3 | Yes |
-| First developer joins | 3 | 5 | No: users and projects |
-| Small studio | 6 | 12 | No: users and projects |
+| Monthly bookkeeping | 9 | $95 | $855 |
+| Advisory call and follow-up | 2.5 | $160 | $400 |
+| Total | 11.5 | | $1,255 |
 
-At the second stage, the studio has a choice: move to another Zoho product, or move to a tool built for its kind of work. Zoho offers paid products such as Zoho Books and Zoho Projects, so check their current pricing if you want to stay in the Zoho family.
+One click creates the invoice draft with those lines. The owner checks it, adds tax, and shares a private link. The client opens it without an account and can save a PDF.
 
-If you choose Paidlyo, the cost grows with the team in a straight line: $27 a month for three people, $54 for six, $108 for twelve, with nothing else to upgrade. Every feature is included from the first person.
+For 12 clients, the owner repeats this 12 times, but each one takes a quick check rather than a build from scratch. If a client disputes an hour, the entry is there with its date, person and task.
 
-Price isn't the only thing to weigh. Moving tools takes an afternoon of setup and a few weeks for new habits to settle. If you expect to stay at two or three people for the next year, that effort may not be worth it. If you're hiring, it's easier to switch before the team doubles than after.","","","","","","How Paidlyo handles time-based billing for teams","Paidlyo is narrower than Zoho Invoice, and deliberately so. It focuses on one flow: tracking hours across a team and turning them into invoices.
+The difference isn't the invoice itself. Both tools produce a clean, branded invoice. The difference is that the hours, rates and totals are already there.","Before switching, count how long last month's invoices took to build. It tells you whether the change is worth paying for.","tip","","","","What this Express Invoice alternative doesn't do","An honest comparison should list what you'd give up. Compared with Express Invoice, Paidlyo has:
 
-1. **Everyone tracks time** with a browser timer or a weekly timesheet, against a client, project and task, marked billable or not.
-2. **Rates are set per project or per task,** so strategy and production can have different prices.
-3. **Projects can have budgets,** so you can compare hours used with what was agreed.
-4. **Invoices are built from unbilled hours** in one click, grouped by project, task or person, with your logo, discount, tax and the client's currency.
-5. **Clients open invoices through a private link** without an account, and can save a PDF.
-6. **You record payments,** in full or in part, and see outstanding invoices by age.
+- **No free version.** Paidlyo costs $9 per person a month after a 14-day trial.
+- **No quotes, orders or recurring invoices.** Paidlyo creates invoices from tracked time, and you can edit each draft.
+- **No offline mode.** It runs in the browser, so you need a connection.
+- **No mobile apps.** You can open it in a browser, but there's no app to install.
+- **No online card payments.** You record full or partial payments yourself.
+- **No inventory or product catalogue.** It's built for time, not stock.
 
-Reports show hours by client, project and task, plus unbilled time, and everything exports to CSV for your accountant or a spreadsheet. There's more on how the tracking side works in [Paidlyo time tracking](/time-tracking), and on the billing side in [how invoices are built from tracked time](/invoicing).","","","","","","Switching from Zoho Invoice to Paidlyo","There's no direct import from Zoho Invoice; Paidlyo's importer reads Harvest CSV files. For a small team, starting fresh is usually quick:
+Paidlyo does include things that matter for hourly work: rates per project and per task, project budgets, billable and non-billable hours, reports on hours by client, project and task, an unbilled time report, and an outstanding invoices report by age. Everything can be exported to CSV.
 
-1. **Export your history from Zoho Invoice,** such as invoices and time records, and keep it as an archive.
-2. **Add your active clients and projects** in Paidlyo, with tasks, hourly rates and each client's currency.
-3. **Invite your team** with owner, admin or member roles.
-4. **Start tracking on the first day of a month,** so that month's invoices all come from one tool.
-5. **Finish open invoices in Zoho Invoice,** and record payments for them there.
+If most of what you invoice is products, recurring fees or quotes that turn into orders, Express Invoice is likely the better tool. If most of what you invoice is your team's time, Paidlyo removes the step of turning hours into invoice lines. Our guide on [what invoicing software does](/guides/what-is-invoicing-software) explains the main types.","","","","","","Switching from Express Invoice","There's no import from Express Invoice, so the move is a clean start. For a small team it takes an afternoon:
 
-Use the 14-day trial to run a full billing cycle before you decide. A card is needed to start the trial, and nothing is charged until it ends.
+1. **Pick a start date,** such as the first of next month.
+2. **Keep Express Invoice for older invoices** until the unpaid ones are paid, so you don't move open balances by hand.
+3. **Add your active clients** in Paidlyo, with each client's currency, and upload your logo.
+4. **Create projects and tasks** with your hourly rates, and budgets where clients have a cap.
+5. **Invite the team** and ask everyone to track time from the start date.
+6. **Create the first invoices** from unbilled hours at the end of the month.
 
-If the main reason you're moving is to bill more of your team's time, see how [billable hours tracking](/features/billable-hours) works in Paidlyo.","","","","","","Is Zoho Invoice really free?","Yes. When we checked on 28 November 2026, Zoho Invoice was free, with limits of two users, three projects and 500 invoices a year.","Why pay for Paidlyo if Zoho Invoice is free?","If you're within Zoho Invoice's limits, you may not need to. Paidlyo suits teams that have more people or projects and bill mainly by the hour.","Can I import my data from Zoho Invoice?","Not directly. Export your Zoho data to keep as history, then set up active clients and projects in Paidlyo.","Does Paidlyo have online payments like Zoho Invoice?","No. Clients pay you directly, for example by bank transfer, and you record the payment in Paidlyo.","","","","","","",""
-"wave","Wave","Wave Alternative for Teams That Bill Hours | Paidlyo","A Wave alternative for agencies and consultancies that bill by the hour: team time tracking and invoices from tracked time in one tool. $9 per person a month.","wave alternative | wave invoicing software | wave free invoicing software","","","","Wave alternative","A Wave alternative for teams whose invoices start with tracked hours","Wave combines free invoicing with bookkeeping for small businesses. Paidlyo does something narrower: team time tracking and invoices built from those hours. Here's how to tell which you need.","Time tracking built in","A timer and weekly timesheet for the whole team, by client, project and task.","timer","Invoices from tracked hours","Pick a client and get a draft priced at your project or task rates.","invoice","Budgets and unbilled time","See project hours against budgets and what's still to bill.","budget","Made for teams","Owner, admin and member roles, with hours from everyone in one place.","users","Price","$9 per person a month","Starter free, Pro $19 a month","Team time tracking","yes","Not listed on pricing page","Bookkeeping","no","yes","Online card payments","no","yes, with processing fees","Payroll","no","Paid add-on","Invoicing in a mobile app","no","yes","Wave","Pro","0","1900","1","no","https://www.waveapps.com/pricing","2026-11-28","2 | 5 | 10","Decide what stays in Wave","Keep bookkeeping in Wave if it works, and move hourly billing.","idea","Set up clients and rates","Add clients, projects, tasks, hourly rates and currencies in Paidlyo.","folder","Start tracking on a set date","Begin on the first day of a month so invoices come from one place.","calendar","When a Wave alternative makes sense","If you're weighing up a **Wave alternative**, start with what Wave already gives you. Wave invoicing software is popular with small businesses because its Starter plan is free. According to [Wave's pricing page](https://www.waveapps.com/pricing), checked on 28 November 2026, Starter includes unlimited estimates, invoices and bills, and unlimited bookkeeping records. The Pro plan costs $19 a month, or $190 a year, and adds things like online payments sent through Wave, automatic late payment reminders, your own branding and bank transaction imports.
+Keep a copy of your Express Invoice data on your computer for your records. Paidlyo's reports and CSV export will cover everything from your start date.
 
-People look elsewhere for different reasons. For agencies, studios and consultancies, a common one is time. Wave's pricing page doesn't list time tracking, and for a team that bills by the hour, the hours are where every invoice starts. Without them in the same tool, someone copies numbers from a timesheet into each invoice every month.
+Paidlyo costs $9 per person a month, or $90 per person a year, with unlimited clients, projects and invoices. A card is needed to start the 14-day trial, and nothing is charged until it ends. Read more about [creating invoices in Paidlyo](/invoicing).","","","","","","Is Express Invoice free?","NCH says its free version is for home users or businesses with one user and doesn't expire. Paid version prices weren't listed when we checked.","Does Express Invoice track time?","Its product page doesn't mention time tracking. It focuses on invoices, quotes, orders and recurring invoices.","Can I import my Express Invoice data into Paidlyo?","No. Paidlyo only imports from Harvest. Most teams start fresh and let open invoices finish in Express Invoice.","Does Paidlyo have a free version?","No. Paidlyo costs **$9 per person a month** after a 14-day trial, with every feature included.","","","","","","",""
+"sage","Sage Accounting","Sage Invoicing Alternative with Time Tracking | Paidlyo","A Sage invoicing alternative for teams that bill hours: time tracking for everyone, rates per task and invoices from unbilled time. $9 per person a month.","sage invoicing alternative | sage invoicing software | sage time tracking software","","","","Sage alternative","A Sage invoicing alternative for teams that bill their time","Sage Accounting is bookkeeping software with invoicing inside it, and time tracking is an extra in some regions. Paidlyo does one job: team time tracking and invoices built from those hours. Here's how to decide.","Time tracking included","Timer and weekly timesheet for everyone, with no add-on.","timer","Invoices from hours","Unbilled time becomes an invoice draft in one click.","invoice","Rates per project and task","Every hour priced at the rate you agreed.","money","Budgets and unbilled time","See hours against budgets and what's still to bill.","budget","Time tracking","Included","Paid add-on in some regions","Free trial","14 days, card needed","30 days","Bookkeeping and VAT returns","no","yes","Multi-currency","Included","Higher plan or add-on","Users","Any number, $9 each","Set by plan, extras paid","Mobile apps","no","yes","Sage Accounting","","","","","","https://www.sage.com/africa/sage-business-cloud/accounting/pricing/","2026-11-28","2 | 5 | 10","Keep Sage for the books","Bookkeeping and VAT returns stay in Sage.","check","Set up clients and rates","Add clients, projects, tasks, rates and currencies.","folder","Record invoices in Sage","Enter each month's invoice totals in your books.","export","When a Sage invoicing alternative makes sense","Most people looking for a **Sage invoicing alternative** are happy with Sage for bookkeeping. The friction is the hourly side. Sage invoicing software sits inside Sage Accounting, a full accounting product built for bookkeeping, VAT and financial reports. Billing a team's hours is not its main job.
 
-Paidlyo is built around that problem. Your team tracks time against clients, projects and tasks, and invoices are built from the unbilled hours. It doesn't do bookkeeping, payroll or card payments, so it isn't a full replacement for Wave. For many service teams, the right setup is to keep the accounting where it is and move the hourly billing.","","","","","","Who should stay on Wave","Wave covers a lot for very little money. It's likely the better fit if:
+Sage's plans and prices vary by country, so check your local pricing page. Two examples, checked on 28 November 2026:
 
-- **You need bookkeeping and invoicing in one place.** Paidlyo has no accounting features.
-- **You sell products or fixed-price services,** where invoices don't start from hours.
-- **Clients pay by card online.** Wave processes card payments, with fees listed on its pricing page. Paidlyo doesn't take card payments.
-- **You want payroll in the same tool.** Wave offers it as a paid add-on.
-- **You work alone or with one or two people** and rarely bill by the hour.
+- **South Africa:** [Sage's pricing page](https://www.sage.com/africa/sage-business-cloud/accounting/pricing/) lists Accounting Start at R3,240 a year including VAT for 1 user, and Accounting Standard at R5,880 a year with 2 users included and up to 5. Extra users cost R85 a month each, and **Time Tracking is an add-on at R185 a month**. Multi-currency payments are another R185 a month.
+- **United Kingdom:** [Sage's UK pricing](https://www.sage.com/en-gb/pricing/) describes Accounting Standard at £43 a month, and Accounting Plus at £59 a month with multi-currency and unlimited users.
 
-In those cases, adding Paidlyo would mean paying for a second tool to solve a problem you don't really have. Stay with Wave.
+So a South African agency that wants time tracking and foreign-currency invoices pays for two add-ons on top of its plan, plus a fee for each user beyond the plan's allowance.
 
-Paidlyo makes more sense once several people track time for clients, rates differ by project or task, and building invoices from timesheets is taking real hours each month.","","","","","","Using Paidlyo with Wave, or instead of it","Because Paidlyo doesn't do accounting, a team that moves hourly billing to Paidlyo will still need bookkeeping somewhere. There are three possible setups:
+One thing to be clear about: Paidlyo has **no Sage integration**. It doesn't send invoices or hours to Sage. It's an alternative for hourly billing, not an add-on to your books.","","","","","","Who should stay on Sage","Sage Accounting does much more than Paidlyo, and for many businesses it's the right place to invoice. Stay with Sage if:
 
-| Setup | How it works | Trade-off |
-|---|---|---|
-| Paidlyo for time and invoices, Wave for books | Invoice clients from Paidlyo, then record invoices and payments in Wave | Some double entry each month, as there's no integration |
-| Paidlyo for time only, Wave for invoices | Track hours in Paidlyo, export them to CSV, build invoices in Wave | You lose invoices built straight from tracked hours |
-| Paidlyo instead of Wave | Use Paidlyo for time and invoices, and a different tool or accountant for books | You need another bookkeeping solution |
+- **Your accountant works in Sage** and wants every invoice in the ledger the moment it's created.
+- **You need bookkeeping,** such as bank feeds, bills, expenses and financial reports. Paidlyo has none of these.
+- **You submit VAT returns from Sage.** Paidlyo doesn't calculate or submit VAT returns.
+- **You sell products or fixed fees** more than hours, or rely on quotes and inventory.
+- **People need a mobile app.** Sage lists mobile apps; Paidlyo runs only in the browser.
 
-The first setup keeps each tool doing what it's best at. The cost is a monthly step where someone enters invoice totals and payments into the books, using Paidlyo's CSV exports of outstanding invoices as a check.
+Paidlyo makes more sense when hourly billing is the core of the business: several people track time for clients, each kind of work has its own rate, projects have budgets, and you want to see unbilled hours before month end. In that case, Sage stays as the books and Paidlyo handles the hours and the invoices built from them.
 
-Talk to whoever does your books before you change anything. They'll tell you which setup is least work for them.","Paidlyo has no integration with Wave, QuickBooks or Xero. Plan who records invoices in your books before you switch, not after.","warning","","","","What it costs for a team","Wave's Pro plan is a flat monthly price on its pricing page, while Paidlyo charges per person. For a small team, that makes Wave cheaper on paper:
+If you're still deciding between a dedicated billing tool and an accounting package, our guide on [what invoicing software is](/guides/what-is-invoicing-software) explains the main types and what each is good at.","Agree the routine with your accountant before moving invoicing out of Sage. Invoices that no longer appear in the books automatically need someone to record them each month.","warning","","","","A month of billing with Paidlyo and Sage","Here's how a 4-person consultancy might bill one client for a month using Paidlyo for hours and Sage for the books.
 
-| Team size | Wave Starter | Wave Pro, monthly | Paidlyo, monthly |
+The team tracks time in Paidlyo with the timer or the weekly timesheet. Each entry has a client, a project, a task and a billable flag. Rates are set on the project: senior advice at $150 an hour, analysis at $95 and meetings at $95.
+
+At month end, the owner opens the client's unbilled time and creates an invoice grouped by task:
+
+| Task | Hours | Rate | Amount |
 |---|---|---|---|
-| 2 people | $0 | $19 | $18 |
-| 5 people | $0 | $19 | $45 |
-| 10 people | $0 | $19 | $90 |
+| Senior advice | 14 | $150 | $2,100 |
+| Analysis | 38 | $95 | $3,610 |
+| Meetings | 6 | $95 | $570 |
+| Total before tax | 58 | | $6,280 |
 
-That's not the whole comparison, though. If your team bills hours, you'd also need a time tracker alongside Wave, and someone to move hours into invoices every month. Count both the second tool's price and that person's time.
+The owner checks the draft, adds tax, and shares a private link. The client opens it without an account and can save a PDF.
 
-For a 5-person team billing 400 hours a month, saving even two hours of invoicing work at $60 an hour is worth more than the price difference. If your team doesn't bill hours, the numbers point the other way, and Wave is the better deal.
+Then the routine continues in Sage:
 
-The other hidden cost is lost hours. When time is tracked in one place and invoiced in another, small amounts of billable work slip through: a call nobody copied over, a task logged to the wrong client. Seeing every unbilled hour in one report before you invoice can be where the real return comes from, more than any difference in subscription price. There's more on that in [billable hours tracking](/features/billable-hours).","","","","","","Getting started if Paidlyo fits","There's no direct import from Wave, and you may not need one if Wave keeps your books. To start billing hours in Paidlyo:
+1. **Record the invoice in Sage** with the Paidlyo invoice number and total, so the income is in the books.
+2. **When the client pays,** record the payment in Paidlyo so the outstanding invoices report stays correct, and in Sage against the invoice.
+3. **At month end,** export outstanding invoices from Paidlyo to CSV, so your bookkeeper can check both systems agree.
 
-1. **Add your active clients** and set each one's currency.
-2. **Create projects and tasks** with hourly rates, and budgets where you've agreed them.
-3. **Invite your team** with owner, admin or member roles.
-4. **Track time for a full month,** with the timer for focused work and the weekly timesheet for the rest.
-5. **Create your first invoices** from unbilled hours, share them as links, and record them in your books.
+For a business sending 10 to 30 invoices a month, the extra recording takes a short session. For a business sending hundreds, the double entry adds up, and invoicing directly in Sage with its time tracking add-on is likely the better choice.","","","","","","Comparing the cost","A direct price comparison is tricky, because Sage prices by country and currency, and its plans include bookkeeping that Paidlyo doesn't. Instead, look at what you'd actually pay for hourly billing in each setup.
 
-The 14-day trial is enough to test the tracking habit and see your first unbilled time report. A card is needed to start, and nothing is charged until the trial ends.
+**Setup A: Sage only.** Your plan, plus the Time Tracking add-on where your region charges for it, plus multi-currency if you bill foreign clients, plus a fee for each user beyond the plan's allowance. Using the South African prices above, a team of 5 on Accounting Standard would pay for 3 extra users and both add-ons each month on top of the plan.
 
-There's more on the hour-to-invoice flow in [how Paidlyo invoicing works](/invoicing), and on the tracking side in [Paidlyo time tracking](/time-tracking).","","","","","","Does Paidlyo replace Wave accounting?","No. Paidlyo tracks time and creates invoices, but it doesn't do bookkeeping. You can keep your accounting tool and use Paidlyo for hourly billing.","Does Wave have time tracking?","Wave's pricing page, checked on 28 November 2026, didn't list time tracking. Check with Wave if you need it.","Can Paidlyo take card payments like Wave?","No. Clients pay you directly, for example by bank transfer, and you record the payment in Paidlyo.","Does Paidlyo integrate with Wave?","No. You can export hours, unbilled time and outstanding invoices as CSV files and use them in your books.","","","","","","",""
-"clio","Clio","Clio Alternative for Simple Hourly Legal Billing | Paidlyo","A Clio alternative only for legal professionals with simple hourly billing and no client funds: time by matter and clear bills. $9 per person a month.","clio alternative | clio legal billing software | clio time tracking software","","","","Clio alternative","A Clio alternative for legal professionals who only need time tracking and simple bills","Clio is a full legal practice system. Paidlyo is a small, low-cost tool for recording time by matter and billing it. It suits only some legal work, and this page is clear about which.","A fraction of the price","$9 per person a month, against Clio's listed starting price of $49 per user.","wallet","Quick to learn","A timer, a weekly timesheet and invoices from recorded time.","timer","Clear hourly bills","Lines by matter, task or person, priced at your rates.","invoice","Set up in an afternoon","Add clients, matters and rates, then start recording time.","clock","Price per person a month","$9","From $49","Time tracking and hourly bills","yes","yes","Trust account reconciliation","no","yes","Document and matter management","no","yes","Online client payments","no","yes","Client portal","no","Core plan and up","Clio","Starting price","4900","0","1","","https://www.clio.com/pricing/","2026-11-28","1 | 2 | 5","Export your matters and time","Keep a full export from Clio as your record before you change anything.","export","Set up clients and matters","Add active clients, matters as projects, tasks and rates in Paidlyo.","folder","Start on a set date","Record time in Paidlyo from the first day of a month.","calendar","Who should look for a Clio alternative, and who shouldn't","Before choosing a **Clio alternative**, it helps to remember what Clio is. Clio legal billing software is part of a full practice management system for law firms. According to [Clio's pricing page](https://www.clio.com/pricing/), checked on 28 November 2026, even its Starter plan includes document and matter management, time and expense tracking, online client payments, and trust and operating account reconciliation. Higher plans add a client portal and more.
+**Setup B: Sage for the books, Paidlyo for hours and invoices.** Your Sage plan without the time and currency add-ons, and possibly fewer Sage users, because only the people who do bookkeeping need a Sage login. Plus Paidlyo at $9 per person a month for everyone who tracks time.
 
-Many firms comparing tools are really looking for another practice management system, because they need those things. Paidlyo is not that. It doesn't hold or reconcile client funds, manage documents, or take online payments.
+**Setup C: Paidlyo plus a different bookkeeping tool or an accountant.** Paidlyo for hours and invoices, and your accountant keeps the books from your exports.
 
-Paidlyo can suit a narrower group of legal professionals:
+Which is cheapest depends on your team size and your local prices. Write down what you'd pay in each setup for your real team before deciding. Paidlyo's yearly plan is $90 per person a year. Our guide on [how much invoicing software costs](/guides/how-much-does-invoicing-software-cost) compares more pricing models.","","","","","","Starting with Paidlyo","There's no import from Sage, and you don't need one if Sage stays your bookkeeping system. To start billing hours in Paidlyo:
 
-- Lawyers who **don't hold client money** and bill simple hourly fees
-- **Legal consultants, contract lawyers and mediators** who bill clients or firms by the hour
-- **Small practices** that use other tools for documents and accounts, and only want time and bills to be simpler and cheaper
+1. **Agree the monthly routine** with your accountant: who records Paidlyo invoices in Sage, and which system is the record for payments.
+2. **Add your active clients** with their currency, and upload your logo.
+3. **Create projects and tasks** with hourly rates, and budgets where you've agreed them with clients.
+4. **Invite the team** as members, with admins for anyone who manages billing.
+5. **Track a full month,** then create invoices from unbilled hours and record them in Sage.
+6. **Stop creating hourly invoices in Sage** from that month, so nothing is billed twice.
 
-If you hold client funds, rely on Clio's trust accounting, or need a client portal, stay with Clio or another legal practice system. The rest of this page is for everyone else.","If your work involves client or trust money, keep a system that meets your local rules for handling it. Paidlyo doesn't hold, track or reconcile client funds.","warning","","","","What Clio includes that Paidlyo doesn't","To be fair to Clio, here is what you'd give up by moving to Paidlyo, based on the features its pricing page lists:
+After the first cycle, check the unbilled time report to make sure every billable hour reached an invoice. If you used Sage's time tracking add-on, you can cancel it once the team is tracking in Paidlyo.
 
-| Clio feature, per its pricing page | Paidlyo |
-|---|---|
-| Document and matter management | No. Matters are projects for time and billing only |
-| Time and expense tracking | Time only; no expenses |
-| Online client payments by card and other methods | No. Clients pay you directly and you record it |
-| Trust and operating account reconciliation | No |
-| Client portal (Core plan and up) | No. Clients view bills through a private link |
-| Multi-currency billing (Signature plan and up) | Yes, a currency per client |
-| Lead capture, intake forms and booking (Elite plan) | No |
+Paidlyo costs $9 per person a month, with every feature included and unlimited clients, projects and invoices. The 14-day trial is long enough to set up and test with real work; a card is needed to start, and nothing is charged until it ends. Read more about [billable hours in Paidlyo](/features/billable-hours).","","","","","","Does Paidlyo integrate with Sage?","No. Paidlyo has no Sage integration. You can export reports as CSV and record invoice totals in Sage yourself.","Does Sage Accounting include time tracking?","It depends on the region. Sage's South African pricing page lists Time Tracking as a paid add-on at R185 a month when we checked.","Does Paidlyo replace Sage for VAT returns?","No. Paidlyo tracks time and creates invoices, but doesn't calculate or submit VAT returns.","How much does Paidlyo cost?","**$9 per person a month**, or $90 per person a year, with every feature included and a 14-day trial.","","","","","","",""
+"bonsai","Bonsai","Bonsai Alternative for Time Tracking and Invoices | Paidlyo","A Bonsai alternative for teams that mainly need time tracking and invoices from tracked hours, without paying for an all-in-one suite. $9 per person a month.","bonsai alternative | hello bonsai alternative | bonsai alternatives | bonsai pricing","","","","Bonsai alternative","A Bonsai alternative for teams that just need time tracking and invoicing","Bonsai bundles proposals, contracts, CRM, projects, invoicing and payments. If your team mostly tracks hours and bills them, you may be paying for a lot you don't use. Here's an honest comparison.","Invoicing on one plan","Invoices from tracked time are included, with no tier to climb.","invoice","Lower price per person","$9 per person a month for every feature.","wallet","Focused on hours","Timer, timesheet, rates and budgets without extra modules.","timer","Clear reports","Hours, unbilled time and outstanding invoices by age.","chart","Lowest plan with invoicing, per user monthly","$9","$25 on Essentials","Time tracking","yes","yes","Proposals and contracts","no","Essentials and up","Online payments","no","Essentials and up","QuickBooks and Xero","no","Premium and up","Mobile apps","no","yes","Bonsai","Essentials","2500","0","1","no","https://www.hellobonsai.com/pricing","2026-11-28","1 | 3 | 8","Finish open work in Bonsai","Let current invoices and contracts finish where they are.","check","Recreate clients and rates","Add active clients, projects, tasks and rates in Paidlyo.","folder","Track and bill a month","Track hours from your start date and invoice from them.","invoice","When to look for a Bonsai alternative","Teams usually look for a **Bonsai alternative** for one of two reasons. Either they use only a small part of what Bonsai offers and the price feels high for that part, or the team has grown and per-seat costs on the plan they need have added up.
 
-That's a long list, and for most traditional law firms it's decisive. Paidlyo competes only on the parts it shares with Clio: recording time, setting rates and producing clear hourly bills.
+Bonsai is an all-in-one tool. According to [Bonsai's pricing page](https://www.hellobonsai.com/pricing), checked on 28 November 2026, its plans are priced per user:
 
-If you're not sure which side of the line you're on, list what you actually used in Clio over the last three months. If the list is mostly time entries, bills and payments you received by bank transfer, Paidlyo may cover it. If it includes trust transactions, documents or the client portal, it won't.","","","","","","What Paidlyo does for legal time and billing","For the legal professionals it suits, Paidlyo keeps time and billing simple:
-
-1. **Record time by client, matter and task,** with a browser timer or a weekly timesheet. Mark each entry billable or not, so internal work and pro bono stay off bills. There's more on that split in [billable hours tracking](/features/billable-hours).
-2. **Set rates per matter or per task,** such as a higher rate for hearings than for document review.
-3. **Create bills from unbilled time** in one click. Group lines by matter, task or person, rename them so the client understands them, and add tax or a discount.
-4. **Share each bill as a private link** the client opens without an account, with a PDF they can keep.
-5. **Record payments,** in full or in part, and see outstanding bills by age.
-
-You can export hours, unbilled time and outstanding bills to CSV for your accountant. There's no integration with accounting software, calendars or document systems.
-
-There's more detail on recording time for legal work in [time tracking for lawyers](/time-tracking/for/law-firms), and on bills and collections in [legal billing with Paidlyo](/invoicing/for/law-firms).","","","","","","What the price difference looks like","Clio's pricing page lists plans as starting at $49 per user per month, without saying which plan or billing period that applies to. Higher plans cost more, and exact prices are available from Clio's sales team. Using that starting price only, here is a rough comparison:
-
-| People | Clio from $49 per user, a year | Paidlyo at $9 per person, a year |
-|---|---|---|
-| 1 | $588 | $108 |
-| 2 | $1,176 | $216 |
-| 5 | $2,940 | $540 |
-
-On yearly billing, Paidlyo costs $90 per person, so a five-person team pays $450.
-
-The gap is large, but it's not a like-for-like comparison. Clio includes trust accounting, documents and payments that Paidlyo doesn't. The saving only matters if you genuinely don't need those features, or already have them elsewhere.","","","","","","Moving from Clio to Paidlyo","If Paidlyo fits your practice, plan the move carefully, because legal records matter long after a matter closes.
-
-1. **Export everything from Clio first,** including matters, time entries, bills and payments, and store the export safely according to your record-keeping obligations.
-2. **Check with your accountant or regulator's guidance** that the rest of your setup still covers your obligations once Clio is gone.
-3. **Set up active clients and matters** in Paidlyo, with tasks and rates.
-4. **Start recording time on the first day of a month,** and finish open bills in Clio.
-5. **Run both for a short overlap** if you want extra confidence, then cancel Clio.
-
-There's no direct import from Clio; Paidlyo's importer reads Harvest CSV files only. The 14-day trial lets you record a full billing cycle before you decide. A card is needed to start, and nothing is charged until it ends.","","","","","","Does Paidlyo have trust accounting like Clio?","No. Paidlyo doesn't hold, track or reconcile client or trust funds. If you need that, use a legal practice system that meets your local rules.","How much does Clio cost?","When we checked on 28 November 2026, Clio's pricing page listed plans starting at $49 per user per month, with exact prices available from Clio.","Can I import my data from Clio?","Not directly. Export your records from Clio and keep them, then set up active clients and matters in Paidlyo.","Who is Paidlyo a good Clio alternative for?","Legal professionals who don't hold client funds and bill simple hourly fees, such as some consultants, contract lawyers and mediators.","","","","","","",""
-"hubstaff","Hubstaff","Hubstaff Alternative Without Screenshots | Paidlyo","A Hubstaff alternative for teams that bill clients without monitoring: self-reported hours by client, project and task, then invoices. $9 per person a month.","hubstaff alternative | hubstaff time tracking software","","","","Hubstaff alternative","A Hubstaff alternative for teams that want accurate billing without monitoring","Hubstaff is built around seeing what people do at their computers. Paidlyo is built around what clients pay for: hours by client, project and task, turned into invoices.","No screenshots or activity scores","People log their own time with a timer or weekly timesheet.","lock","Built for client billing","Hours sit under clients, projects and tasks, ready to invoice.","invoice","A lower price per person","$9 per person a month, against $10 per seat on Hubstaff Team.","wallet","Nothing to install","Paidlyo runs in a web browser, with no desktop agent.","globe","Price per person a month","$9","$10 per seat on Team","Screenshots and activity tracking","no","yes","App and URL tracking","no","yes","Mobile apps and geofencing","no","yes","Invoices from tracked time","yes","yes","Free trial","14 days, card needed","14 days, no card","Hubstaff","Team","1000","0","1","","https://hubstaff.com/pricing","2026-11-28","5 | 10 | 20","Export your Hubstaff hours","Keep your time reports as your history before you switch.","export","Set up clients and rates","Add active clients, projects, tasks and hourly rates in Paidlyo.","folder","Tell the team what changes","Explain that tracking is now self-reported, and why.","users","Why teams look for a Hubstaff alternative","If you're searching for a **Hubstaff alternative**, it's usually because of how Hubstaff tracks time. Hubstaff time tracking software is known for monitoring. Its [pricing page](https://hubstaff.com/pricing), checked on 28 November 2026, lists features such as screenshots, activity tracking, app and URL tracking, timesheets, invoicing, mobile apps and geofencing. For some businesses, that level of visibility is exactly the point.
-
-Teams often move away for one of two reasons. Some find that monitoring hurts trust: good people feel watched, and the activity numbers start to matter more than the work. Others realise they never needed monitoring in the first place. What they need is to know which client and project each hour belongs to, so they can bill it.
-
-Paidlyo is built for that second need. People log their own time with a browser timer or a weekly timesheet, against a client, project and task, marked billable or not. Those hours become invoices, as described in [how Paidlyo invoicing works](/invoicing). There are no screenshots, no activity levels and no app or website tracking, by design.
-
-Self-reported time does depend on habits. People need to log hours daily, not reconstruct them on Friday. In return, the hours describe the work in the client's terms, and nobody has to explain why their mouse was idle while they were thinking through a problem.","","","","","","Monitoring or self-reported time: which suits your clients?","The right choice often depends less on your team and more on your clients. Ask what they actually need to see before they pay:
-
-| What your clients expect | Better fit |
-|---|---|
-| Proof of activity, such as screenshots, for every billed hour | Hubstaff |
-| Clear hours by project and task, with honest descriptions | Paidlyo |
-| Fixed-price deliverables, where hours are internal only | Paidlyo |
-| Field work with location checks | Hubstaff |
-
-Some marketplaces and outsourcing clients ask for activity proof by contract. If that's your situation, a monitoring tool may be required, and Paidlyo won't meet the requirement.
-
-Many agency, studio and consultancy clients care about outcomes and clear invoices. For them, a line that says ""Development: 42 hours at $115"" with a sensible task breakdown is the proof that matters. Screenshots add little, and they cost something in trust inside your own team.","","","","","","What you give up by leaving Hubstaff","Hubstaff does several things Paidlyo deliberately doesn't. Check this list before you move:
-
-- **Screenshots, activity levels, and app and URL tracking.** Paidlyo records only the hours people log.
-- **Mobile apps and geofencing.** Paidlyo runs in a web browser on a computer, with no apps.
-- **A desktop tracking agent.** Some people like a tracker that runs in the background; Paidlyo uses a browser timer instead.
-- **A trial without a card.** Hubstaff's 14-day trial needs no card. Paidlyo's 14-day trial needs a card to start, though nothing is charged until it ends.
-
-Paidlyo also has no timesheet approvals, calendar sync, integrations or public API. If your workflow depends on any of these, test carefully or stay where you are.
-
-What you keep is the part that pays the bills: accurate hours by client, project and task, rates per project or task, project budgets, and invoices built from unbilled time. You also keep reports on unbilled time and outstanding invoices, so the billing side gets simpler, not just the tracking.","If a client contract requires screenshots or activity proof, check it before you switch. Paidlyo can't provide that kind of evidence.","warning","","","","What a team pays","Hubstaff's pricing FAQ says its Team plan costs $10 per seat per month, and that annual billing comes with two months free. It also says seats are charged for every member, including people who don't track time. Paidlyo charges $9 per person a month for active people, or $90 per person a year.
-
-Using Hubstaff's Team price as listed:
-
-| Team size | Hubstaff Team, $10 per seat a year | Paidlyo, monthly billing a year | Paidlyo, yearly billing |
+| Plan | Monthly | Billed yearly | Main additions |
 |---|---|---|---|
-| 5 people | $600 | $540 | $450 |
-| 10 people | $1,200 | $1,080 | $900 |
-| 20 people | $2,400 | $2,160 | $1,800 |
+| Basic | $15 | $9 | Time tracking, tasks, projects, CRM, mobile apps |
+| Essentials | $25 | $19 | Invoices and payments, proposals, contracts, client portal, expenses |
+| Premium | $39 | $29 | Workload, Gantt, profit reports, QuickBooks and Xero |
+| Elite | $59 | $49 | Custom permissions, timesheet locking; 3-user minimum |
 
-Hubstaff's annual discount would lower its column, so check its pricing page for the exact yearly rate. The bigger difference isn't price. It's what you're paying for: monitoring and field features, or a focused tool for billing client time.
+The key detail for hourly businesses: **Basic includes time tracking but not invoicing.** To create invoices, you need Essentials or above. So a team that tracks hours and bills them starts at $25 per user a month, or $19 on yearly billing.
 
-Also count who needs a seat. If project managers or account managers only review reports and never track time, check how each tool charges for them. Hubstaff's pricing page mentions a free Project Viewer role for people who only view reports. In Paidlyo, every active person counts, so plan roles before you invite people.","","","","","","Switching from Hubstaff without losing trust or hours","Moving away from monitoring is as much a team change as a tool change. Do it openly:
+Paidlyo does a narrower job, team time tracking and invoices from tracked time, for $9 per person a month, or $90 per person a year, with every feature on one plan.","","","","","","Who should stay on Bonsai","Bonsai covers far more of the client lifecycle than Paidlyo, and for many freelancers and small agencies that's exactly the point. Stay with Bonsai if you rely on:
 
-1. **Export your Hubstaff time reports** as your record of past hours.
-2. **Set up active clients, projects and tasks** in Paidlyo, with hourly rates and each client's currency.
-3. **Explain the change to the team.** Tracking is now self-reported, for billing and planning, and nobody is watching screens.
-4. **Agree simple habits:** the timer for focused work, the weekly timesheet for the rest, and a quick review every Friday.
-5. **Start on the first day of a month,** so each month's invoices come from one tool.
+- **Proposals and contracts.** Sending a proposal, getting it signed and turning it into a project in one tool is genuinely useful. Paidlyo has neither.
+- **Online payments.** Bonsai lists online payments on invoices from Essentials. Paidlyo doesn't take payments; you record them yourself.
+- **A client portal and forms.** Paidlyo shares each invoice as a no-login link, but has no portal.
+- **CRM and a deals pipeline,** for tracking leads before they become clients.
+- **Mobile apps** for tracking on the go. Paidlyo runs only in a browser.
+- **QuickBooks or Xero sync,** on Premium and up. Paidlyo has no accounting integration.
+- **Expense tracking** to rebill clients.
 
-There's no direct import from Hubstaff; Paidlyo's importer reads Harvest CSV files. For more on running a distributed team without monitoring, read [time tracking for remote teams](/time-tracking/for/remote-teams). For how the timer works day to day, see [the Paidlyo timer](/features/timer).","","","","","","Does Paidlyo take screenshots like Hubstaff?","No. There are no screenshots, activity levels or app and website tracking. People log their own hours.","Is Paidlyo cheaper than Hubstaff?","Paidlyo costs **$9 per person a month** or $90 a year. When we checked, Hubstaff's FAQ listed its Team plan at $10 per seat per month.","Does Paidlyo have a mobile app or GPS tracking?","No. Paidlyo runs in a web browser on a computer, with no mobile apps, GPS or geofencing.","Can I import my Hubstaff data?","Not directly. Export your Hubstaff reports to keep as history, then set up active clients and projects in Paidlyo.","","","","","","",""
-"paymo","Paymo","Paymo Alternative for Time Tracking and Billing | Paidlyo","A Paymo alternative for teams that already plan work elsewhere and only need time tracking and invoices from tracked hours. $9 per person a month.","paymo alternative | paymo time tracking software","","","","Paymo alternative","A Paymo alternative for teams that only need time tracking and billing","Paymo combines project management, time tracking and invoicing. If your team already plans work in another tool, you may be paying for features you don't use. Here's how Paidlyo compares.","Pay only for time and billing","$9 per person a month, without project management features you don't need.","wallet","Keep your planning tool","Plan work where you already do; track and bill hours in Paidlyo.","link","Invoices from tracked hours","Pick a client and get a draft priced at project or task rates.","invoice","One plan, every feature","No tiers, so budgets, reports and invoicing are all included.","check","Price per person a month","$9","$15.90 on Plus, regular price","Invoices from tracked time","yes","yes","Task lists and Kanban boards","no","yes","Gantt charts and resource scheduling","no","Pro plan","Recurring invoices and expenses","no","Plus and up","Mobile and desktop apps","no","yes","Paymo","Plus","1590","0","1","no","https://www.paymoapp.com/pricing/","2026-11-28","5 | 10 | 20","Export from Paymo","Download your time entries and invoices as your history.","export","Set up clients and rates","Add active clients, projects, tasks, rates and budgets in Paidlyo.","folder","Start on a set date","Track in Paidlyo from the first day of a month.","calendar","When a Paymo alternative makes sense","If you're looking for a **Paymo alternative**, it helps to start with what Paymo covers. Paymo time tracking software is part of a wider work management tool. According to [Paymo's pricing page](https://www.paymoapp.com/pricing/), checked on 28 November 2026, its plans include task management, time tracking and invoicing, with Kanban boards, Gantt charts, resource scheduling, recurring invoices and expenses on its higher tiers. It also has mobile and desktop apps.
+If you use three or more of these regularly, Bonsai's price is buying real value, and a narrower tool would leave gaps you'd need to fill with other apps.
 
-That's a lot of tool, and for some teams it's exactly right: one place to plan the work, track it and bill it. Teams often start comparing tools when they don't use half of it. Perhaps they already plan projects in a separate tool the whole company uses, and Paymo's task management sits empty while they pay for it.
+Paidlyo makes sense when most of that list goes unused, and what your team actually does every day is track hours, apply rates, watch budgets and bill clients at month end.","Before switching, list which Bonsai features you used in the last three months. If it's mainly time tracking and invoices, you're likely overpaying.","tip","","","","What a team pays","Here's what a team that tracks time and sends invoices pays each month. On Bonsai, that means Essentials at least:
 
-Paidlyo is built for that situation. It doesn't try to manage tasks or schedules. It does time tracking and billing: a browser timer and weekly timesheet by client, project and task, rates and budgets, invoices from unbilled hours, payment recording and reports. All of it costs $9 per person a month, with every feature on one plan.
+| Team size | Bonsai Essentials, monthly | Bonsai Essentials, yearly | Paidlyo, monthly | Paidlyo, yearly |
+|---|---|---|---|---|
+| 1 person | $25 | $19 | $9 | $7.50 |
+| 3 people | $75 | $57 | $27 | $22.50 |
+| 8 people | $200 | $152 | $72 | $60 |
 
-If you want planning, time and billing in one tool, Paymo may suit you better. If you want a focused tracker alongside the planning tool you already have, read on.","","","","","","One all-in-one tool, or two focused tools?","This is the real decision, and it depends on where your team already works:
+The yearly columns show the monthly equivalent of yearly billing. Bonsai's Elite plan also has a 3-user minimum, so even a solo owner would pay for three seats there.
 
-| Your current setup | Likely better choice |
-|---|---|
-| You plan work nowhere yet, or in spreadsheets | An all-in-one tool like Paymo |
-| You plan in a separate project tool everyone uses | A focused tracker like Paidlyo |
-| You need Gantt charts and staff scheduling | Paymo Pro or another planning tool |
-| You mainly need hours, rates, budgets and invoices | Paidlyo |
+For an 8-person studio on yearly billing, that's $1,824 a year for Bonsai Essentials against $720 for Paidlyo. If the studio needs QuickBooks or Xero sync, Bonsai Premium raises it to $2,784 a year.
 
-Running two tools has a cost: people need to know where to log time, and project names should match in both. Keep the same project names in both tools, and the overlap stays small. Running one large tool has a cost too: more settings, more training, and paying for features some people never open.
+The difference is large, but so is the difference in features. Paidlyo isn't a cheaper Bonsai; it's a tool for a smaller set of jobs. The useful comparison is: what would you pay to cover the features you actually use? If that's proposals and payments as well as invoicing, compare Bonsai with Paidlyo plus a separate contracts tool and a payment method you already have.","","","","","","Billing hours in Paidlyo","Here's what a month of billing looks like in Paidlyo for a 3-person consultancy that used to invoice from Bonsai.
 
-Neither is wrong. Pick the setup that matches how your team already plans work, rather than changing everyone's habits for a billing tool.
+Each person tracks time with the timer or the weekly timesheet. Every entry has a client, a project, a task and a billable flag. Rates are set on the project: $140 an hour for strategy, $95 for delivery and $95 for meetings. If a client has a cap on hours, the project has a **budget**, and the owner checks hours against it during the month.
 
-A quick test helps: ask three people on the team where they look first each morning to see what they're working on. If they all name the same planning tool, and it isn't Paymo, a focused tracker next to it is likely the simpler setup.","","","","","","What you give up by leaving Paymo","Before you switch, check what Paidlyo doesn't have:
+At month end, the owner opens the unbilled time report, picks a client and creates the invoice in one click:
 
-- **Task management.** No task lists, Kanban boards, Gantt charts or dependencies. Paidlyo tasks are categories for time and rates, not to-do items.
-- **Resource scheduling.** No staff scheduling or workload planning.
-- **Recurring invoices and expenses.** Every Paidlyo invoice is built from tracked hours, and there's no expense tracking.
-- **Apps and integrations.** No mobile or desktop apps, no integrations and no public API. Paidlyo runs in a web browser and exports CSV.
-- **A free plan.** Paymo has one for one user, one client and two projects. Paidlyo has a 14-day trial instead, with a card needed to start.
-
-What you keep is the billing core: time by client, project and task, rates per project or task, project budgets, invoices built from unbilled hours with your logo, tax and the client's currency, partial payments and outstanding invoices by age.","List which Paymo features your team opened last month. If task boards and scheduling aren't on the list, you may be paying for them without using them.","tip","","","","What a team pays","Paymo's pricing page shows introductory prices for the first three months, then regular monthly prices of $15.90 per user for Plus and $23.90 per user for Pro. It also mentions annual discounts of up to 40%, without listing annual prices. Using the regular monthly prices:
-
-| Team size | Paymo Plus, a year | Paymo Pro, a year | Paidlyo, monthly billing, a year |
+| Task | Hours | Rate | Amount |
 |---|---|---|---|
-| 5 people | $954 | $1,434 | $540 |
-| 10 people | $1,908 | $2,868 | $1,080 |
-| 20 people | $3,816 | $5,736 | $2,160 |
+| Strategy | 12 | $140 | $1,680 |
+| Delivery | 30 | $95 | $2,850 |
+| Meetings | 5 | $95 | $475 |
+| Total before tax | 47 | | $5,005 |
 
-On yearly billing, Paidlyo costs $90 per person, so a 10-person team pays $900. Paymo's annual discount would narrow the gap, so check its current annual prices before you compare.
+The draft can be edited before it's sent, with your logo, tax, a discount and the client's currency. The client opens a private link without an account and can save a PDF.
 
-Remember to add the cost of your planning tool if you'd use Paidlyo alongside one. If that tool is already paid for, paying for Paymo's planning features as well means paying twice for the same job.","","","","","","Switching from Paymo to Paidlyo","There's no direct import from Paymo; Paidlyo's importer reads Harvest CSV files. For a small team, setting up fresh is straightforward:
+Compared with a full suite, there's less to set up and less to learn. New team members only need to know how to start a timer or fill in a timesheet; everything else is done by whoever handles billing.
 
-1. **Export your time entries and invoices from Paymo** and keep them as your history.
-2. **Add your active clients and projects** in Paidlyo, using the same project names as your planning tool.
-3. **Add tasks, hourly rates and budgets.** Keep tasks broad, such as design, development and meetings.
-4. **Invite the team** with owner, admin or member roles, and agree a start date.
-5. **Start on the first day of a month,** and finish the current month's invoices in Paymo.
+Clients pay by bank transfer or another method you agree, and you record full or partial payments. The outstanding invoices report shows who still owes money and for how long. Read more about [billable hours tracking](/features/billable-hours).","","","","","","Switching from Bonsai","There's no import from Bonsai. Paidlyo's importer reads Harvest CSV files only, so the move is a clean start. For a small team, it takes an afternoon:
 
-There's more on setting up projects, rates and budgets in [project time tracking](/features/project-time-tracking), and on billing in [how Paidlyo invoicing works](/invoicing). Agencies can also read [time tracking for agencies](/time-tracking/for/agencies) for rate cards and scope creep. Try it with the 14-day trial before you cancel anything.","","","","","","Does Paidlyo have task management like Paymo?","No. Paidlyo has no task boards, Gantt charts or scheduling. Its tasks are categories for tracking time and setting rates.","Is Paidlyo cheaper than Paymo?","Paidlyo costs **$9 per person a month**. When we checked on 28 November 2026, Paymo Plus was $15.90 per user a month at its regular monthly price.","Can I import my data from Paymo?","Not directly. Export your Paymo data to keep as history, then set up active clients and projects in Paidlyo.","Does Paidlyo have recurring invoices?","No. Every invoice is built from tracked hours. If you bill fixed monthly amounts, a tool with recurring invoices will suit you better.","","","","","","",""
+1. **Pick a start date,** such as the first of next month.
+2. **Keep Bonsai until open invoices are paid** and current contracts have run their course. If you need proposals or contracts going forward, decide which tool will handle them.
+3. **Add your active clients** in Paidlyo with their currencies, and upload your logo.
+4. **Create projects and tasks** with your rates, and budgets for capped work.
+5. **Invite the team,** with admin roles for anyone who handles billing.
+6. **Track a full month,** then create the first invoices from unbilled hours.
+
+Export what you need from Bonsai for your records before cancelling.
+
+Paidlyo costs $9 per person a month, or $90 per person a year, with every feature and unlimited clients, projects and invoices. There's no free plan. The 14-day trial is longer than Bonsai's 7-day trial, enough to test with real work; a card is needed to start, and nothing is charged until it ends. If you're weighing several tools, our guide to [the best invoicing software](/guides/what-is-the-best-invoicing-software) has a checklist.","","","","","","How much does Bonsai cost?","When we checked, Bonsai ranged from $15 to $59 per user a month on monthly billing, or $9 to $49 billed yearly.","Does Bonsai's Basic plan include invoicing?","No. Bonsai listed invoices and payments from the Essentials plan, at $25 per user a month or $19 billed yearly.","Can I import my Bonsai data into Paidlyo?","No. Paidlyo only imports from Harvest. Most teams start fresh with active clients and projects.","Does Paidlyo have proposals and contracts?","No. Paidlyo focuses on time tracking and invoices at **$9 per person a month**. Use another tool for proposals and contracts.","","","","","","",""
+"everhour","Everhour","Everhour Alternative for Small Teams | Paidlyo","An Everhour alternative for small teams: no 5-seat minimum, time tracking and invoices from tracked hours on one plan. $9 per person a month, 14-day trial.","everhour alternative | everhour alternatives | everhour pricing | everhour competitors","","","","Everhour alternative","An Everhour alternative for small teams that bill by the hour","Everhour is a strong time tracker that plugs into Asana, Jira, ClickUp and other tools, with a 5-seat minimum on its paid plan. Paidlyo is a standalone tracker with invoicing, priced per person from one. Here's how to choose.","No seat minimum","Pay for the people you have, from one person up.","user","Standalone and simple","Timer and timesheet without connecting a project tool.","timer","Invoices from hours","Unbilled time becomes an invoice draft in one click.","invoice","Monthly or yearly","$9 per person a month, or $90 a year.","calendar","Paid plan price per seat, yearly","$7.50","$8.50","Minimum paid seats","1","5","Project tool integrations","no","40+ on paid plan","Invoicing","yes","yes, paid plan","Expenses and time off","no","yes","Free plan","no","Up to 5 seats","Everhour","Team","850","0","5","yes","https://everhour.com/pricing","2026-11-28","2 | 4 | 10","Export your Everhour data","Keep a copy of past hours and reports for your records.","export","Set up clients and rates","Add clients, projects, tasks and rates in Paidlyo.","folder","Track from one start date","Move the team over on the first of the month.","calendar","When an Everhour alternative makes sense","People look for an **Everhour alternative** for different reasons, but two come up most for small teams: the paid plan's seat minimum, and the fact that Everhour works best alongside a project management tool you may not use.
+
+According to [Everhour's pricing page](https://everhour.com/pricing), checked on 28 November 2026:
+
+- **Free:** $0 for up to 5 seats, with time tracking, projects and tasks, reports and data export, but limited features and no integrations.
+- **Team:** $8.50 per seat a month billed yearly, with a **minimum of 5 seats**. It includes all features: native integrations, billing, budgeting and invoicing, SSO and advanced permissions.
+- **Custom:** for 50 seats or more, by quote.
+
+The page shows the Team price for yearly billing; a monthly option exists, but its price isn't listed. Annual payment saves 15%, and unused months aren't refunded. There's a 14-day trial with all features and no card.
+
+So a 2-person studio that wants invoicing on Everhour pays for 5 seats: $42.50 a month on yearly billing. On Paidlyo, the same 2 people pay $18 a month, or $15 a month on the yearly plan. For teams of 5 or more the minimum no longer matters, and Everhour's yearly price per seat is close to Paidlyo's.","","","","","","Who should stay on Everhour","Everhour does several things Paidlyo doesn't, and for some teams those are the whole reason to use it.
+
+**Stay with Everhour if:**
+
+- **Your team lives in Asana, Jira, ClickUp or a similar tool.** Everhour lists 40+ integrations and is built to add time tracking inside those tools. Paidlyo has no integrations; time is tracked in Paidlyo itself.
+- **You need expenses or time off** alongside time tracking. Both are listed as Everhour features. Paidlyo has neither.
+- **You have 5 or more people and want a free start.** Everhour's free plan covers up to 5 seats for basic tracking. Paidlyo has no free plan.
+- **You need SSO or advanced permissions.** Paidlyo has three roles: owner, admin and member.
+
+**Paidlyo is the better fit if:**
+
+- you're a team of 1 to 4 who'd otherwise pay for empty seats;
+- you don't use a project management tool, or you'd rather keep time tracking separate from it;
+- you want invoices built from unbilled time, rates per project and task, budgets and outstanding invoice reports in one simple tool;
+- you'd like the option to pay monthly at a clear price.
+
+If you do use a project tool and want time tracked inside it, Everhour's integrations are a real advantage. Our page on [Paidlyo as a ClickUp time tracking alternative](/alternatives/clickup) explains the trade-offs of keeping time separate.","Count your seats honestly. If your team will grow past 5 within a year, the minimum matters less than features and how people prefer to track.","tip","","","","What small teams pay","Here's how the seat minimum affects real team sizes, using Everhour's yearly Team price and Paidlyo's prices:
+
+| Team size | Everhour Team, yearly | Paidlyo, yearly | Paidlyo, monthly |
+|---|---|---|---|
+| 1 person | $510 a year (5 seats) | $90 a year | $9 a month |
+| 2 people | $510 a year (5 seats) | $180 a year | $18 a month |
+| 4 people | $510 a year (5 seats) | $360 a year | $36 a month |
+| 10 people | $1,020 a year | $900 a year | $90 a month |
+
+Below 5 people, the gap is wide because of the minimum. At 10 people, the two are within about $120 a year on yearly billing.
+
+Remember what each price includes. Everhour's Team plan includes integrations, expenses, time off and SSO, which Paidlyo doesn't offer. Paidlyo includes invoicing, budgets and reports on its single plan, which Everhour also lists on Team. If you'd use Everhour's extra features, the comparison is closer than the table suggests.
+
+Also check how Everhour counts seats for people who only view reports, since every seat counts towards the bill. Our guide on [how much time tracking software costs](/guides/how-much-does-time-tracking-software-cost) covers seat rules across more tools.","","","","","","A month of billing in Paidlyo","Here's what billing looks like for a 3-person web studio that moved from Everhour to Paidlyo.
+
+Each person tracks time with the timer in a browser tab, or fills in the weekly timesheet at the end of each day. Every entry has a client, a project, a task and a billable flag. Internal work, such as studio admin and sales calls, is tracked as non-billable so it shows in reports but never reaches an invoice.
+
+Rates are set on each project: $120 an hour for development, $105 for design and $85 for project management. One client has a 40-hour monthly cap, set as a **budget**, so the owner can see when they're close.
+
+At month end, the owner opens the unbilled time report and creates each client's invoice in one click, grouped by task. The draft can be edited, with the studio's logo, tax and the client's currency. Clients receive a private link and open the invoice without an account.
+
+When payments arrive, the owner records them, including partial payments. The outstanding invoices report shows which clients are late and by how long.
+
+Without a project tool in the middle, there's nothing to keep in sync: the work happens wherever it happens, and the hours live in one place. For more on how live tracking works, see [the timer](/features/timer).","","","","","","Switching from Everhour","There's no import from Everhour. Paidlyo's importer reads Harvest CSV files only, so switching is a clean start:
+
+1. **Pick a start date,** ideally the first day of a billing period.
+2. **Export your Everhour data** for your records, including past hours and reports.
+3. **Bill any remaining hours** from Everhour, so nothing tracked there is lost.
+4. **Add your active clients** in Paidlyo, with their currencies, and upload your logo.
+5. **Create projects and tasks** with rates and budgets.
+6. **Invite the team,** and tell them where to track from the start date.
+
+If you remove an Everhour integration from your project tool, let the team know, so nobody keeps starting timers in the old place out of habit.
+
+Remember that Everhour's annual payments aren't refunded for unused months, so time the switch close to your renewal date if you're on yearly billing.
+
+Paidlyo costs $9 per person a month, or $90 per person a year, with every feature and unlimited clients, projects and invoices. The 14-day trial needs a card to start, and nothing is charged until it ends.","","","","","","How much does Everhour cost?","When we checked, Everhour Team was $8.50 per seat a month billed yearly, with a 5-seat minimum. The free plan covers up to 5 seats with limited features.","Does Everhour have a seat minimum?","Yes. Everhour's pricing page said Team seats are billed at a minimum of 5, even with fewer users.","Does Paidlyo integrate with Asana or Jira?","No. Paidlyo has no integrations. Time is tracked directly in Paidlyo with a timer or weekly timesheet.","Is Paidlyo cheaper than Everhour for a small team?","For teams under 5, usually yes, because Paidlyo has no seat minimum. It costs **$9 per person a month**.","","","","","","",""

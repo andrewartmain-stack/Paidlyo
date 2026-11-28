@@ -1,48 +1,77 @@
 "product","slug","name","seo.title","seo.description","keywords","cover.file","cover.alt","cover.caption","hero.eyebrow","hero.title","hero.description","painPoints.1.title","painPoints.1.text","painPoints.1.icon","painPoints.2.title","painPoints.2.text","painPoints.2.icon","painPoints.3.title","painPoints.3.text","painPoints.3.icon","painPoints.4.title","painPoints.4.text","painPoints.4.icon","example.title","example.description","example.rows.1.label","example.rows.1.value","example.rows.2.label","example.rows.2.value","example.rows.3.label","example.rows.3.value","example.rows.4.label","example.rows.4.value","example.total.label","example.total.value","sections.1.heading","sections.1.body","sections.1.callout","sections.1.calloutKind","sections.1.image.file","sections.1.image.alt","sections.1.image.caption","sections.2.heading","sections.2.body","sections.2.callout","sections.2.calloutKind","sections.2.image.file","sections.2.image.alt","sections.2.image.caption","sections.3.heading","sections.3.body","sections.3.callout","sections.3.calloutKind","sections.3.image.file","sections.3.image.alt","sections.3.image.caption","sections.4.heading","sections.4.body","sections.4.callout","sections.4.calloutKind","sections.4.image.file","sections.4.image.alt","sections.4.image.caption","sections.5.heading","sections.5.body","sections.5.callout","sections.5.calloutKind","sections.5.image.file","sections.5.image.alt","sections.5.image.caption","features.1.title","features.1.text","features.1.icon","features.1.href","features.2.title","features.2.text","features.2.icon","features.2.href","features.3.title","features.3.text","features.3.icon","features.3.href","features.4.title","features.4.text","features.4.icon","features.4.href","teamSizes","screenshots.1.file","screenshots.1.alt","screenshots.1.caption","screenshots.2.file","screenshots.2.alt","screenshots.2.caption","faq.1.question","faq.1.answer","faq.2.question","faq.2.answer","faq.3.question","faq.3.answer","faq.4.question","faq.4.answer","related.1.href","related.1.label","related.2.href","related.2.label","related.3.href","related.3.label","updated"
-"invoicing","contractors","Contractors","Invoicing Software for Contractors Billing Hours | Paidlyo","Invoicing software for contractors on hourly contracts: invoices from tracked hours, one project per contract, overdue invoices by age. $9 per person a month.","invoicing software for contractors | contractor invoicing software | invoicing software for contract work | invoicing software for contract labor | billing and invoicing software for contractors","","","","For contractors","Invoicing software for contractors who bill by the hour on a contract","Turn the hours you tracked under each contract into invoices that match the client's paperwork. Record payments as they land and see what's overdue. Built for hourly contract work, not construction jobs.","Invoices rejected by accounts","A missing contract reference sends the invoice back and resets the payment clock.","alert","Two contracts, one muddle","Hours for different statements of work end up on the same invoice.","folder","Weeks of unpaid work","Billing once a month means you finance a month of work every month.","wallet","Premium hours at standard rates","On-call and weekend work slips onto the invoice at the normal rate.","money","Example: a monthly invoice under one statement of work","An independent developer bills a client for one contract, with a premium rate for on-call support. The figures are illustrative, not from a real customer.","Development: 152 hours at $90","$13,680","On-call support: 8 hours at $130","$1,040","","","","","Invoice total before tax","$14,720","Invoicing software for contractors: who it suits","The word contractor covers two very different jobs, and it's worth being clear which one Paidlyo serves. **Invoicing software for contractors** in construction and the trades needs materials, progress billing, retentions and job site estimates. Paidlyo has none of that, so if you're an electrical, painting or general contractor, a construction-focused tool will suit you far better.
+"invoicing","coaches","Coaches","Invoicing Software for Coaches Billing by the Hour | Paidlyo","Invoicing software for business and executive coaches: bill sessions, prep and packages to companies and individuals from tracked hours. $9 per person a month.","invoicing software for coaches | best invoicing software for coaches | coaching invoicing software | invoicing for executive coaches","","","","For coaches","Invoicing software for coaches who bill sessions and hours","For business, executive and career coaches, and coaching practices: track sessions and prep time, bill companies and individuals at the right rates, and see which packages are running out.","Corporate clients want detail","HR and finance teams ask for sessions, dates and hours.","building","Prep time goes unbilled","Preparation and follow-up notes rarely reach the invoice.","alert","Packages run out quietly","Nobody notices the 12 sessions are used until session 14.","budget","One sponsor, many coachees","A company pays for several people, each on their own programme.","users","Example: a monthly invoice to a corporate sponsor","An executive coach bills a company for one month of coaching for two leaders, grouped by project. The figures are illustrative, not from a real customer.","Leader A: 3 sessions, 4.5 hours at $250","$1,125","Leader B: 2 sessions, 3 hours at $250","$750","Stakeholder interviews: 2 hours at $200","$400","Assessment debrief prep: 1.5 hours at $200","$300","Invoice total before tax","$2,575","What invoicing software for coaches should do","Good **invoicing software for coaches** has to handle two very different kinds of client. Individuals often pay for themselves, by the session or in packages. Companies pay for coaching for their staff, and their finance teams expect invoices that show what was delivered, to whom and when.
 
-Paidlyo is for **independent contractors who sell hours under a contract**: developers, engineers, designers, consultants, analysts, writers and other professionals who work for a client for weeks or months at an agreed hourly rate. It's also for small agencies that place contractors with clients and bill their hours.
+The second kind is where billing gets complicated. One company might sponsor three leaders, each with their own programme, plus stakeholder interviews, assessment debriefs and a check-in with HR. If all of that becomes one line saying ""Coaching services, March"", it tends to come back with questions.
 
-For that kind of work, the invoice is simple in shape but easy to get wrong in detail. It has to match the contract, use the right rates, cover the right period and reach the right person. Paidlyo builds it from the hours you tracked: each contract is a project, each type of work is a task with its own rate, and the invoice draft is built from every unbilled hour in one click.
+Paidlyo approaches this from the time side:
 
-In the example above, one month under one contract becomes two clear lines, with on-call hours billed at the premium the contract allows.","If your invoices include materials, equipment or progress stages, Paidlyo isn't the right tool. It invoices hours only.","warning","","","","Matching the client's paperwork","Contract clients, especially larger companies and recruitment agencies, often check invoices against their own records before paying. A few habits get invoices approved the first time:
+- **Each paying client** is a client in Paidlyo, whether a company or an individual.
+- **Each coachee or programme** is a project, so a company sponsoring three leaders has three projects.
+- **Each kind of work** is a task: sessions, preparation, stakeholder interviews, reports.
+- **Rates are set per project or task,** so a session and prep time can be billed differently.
+- **At month end,** invoices are built from unbilled hours in one click.
 
-1. **One project per contract or statement of work.** Hours for different contracts never mix, and each invoice covers one agreement.
-2. **Task names that match the contract.** If the contract says ""Development"" and ""On-call support"", use exactly those.
-3. **The contract or purchase order reference** in the email you send with the invoice link, plus any reference the client's accounts team asked for.
-4. **The right period.** Invoice the hours for the agreed period, such as a calendar month, and nothing else.
-5. **The right person.** Send the link to whoever approves invoices, as well as your day-to-day contact.
+This page is for coaches who bill companies and individuals for their time. It isn't for therapists or counsellors who bill insurers or handle clinical records, which need specialist practice software.","","","","","","Sessions, prep and follow-up","Coaching hours are more than the time on the call. Preparation, reading assessment results, writing session notes and following up by email all take time, and many coaches don't bill any of it because they never measured it.
 
-In Paidlyo, you review the draft before sharing it. You can rename lines, add tax and choose whether lines are grouped by project, task or person. The client opens the invoice through a private link without an account, and can save a PDF for their records.","","","","","","Weekly or monthly invoices?","How often you invoice decides how much unpaid work you carry. Using the example contract, with payment terms of 14 days:
+Start by tracking everything for a month, even work you don't plan to bill. Use a few simple tasks:
 
-| Invoice cadence | Typical invoice | Longest stretch of work not yet paid |
+| Task | What goes in it | Billed? |
 |---|---|---|
-| Monthly | About $14,700 | About 6 weeks |
-| Every two weeks | About $7,400 | About 4 weeks |
-| Weekly | About $3,700 | About 3 weeks |
+| Coaching session | Time in the session itself | Yes |
+| Preparation | Reviewing notes and materials before a session | Depends on contract |
+| Stakeholder interviews | Conversations with managers or peers | Usually yes |
+| Reports and debriefs | Assessment reports, written summaries | Usually yes |
+| Admin and scheduling | Emails, booking, invoicing | No |
 
-Monthly invoicing is simpler for both sides, and many clients prefer it. Weekly or fortnightly invoicing reduces your risk if a client pays late or a contract ends suddenly.
+Mark each entry billable or not. At the end of the month, the hours report shows how much unbilled time sits behind each paid hour. If every one-hour session takes another 45 minutes of preparation, you know your real hourly rate is much lower than your session rate.
 
-Because Paidlyo builds invoices from unbilled hours, any cadence works. At the end of each period, create the invoice for that client. Hours already invoiced aren't picked up again, so each invoice covers exactly the work since the last one.
+That number helps in two ways. You can raise your session price, or you can agree with corporate clients that preparation and reports are billed separately, as their own lines on the invoice.","Put your billing rules for prep and reports in the coaching agreement. Clients rarely object to time they agreed to in writing.","tip","","","","Packages and programmes","Many coaches sell packages: 6 sessions over three months, or a 12-session leadership programme. Paidlyo invoices are built from tracked time, so the way you use it depends on how the package is paid.
 
-Whatever you choose, agree it in the contract, then stick to it. Predictable invoices make it easier for the client's accounts team to pay you on time, because they know what's coming and when.","","","","","","Late payments and partial payments","Contractors are often paid through several layers: a client's accounts team, sometimes a recruitment agency, sometimes a payroll provider. Payments can arrive late, split, or short.
+**Billed as you go.** If the client pays for sessions as they're delivered, track each session and invoice monthly from unbilled hours. Set a **project budget** for the package hours so you can see how many are left.
 
-Record every payment in Paidlyo as it arrives, in full or in part. A partly paid invoice stays open with the correct balance. The outstanding invoices report then lists everything unpaid by age, so you can see at a glance which invoices need chasing.
+**Paid upfront.** If the client pays for the whole package in advance, issue that invoice from your accounting tool, then use Paidlyo to track the sessions against a budget. You'll know exactly when the package is used up and can talk to the client about renewal before the last session, not after it.
 
-A simple chasing routine:
+Here's how a budget helps with a 12-session programme of 90-minute sessions:
 
-- **On the due date:** check the report and confirm nothing is missing.
-- **A few days late:** a short, polite reminder with the invoice link.
-- **Two weeks late:** contact the person who approves invoices, not only your project contact.
-- **A month late:** raise it formally, using the payment terms in your contract.
+| Point in the programme | Hours used | Hours left |
+|---|---|---|
+| After session 4 | 6 | 12 |
+| After session 8 | 12 | 6 |
+| After session 10 | 15 | 3 |
 
-Clients can't pay by card through Paidlyo. They pay you directly, by bank transfer or however your contract says, and you record it.","","","","","","Tax, currency and what Paidlyo doesn't do","Contractors often work across borders. Each client in Paidlyo has their own currency, so a client abroad can be invoiced in the currency in your contract. You can add a tax percentage to an invoice, but whether tax applies, and at what rate, depends on your registration and where the client is. Ask your accountant before the first invoice to a new country.
+At session 10, it's time for the renewal conversation. Without a budget, that moment often passes unnoticed.
 
-It's also worth knowing the limits:
+Paidlyo doesn't create recurring or subscription invoices, and it doesn't take payments upfront, so it suits coaches who bill sessions as they're delivered better than those selling memberships.","","","","","","Billing corporate sponsors clearly","Corporate coaching often has three parties: the coach, the coachee and the company paying. The invoice goes to the company, and it needs to make sense to someone in finance who wasn't in the room.
 
-- **No expenses.** Travel and equipment costs need to be invoiced from another tool.
-- **No recurring or fixed-amount invoices.** Every invoice is built from tracked hours.
-- **No accounting integration.** You can export hours and outstanding invoices to CSV.
-- **No card payments or mobile app.** Clients pay you directly, and you work from a browser.
+A few habits make corporate invoices easy to approve:
 
-For the tracking side, such as hour caps and different rates under one contract, see [time tracking for contractors](/time-tracking/for/contractors). If you bill larger companies as a consultant, [invoicing for consultants](/invoicing/for/consultants) covers procurement and approval in more depth. Paidlyo costs $9 per person a month.","","","","","","One project per contract","Each statement of work keeps its own hours and invoices.","folder","","Rates per task","Bill on-call or weekend work at the contracted premium.","money","","Invoices from tracked hours","Create an invoice for any period in one click.","invoice","/invoicing","Overdue invoices by age","Record partial payments and see what's still owed.","chart","/features/reports","1 | 3 | 10","","","","","","","Is Paidlyo suitable for construction contractors?","No. Paidlyo invoices hours only, with no materials, progress billing or retentions. It suits contractors who bill hourly under a contract.","Can I invoice weekly?","Yes. Invoices are built from unbilled hours, so you can create one at the end of any period, weekly or monthly.","Can I bill on-call hours at a higher rate?","Yes. Create a task for on-call work with its own hourly rate, and invoice lines use it automatically.","Can I invoice clients in another currency?","Yes. Each client has their own currency, and every invoice to that client uses it.","","","","","","",""
+- **One project per coachee,** so you can group the invoice by project and each leader appears separately.
+- **Session lines with hours,** rather than one total, so the client can match them to their own records.
+- **Separate lines for non-session work,** such as stakeholder interviews and reports.
+- **The company's purchase order or reference** in the project name, if they ask for one.
+- **The client's currency,** set once per client, if the company is abroad.
+
+Invoices carry your logo and can include tax where you're registered and a discount if you've agreed one. The client receives a private link and opens the invoice without an account, then saves a PDF for their approval process.
+
+Confidentiality matters in coaching. Invoices show sessions and hours, not what was discussed, so keep task names neutral: ""Coaching session"" rather than anything that hints at content.
+
+When the client pays, record the payment. The outstanding invoices report shows which sponsors are late and by how long.","","","","","","Is Paidlyo right for your coaching practice?","Paidlyo suits coaches who **bill for their time**, especially to companies, and coaching practices where several coaches work with the same clients.
+
+**A good fit if you:**
+
+- coach leaders, managers or professionals paid for by their employer;
+- bill sessions, interviews and reports by the hour;
+- run a small practice with associate coaches who need to track time in one place;
+- want to see packages running out before they do.
+
+**Not a good fit if you need:**
+
+- **online booking and scheduling.** Paidlyo has no calendar sync or booking pages;
+- **card payments on invoices.** Clients pay by transfer or your agreed method, and you record it;
+- **memberships or recurring billing** for group programmes;
+- **a mobile app.** Paidlyo runs in a browser on a computer;
+- **clinical or insurance billing,** for therapy and counselling.
+
+For associate coaches, each person joins as a member and tracks their own sessions. The company's invoice includes everyone's hours at the rate you charge for each.
+
+Paidlyo costs $9 per person a month, or $90 per person a year, with every feature and unlimited clients, projects and invoices. There's no free plan. The 14-day trial needs a card to start, and nothing is charged until it ends. See [project budgets](/features/project-budgets) for tracking packages, or how consultants use Paidlyo in [invoicing for consultants](/invoicing/for/consultants).","","","","","","Coachee as project","Each programme tracked and billed separately.","folder","","Rates per task","Sessions, interviews and reports at their own rates.","money","","Package budgets","See how many programme hours are left.","budget","/features/project-budgets","Clear corporate invoices","Grouped by coachee, with your logo and a no-login link.","invoice","","1 | 3 | 8","","","","","","","Can I bill a company for several coachees on one invoice?","Yes. Make each coachee a project under the company, then group the invoice by project.","Does Paidlyo handle coaching packages?","Set a project budget for the package hours and watch it as you track sessions. Upfront package invoices are best issued from your accounting tool.","Can clients book sessions or pay by card?","No. Paidlyo has no booking or card payments. Clients pay by your agreed method, and you record it.","Is Paidlyo suitable for therapists?","No. Therapy and counselling practices that bill insurers or keep clinical records need specialist practice software.","","","","","","",""
