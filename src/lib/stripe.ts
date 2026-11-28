@@ -6,7 +6,7 @@ let stripe: Stripe | undefined;
 /** Server-side Stripe client. Created lazily so the app runs without Stripe keys. */
 export function getStripe() {
   if (!stripe) {
-    const key = process.env.STRIPE_SECRET_KEY;
+    const key = process.env.STRIPE_SECRET_KEY?.trim();
     if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
     stripe = new Stripe(key);
   }

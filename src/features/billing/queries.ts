@@ -39,9 +39,15 @@ export const getOrgBilling = cache(async (organizationId: string): Promise<OrgBi
 
 /** Stripe price ids for each interval, from env (null when billing isn't configured). */
 export function priceIds(): Record<PlanInterval, string> | null {
-  const month = process.env.STRIPE_PRICE_MONTHLY;
-  const year = process.env.STRIPE_PRICE_YEARLY;
-  if (!month || !year || !process.env.STRIPE_SECRET_KEY) return null;
+  // Trimmed: values pasted into a hosting dashboard often carry a space or newline.
+  const month = process.env.STRIPE_PRICE_MONTHLY?.trim();
+  const year = process.env.STRIPE_PRICE_YEARLY?.trim();
+  const key = process.env.STRIPE_SECRET_KEY?.trim();
+  if (!month || !year || !key) {
+    const missing = [!key && "STRIPE_SECRET_KEY", !month && "STRIPE_PRICE_MONTHLY", !year && "STRIPE_PRICE_YEARLY"].filter(Boolean);
+    console.error(`Billing not configured: missing ${missing.join(", ")}`);
+    return null;
+  }
   return { month, year };
 }
 
@@ -60,7 +66,8 @@ export async function listPlanPrices(): Promise<PlanPrice[] | null> {
       currency: price.currency.toUpperCase(),
     }));
   } catch (error) {
-    console.error("Failed to load Stripe prices", error);
+    // Names the cause without the key: "No such price" (wrong id / test vs live), "Invalid API Key".
+    console.error("Failed to load Stripe prices:", error instanceof Error ? error.message : error);
     return null;
   }
 }
